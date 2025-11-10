@@ -6,6 +6,8 @@ An interactive web game where kids help a friendly ghost "debug" haunted code to
 ## Technology Stack
 - **Frontend**: Vite (for fast development and build)
 - **Infrastructure**: AWS CDK (for deployment)
+- **Language**: TypeScript (for all code where possible)
+- **Lambda Functions**: TypeScript with Node.js 20.x runtime
 - **Target Audience**: Kids learning coding concepts
 
 ## Development Philosophy
@@ -26,7 +28,16 @@ This is a **hackathon project** with the following priorities:
 
 ## Implementation Preferences
 - Keep architecture simple and straightforward
-- Use modern JavaScript/TypeScript patterns
+- **Always use TypeScript** - All code should be written in TypeScript where possible for type safety
+- Use modern TypeScript patterns with strict mode enabled
 - Leverage existing libraries and frameworks where helpful
 - Focus on the interactive and visual elements that make the game engaging
 - Animations and user feedback are important for the experience
+
+## TypeScript Guidelines
+- Use TypeScript for all new code (frontend, backend, Lambda functions, CDK infrastructure)
+- Enable strict mode in tsconfig.json
+- Define proper interfaces and types for all data structures
+- Use type guards for runtime type checking
+- Avoid `any` type - use `unknown` or proper types instead
+- Leverage TypeScript's type inference where appropriate

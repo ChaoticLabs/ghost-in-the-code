@@ -2,6 +2,10 @@ import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
+import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as iam from 'aws-cdk-lib/aws-iam';
+import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
+import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 
 export class GhostInTheCodeStack extends cdk.Stack {
@@ -14,9 +18,29 @@ export class GhostInTheCodeStack extends cdk.Stack {
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
       publicReadAccess: true,
-      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ACLS,
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: false,
+        blockPublicPolicy: false,
+        ignorePublicAcls: false,
+        restrictPublicBuckets: false,
+      }),
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+    });
+
+    // S3 bucket for audio cache with CORS configuration
+    const audioCacheBucket = new s3.Bucket(this, 'AudioCacheBucket', {
+      bucketName: `ghost-audio-cache-${this.account}-${this.region}`,
+      removalPolicy: cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: true,
+      cors: [
+        {
+          allowedOrigins: ['*'],
+          allowedMethods: [s3.HttpMethods.GET, s3.HttpMethods.HEAD],
+          allowedHeaders: ['*'],
+          maxAge: 3600,
+        },
+      ],
     });
 
     // CloudFront distribution for the website
@@ -43,6 +67,77 @@ export class GhostInTheCodeStack extends cdk.Stack {
       ],
     });
 
+    // Lambda function for Bedrock AI hints
+    const bedrockFunction = new NodejsFunction(this, 'BedrockFunction', {
+      entry: 'lambda/bedrock/index.ts',
+      handler: 'handler',
+      runtime: Runtime.NODEJS_20_X,
+      timeout: cdk.Duration.seconds(30),
+      memorySize: 512,
+      environment: {
+        MODEL_ID: 'anthropic.claude-3-haiku-20240307-v1:0',
+      },
+      bundling: {
+        minify: true,
+        sourceMap: true,
+        target: 'es2020',
+      },
+    });
+
+    // Grant Bedrock permissions to Lambda
+    bedrockFunction.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ['bedrock:InvokeModel'],
+        resources: ['*'],
+      })
+    );
+
+    // Lambda function for Polly voice synthesis
+    const pollyFunction = new NodejsFunction(this, 'PollyFunction', {
+      entry: 'lambda/polly/index.ts',
+      handler: 'handler',
+      runtime: Runtime.NODEJS_20_X,
+      timeout: cdk.Duration.seconds(10),
+      memorySize: 256,
+      environment: {
+        AUDIO_BUCKET: audioCacheBucket.bucketName,
+        VOICE_ID: 'Joanna',
+      },
+      bundling: {
+        minify: true,
+        sourceMap: true,
+        target: 'es2020',
+      },
+    });
+
+    // Grant Polly and S3 permissions to Lambda
+    pollyFunction.addToRolePolicy(
+      new iam.PolicyStatement({
+        actions: ['polly:SynthesizeSpeech'],
+        resources: ['*'],
+      })
+    );
+    audioCacheBucket.grantWrite(pollyFunction);
+    audioCacheBucket.grantPublicAccess();
+
+    // API Gateway with CORS
+    const api = new apigateway.RestApi(this, 'GameApi', {
+      restApiName: 'Ghost in the Code API',
+      description: 'API for AI hints and voice synthesis',
+      defaultCorsPreflightOptions: {
+        allowOrigins: apigateway.Cors.ALL_ORIGINS,
+        allowMethods: apigateway.Cors.ALL_METHODS,
+        allowHeaders: ['Content-Type', 'Authorization'],
+      },
+    });
+
+    // API endpoints
+    const hints = api.root.addResource('hints');
+    hints.addMethod('POST', new apigateway.LambdaIntegration(bedrockFunction));
+
+    const voice = api.root.addResource('voice');
+    voice.addMethod('POST', new apigateway.LambdaIntegration(pollyFunction));
+
     // Outputs
     new cdk.CfnOutput(this, 'WebsiteBucketName', {
       value: websiteBucket.bucketName,
@@ -65,6 +160,18 @@ export class GhostInTheCodeStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'WebsiteUrl', {
       value: `https://${distribution.distributionDomainName}`,
       description: 'Website URL',
+    });
+
+    new cdk.CfnOutput(this, 'ApiEndpoint', {
+      value: api.url,
+      description: 'API Gateway endpoint URL',
+      exportName: 'GhostInTheCode-ApiEndpoint',
+    });
+
+    new cdk.CfnOutput(this, 'AudioBucketName', {
+      value: audioCacheBucket.bucketName,
+      description: 'S3 bucket name for audio cache',
+      exportName: 'GhostInTheCode-AudioBucketName',
     });
   }
 }

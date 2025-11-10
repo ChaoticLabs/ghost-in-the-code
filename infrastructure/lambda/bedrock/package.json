@@ -1,0 +1,13 @@
+{
+  "name": "bedrock-lambda",
+  "version": "1.0.0",
+  "description": "Lambda function for Bedrock AI hint generation",
+  "main": "index.ts",
+  "dependencies": {
+    "@aws-sdk/client-bedrock-runtime": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.0.0"
+  }
+}

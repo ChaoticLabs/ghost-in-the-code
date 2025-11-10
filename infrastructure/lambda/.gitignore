@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build output (if accidentally created)
+dist/
+*.js
+*.js.map
+!*.config.js
+
+# TypeScript cache
+*.tsbuildinfo
+
+# CDK asset staging
+.cdk.staging/
+cdk.out/

@@ -38,7 +38,12 @@
   - Add CDK outputs for bucket name and distribution domain
   - _Requirements: 7.3, 7.4_
 
-- [ ] 4. Implement CDK stack for AI and voice services
+- [x] 4. Implement CDK stack for AI and voice services
+
+
+
+
+
   - Create S3 bucket for audio cache with CORS configuration
   - Set up Lambda function for Bedrock integration with IAM permissions
   - Set up Lambda function for Polly integration with IAM permissions
