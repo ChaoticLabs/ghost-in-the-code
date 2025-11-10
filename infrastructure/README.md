@@ -1,56 +1,71 @@
 # Ghost in The Code - Infrastructure
 
-AWS CDK infrastructure for the Ghost in The Code game.
+AWS CDK infrastructure for deploying the Ghost in The Code game.
 
 ## Prerequisites
 
-- Node.js 18+ installed
+- Node.js 20.x or later
 - AWS CLI configured with credentials
-- AWS CDK CLI installed globally: `npm install -g aws-cdk`
-
-## Setup
-
-1. Install dependencies:
-```bash
-cd infrastructure
-npm install
-```
-
-2. Bootstrap CDK (first time only):
-```bash
-npm run cdk bootstrap
-```
-
-## Available Commands
-
-- `npm run build` - Compile TypeScript to JavaScript
-- `npm run watch` - Watch for changes and compile
-- `npm run cdk synth` - Synthesize CloudFormation template
-- `npm run cdk diff` - Compare deployed stack with current state
-- `npm run deploy` - Deploy the stack to AWS
-- `npm run destroy` - Remove all resources from AWS
+- AWS CDK CLI installed (`npm install -g aws-cdk`)
 
 ## Deployment
 
-To deploy the infrastructure:
+### Option 1: Full Deployment (Recommended)
+
+This will build the Vite app and deploy everything in one command:
 
 ```bash
+npm run deploy:full
+```
+
+### Option 2: Manual Steps
+
+If you prefer to run steps separately:
+
+```bash
+# 1. Build the Vite app (from project root)
+cd ..
+npm install
+npm run build
+
+# 2. Deploy the CDK stack
+cd infrastructure
 npm run deploy
 ```
 
-The stack will output important values like CloudFront distribution URL and API endpoints.
+### Option 3: Using Deployment Scripts
 
-## Environment Variables
+**Windows (PowerShell):**
+```powershell
+.\deploy.ps1
+```
 
-The following environment variables can be set:
+**Linux/Mac (Bash):**
+```bash
+chmod +x deploy.sh
+./deploy.sh
+```
 
-- `CDK_DEFAULT_ACCOUNT` - AWS account ID (defaults to current AWS CLI account)
-- `CDK_DEFAULT_REGION` - AWS region (defaults to us-east-1)
+## Other Commands
 
-## Stack Resources
+- `npm run synth` - Synthesize CloudFormation template
+- `npm run diff` - Compare deployed stack with current state
+- `npm run destroy` - Delete all AWS resources
+
+## Architecture
 
 The infrastructure includes:
-- S3 buckets for static hosting and audio cache
-- CloudFront distribution for content delivery
-- Lambda functions for AI and voice services
-- API Gateway for backend endpoints
+
+- **S3 Bucket**: Static website hosting for the Vite app
+- **CloudFront**: CDN for fast global delivery
+- **API Gateway**: REST API for AI and voice features
+- **Lambda Functions**: 
+  - Bedrock function for AI-powered hints
+  - Polly function for text-to-speech
+- **S3 Bucket**: Audio cache for Polly-generated speech
+
+## Notes
+
+- No Docker required - uses local bundling for the Vite app
+- The `dist` folder must exist before deployment
+- CloudFront cache is automatically invalidated on deployment

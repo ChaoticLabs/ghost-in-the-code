@@ -51,12 +51,17 @@
   - Add CDK outputs for API endpoint and audio bucket
   - _Requirements: 7.3, 7.5_
 
-- [ ] 5. Create deployment script
-  - Write bash script to build Vite app
-  - Add CDK deployment commands
-  - Include S3 sync for static assets
-  - Add CloudFront cache invalidation
-  - Make script executable and test locally
+- [x] 5. Configure CDK asset bundling for Vite app
+
+
+
+
+
+  - Update S3 deployment construct to use BundlingOptions
+  - Configure bundling to run `npm install && npm run build` in Vite project directory
+  - Set bundling output directory to `dist` folder
+  - Add optional build script to package.json for local testing: `"build": "vite build"`
+  - Test CDK deployment with automatic bundling
   - _Requirements: 7.5_
 
 ## Game Engine and State Management

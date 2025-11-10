@@ -1,5 +1,6 @@
 import * as cdk from 'aws-cdk-lib';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as s3deploy from 'aws-cdk-lib/aws-s3-deployment';
 import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
@@ -7,6 +8,7 @@ import * as iam from 'aws-cdk-lib/aws-iam';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
+import * as path from 'path';
 
 export class GhostInTheCodeStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -137,6 +139,15 @@ export class GhostInTheCodeStack extends cdk.Stack {
 
     const voice = api.root.addResource('voice');
     voice.addMethod('POST', new apigateway.LambdaIntegration(pollyFunction));
+
+    // Deploy Vite app to S3 (expects pre-built dist folder)
+    // Run 'npm run build' in project root before deploying
+    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
+      sources: [s3deploy.Source.asset(path.join(__dirname, '../../dist'))],
+      destinationBucket: websiteBucket,
+      distribution,
+      distributionPaths: ['/*'],
+    });
 
     // Outputs
     new cdk.CfnOutput(this, 'WebsiteBucketName', {

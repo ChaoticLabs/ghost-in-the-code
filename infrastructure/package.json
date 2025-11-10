@@ -8,6 +8,7 @@
     "watch": "tsc -w",
     "cdk": "cdk",
     "deploy": "cdk deploy --all",
+    "deploy:full": "cd .. && npm install && npm run build && cd infrastructure && npm run deploy",
     "synth": "cdk synth",
     "diff": "cdk diff",
     "destroy": "cdk destroy --all"

@@ -33,6 +33,7 @@ This is a **hackathon project** with the following priorities:
 - Leverage existing libraries and frameworks where helpful
 - Focus on the interactive and visual elements that make the game engaging
 - Animations and user feedback are important for the experience
+- **No Docker** - Avoid Docker dependencies; use local bundling and native tooling instead
 
 ## TypeScript Guidelines
 - Use TypeScript for all new code (frontend, backend, Lambda functions, CDK infrastructure)
