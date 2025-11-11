@@ -1,0 +1,113 @@
+{
+  "levelId": "loops-1",
+  "challenges": [
+    {
+      "id": "loop-basic-1",
+      "type": "loop",
+      "title": "The Infinite Haunting",
+      "description": "Oh no! This loop never stops haunting! The ghost is stuck saying 'Boo!' forever. Can you help fix the loop so it stops after 5 times?",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let count = 0;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "while (count < 5) {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "  console.log('Boo!');", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 4, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [3]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 3,
+        "correctContent": "  console.log('Boo!');\n  count++;",
+        "alternativeCorrectContent": ["  console.log('Boo!');\n  count = count + 1;"]
+      },
+      "hints": [
+        "The loop needs to change something to eventually stop...",
+        "What variable controls when the loop ends? It's 'count'!",
+        "Try adding 'count++' after the console.log to make count go up each time!"
+      ],
+      "educationalContent": "Loops need a way to eventually stop. We use a counter variable and increment it (make it bigger) each time through the loop. Without incrementing, the loop runs forever!"
+    },
+    {
+      "id": "loop-basic-2",
+      "type": "loop",
+      "title": "The Wrong Direction Ghost",
+      "description": "This ghost is counting backwards when it should count forwards! Help fix the loop so it counts from 1 to 3.",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "for (let i = 3; i >= 1; i--) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 2, "content": "  console.log('Ghost ' + i);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [1]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 1,
+        "correctContent": "for (let i = 1; i <= 3; i++) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "Look at where the loop starts and which direction it goes...",
+        "The loop should start at 1 and go UP to 3, not down from 3!",
+        "Change 'i = 3' to 'i = 1', '>=' to '<=', and 'i--' to 'i++'"
+      ],
+      "educationalContent": "For loops have three parts: where to start, when to stop, and how to change. We can count up (i++) or down (i--), but we need to make sure all three parts work together!"
+    },
+    {
+      "id": "loop-basic-3",
+      "type": "loop",
+      "title": "The Off-By-One Ghost",
+      "description": "This ghost wants to haunt 10 houses, but the loop only visits 9! Can you fix it?",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "for (let house = 1; house < 10; house++) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 2, "content": "  console.log('Haunting house ' + house);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [1]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 1,
+        "correctContent": "for (let house = 1; house <= 10; house++) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "Count on your fingers: does 'house < 10' include 10?",
+        "The symbol '<' means 'less than', so it stops BEFORE 10!",
+        "Change '<' to '<=' which means 'less than or equal to' - that includes 10!"
+      ],
+      "educationalContent": "The difference between < and <= is important! '<' means 'less than' (stops before), while '<=' means 'less than or equal to' (includes the number). This is called an 'off-by-one' error."
+    },
+    {
+      "id": "loop-intermediate-1",
+      "type": "loop",
+      "title": "The Nested Ghost Party",
+      "description": "The ghost wants to invite 3 friends and give each friend 2 treats. But something's wrong with the inner loop!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "for (let friend = 1; friend <= 3; friend++) {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "  console.log('Friend ' + friend + ' arrives');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "  for (let treat = 1; treat < 2; treat++) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 4, "content": "    console.log('  Giving treat ' + treat);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "  }", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [3]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 3,
+        "correctContent": "  for (let treat = 1; treat <= 2; treat++) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "Each friend should get 2 treats, but they're only getting 1!",
+        "Look at the inner loop condition - does 'treat < 2' give 2 treats?",
+        "Change '<' to '<=' so the loop includes treat number 2!"
+      ],
+      "educationalContent": "Nested loops are loops inside loops! The inner loop runs completely for each time the outer loop runs. If the outer loop runs 3 times and the inner loop runs 2 times, we get 3 × 2 = 6 total actions!"
+    }
+  ]
+}

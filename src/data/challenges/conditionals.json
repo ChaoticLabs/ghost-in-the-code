@@ -1,0 +1,149 @@
+{
+  "levelId": "conditionals-1",
+  "challenges": [
+    {
+      "id": "conditional-basic-1",
+      "type": "conditional",
+      "title": "The Backwards Door",
+      "description": "The ghost can't get through the door! The condition is checking the wrong thing. Help fix it so the door opens when the key is true.",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let hasKey = true;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (hasKey === false) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  console.log('Door opens!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "  console.log('Door stays locked');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "if (hasKey === true) {",
+        "alternativeCorrectContent": ["if (hasKey) {"]
+      },
+      "hints": [
+        "The door should open when hasKey is true, but the condition checks for false!",
+        "Look at line 2 - it says 'if hasKey === false', but we want it to be true!",
+        "Change 'false' to 'true', or just write 'if (hasKey)' which means the same thing!"
+      ],
+      "educationalContent": "Conditionals let us make decisions in code. 'if (condition)' means 'do this when the condition is true'. We can check if something equals true, or just write the variable name if it's already true or false!"
+    },
+    {
+      "id": "conditional-basic-2",
+      "type": "conditional",
+      "title": "The Wrong Comparison",
+      "description": "The ghost needs to check if it has enough energy (at least 50) to haunt. But the comparison is wrong!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let energy = 75;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (energy > 50) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  console.log('Ready to haunt!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "  console.log('Need more energy');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "if (energy >= 50) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "The ghost needs AT LEAST 50 energy, which means 50 or more!",
+        "The symbol '>' means 'greater than', so it doesn't include 50 itself!",
+        "Change '>' to '>=' which means 'greater than or equal to' - that includes 50!"
+      ],
+      "educationalContent": "Comparison operators help us compare numbers: '>' means greater than, '<' means less than, '>=' means greater than or equal to, and '<=' means less than or equal to. Choose the right one for what you need!"
+    },
+    {
+      "id": "conditional-basic-3",
+      "type": "conditional",
+      "title": "The Missing Else",
+      "description": "The ghost wants to say 'Too cold!' when temperature is below 60, but nothing happens! The else is in the wrong place.",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let temperature = 45;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (temperature >= 60) {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "  console.log('Perfect haunting weather!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "}", "isEditable": true, "isBuggy": true }
+        ],
+        "buggyLines": [4]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 4,
+        "correctContent": "} else {\n  console.log('Too cold!');\n}",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "When temperature is less than 60, nothing happens! We need an 'else' part.",
+        "The 'else' block runs when the 'if' condition is false.",
+        "Add 'else { console.log('Too cold!'); }' after the closing brace!"
+      ],
+      "educationalContent": "The 'else' part of a conditional runs when the 'if' condition is false. It's like saying 'if this is true, do this, otherwise do that'. Not every if needs an else, but it's useful when you want something to happen either way!"
+    },
+    {
+      "id": "conditional-intermediate-1",
+      "type": "conditional",
+      "title": "The Confused Logic",
+      "description": "The ghost wants to haunt only when it's nighttime AND the moon is full. But the logic operator is wrong!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let isNighttime = true;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "let isFullMoon = true;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "if (isNighttime || isFullMoon) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 4, "content": "  console.log('Perfect time to haunt!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "  console.log('Not the right time');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 7, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [3]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 3,
+        "correctContent": "if (isNighttime && isFullMoon) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "The ghost needs BOTH nighttime AND full moon, not just one or the other!",
+        "The symbol '||' means 'or' - it's true if either condition is true.",
+        "Change '||' to '&&' which means 'and' - both conditions must be true!"
+      ],
+      "educationalContent": "Logical operators combine conditions: '&&' means AND (both must be true), '||' means OR (at least one must be true), and '!' means NOT (flips true to false or false to true). Choose the right operator for your logic!"
+    },
+    {
+      "id": "conditional-intermediate-2",
+      "type": "conditional",
+      "title": "The Inverted Check",
+      "description": "The ghost wants to haunt when the door is NOT locked, but the logic is backwards!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let isDoorLocked = false;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (isDoorLocked) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  console.log('Ghost enters the room!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "  console.log('Door is locked, cannot enter');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "if (!isDoorLocked) {",
+        "alternativeCorrectContent": ["if (isDoorLocked === false) {"]
+      },
+      "hints": [
+        "The ghost should enter when the door is NOT locked!",
+        "Right now it checks if the door IS locked, which is backwards.",
+        "Add a '!' before isDoorLocked to flip it: '!isDoorLocked' means 'not locked'!"
+      ],
+      "educationalContent": "The '!' operator means NOT - it flips true to false and false to true. So '!isDoorLocked' means 'the door is not locked'. It's a quick way to check for the opposite of something!"
+    }
+  ]
+}

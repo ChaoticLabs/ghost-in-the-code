@@ -90,7 +90,12 @@
   - Handle localStorage errors gracefully with fallbacks
   - _Requirements: 5.5, 9.1_
 
-- [ ] 8. Create challenge data structure and loader
+- [x] 8. Create challenge data structure and loader
+
+
+
+
+
   - Define challenge JSON schema for loops, conditionals, logic
   - Create sample challenges for each type (3-5 per type)
   - Implement challenge loader that reads from JSON files
