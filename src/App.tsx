@@ -1,9 +1,22 @@
+import { useState } from 'react';
 import { useGame, gameActions } from './engine'
+import { WelcomeScreen } from './components'
 import './App.css'
 
 function App() {
   const { state, dispatch } = useGame();
+  const [gameStarted, setGameStarted] = useState(false);
 
+  const handleStartGame = () => {
+    setGameStarted(true);
+  };
+
+  // Show welcome screen if game hasn't started
+  if (!gameStarted) {
+    return <WelcomeScreen onStart={handleStartGame} />;
+  }
+
+  // Game demo UI (will be replaced with actual game components later)
   const handleCompleteChallenge = () => {
     dispatch(gameActions.completeChallenge('test-challenge-1', 1, 2));
   };
@@ -46,6 +59,9 @@ function App() {
         </button>
         <button onClick={() => dispatch(gameActions.resetGame())}>
           Reset Game
+        </button>
+        <button onClick={() => setGameStarted(false)}>
+          Back to Welcome
         </button>
       </div>
     </div>

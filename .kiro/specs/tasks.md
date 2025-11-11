@@ -116,7 +116,12 @@
 
 ## UI Components - Core Gameplay
 
-- [ ] 10. Build WelcomeScreen component
+- [x] 10. Build WelcomeScreen component
+
+
+
+
+
   - Create welcome screen layout with game title
   - Add ghost character SVG or image
   - Implement start button with transition to game
