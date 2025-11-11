@@ -2,11 +2,12 @@
  * React Context for game state management
  */
 
-import { createContext, useContext, useReducer } from 'react';
+import { createContext, useContext, useReducer, useEffect } from 'react';
 import type { ReactNode, Dispatch } from 'react';
 import type { GameState } from './types';
 import type { GameAction } from './gameActions';
 import { gameReducer, initialGameState } from './gameReducer';
+import { loadGameState, saveGameState } from './persistence';
 
 interface GameContextType {
   state: GameState;
@@ -20,7 +21,20 @@ interface GameProviderProps {
 }
 
 export function GameProvider({ children }: GameProviderProps) {
-  const [state, dispatch] = useReducer(gameReducer, initialGameState);
+  // Initialize state with loaded data or default
+  const [state, dispatch] = useReducer(
+    gameReducer,
+    initialGameState,
+    (initial) => {
+      const savedState = loadGameState();
+      return savedState || initial;
+    }
+  );
+
+  // Auto-save state whenever it changes
+  useEffect(() => {
+    saveGameState(state);
+  }, [state]);
 
   return (
     <GameContext.Provider value={{ state, dispatch }}>
