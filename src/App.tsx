@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useGame, gameActions } from './engine'
-import { WelcomeScreen } from './components'
+import { useGame } from './engine'
+import { WelcomeScreen, GameBoard } from './components'
 import './App.css'
 
 function App() {
-  const { state, dispatch } = useGame();
+  const { state } = useGame();
   const [gameStarted, setGameStarted] = useState(false);
 
   const handleStartGame = () => {
@@ -16,55 +16,49 @@ function App() {
     return <WelcomeScreen onStart={handleStartGame} />;
   }
 
-  // Game demo UI (will be replaced with actual game components later)
-  const handleCompleteChallenge = () => {
-    dispatch(gameActions.completeChallenge('test-challenge-1', 1, 2));
-  };
+  // Placeholder components for GameBoard sections
+  const codeEditorPlaceholder = (
+    <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
+      <h3 style={{ color: '#00D9FF', marginBottom: '1rem' }}>Code Editor</h3>
+      <p style={{ marginBottom: '0.5rem' }}>This is where the interactive code editor will be displayed.</p>
+      <p style={{ color: '#A3FF00' }}>Coming soon in task 12!</p>
+    </div>
+  );
 
-  const handleNextChallenge = () => {
-    dispatch(gameActions.nextChallenge());
-  };
+  const ghostCharacterPlaceholder = (
+    <div style={{ color: '#FFFFFF', textAlign: 'center', fontSize: '1.125rem' }}>
+      <h3 style={{ color: '#A3FF00', marginBottom: '1rem' }}>Ghost Character</h3>
+      <p>👻</p>
+      <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 13!</p>
+    </div>
+  );
 
-  const handleUseHint = () => {
-    dispatch(gameActions.useHint('test-challenge-1'));
-  };
+  const progressTrackerPlaceholder = (
+    <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
+      <h3 style={{ color: '#6B46C1', marginBottom: '1rem' }}>Progress Tracker</h3>
+      <p>Level progress and challenge map will be displayed here.</p>
+      <p style={{ color: '#A3FF00', fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 14!</p>
+    </div>
+  );
+
+  const hintPanelPlaceholder = (
+    <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
+      <h3 style={{ color: '#FF9500', marginBottom: '1rem' }}>Hint Panel</h3>
+      <p>Hints and tips will appear here when you need help.</p>
+      <p style={{ color: '#A3FF00', fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 15!</p>
+    </div>
+  );
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Ghost in The Code - Game State Demo</h1>
-      
-      <div style={{ marginTop: '2rem', padding: '1rem', border: '1px solid #ccc', borderRadius: '8px' }}>
-        <h2>Current Game State</h2>
-        <p><strong>Level:</strong> {state.currentLevel}</p>
-        <p><strong>Challenge:</strong> {state.currentChallenge}</p>
-        <p><strong>Score:</strong> {state.score}</p>
-        <p><strong>Completed Challenges:</strong> {state.completedChallenges.size}</p>
-        <p><strong>Total Hints Used:</strong> {state.assessmentMetrics.totalHintsUsed}</p>
-        <p><strong>Challenges Completed:</strong> {state.assessmentMetrics.challengesCompleted}</p>
-        <p><strong>Average Attempts:</strong> {state.assessmentMetrics.averageAttempts.toFixed(2)}</p>
-      </div>
-
-      <div style={{ marginTop: '2rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-        <button onClick={handleCompleteChallenge}>
-          Complete Challenge
-        </button>
-        <button onClick={handleNextChallenge}>
-          Next Challenge
-        </button>
-        <button onClick={handleUseHint}>
-          Use Hint
-        </button>
-        <button onClick={() => dispatch(gameActions.nextLevel())}>
-          Next Level
-        </button>
-        <button onClick={() => dispatch(gameActions.resetGame())}>
-          Reset Game
-        </button>
-        <button onClick={() => setGameStarted(false)}>
-          Back to Welcome
-        </button>
-      </div>
-    </div>
+    <GameBoard
+      level={state.currentLevel}
+      challenge={state.currentChallenge}
+      totalChallenges={10}
+      codeEditor={codeEditorPlaceholder}
+      ghostCharacter={ghostCharacterPlaceholder}
+      progressTracker={progressTrackerPlaceholder}
+      hintPanel={hintPanelPlaceholder}
+    />
   )
 }
 
