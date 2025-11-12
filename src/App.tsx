@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -13,6 +13,8 @@ function App() {
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [ghostState, setGhostState] = useState<'idle' | 'happy' | 'thinking' | 'celebrating'>('idle');
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
+  const [showLevelComplete, setShowLevelComplete] = useState(false);
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
 
   // Load challenges on mount
   useEffect(() => {
@@ -42,9 +44,18 @@ function App() {
     setTimeout(() => {
       setShowSuccessAnimation(false);
       setGhostState('idle');
+      
+      // Check if this was the last challenge in the level
+      const nextIndex = currentChallengeIndex + 1;
+      if (nextIndex >= challenges.length) {
+        // Level complete! Show transition
+        setShowLevelComplete(true);
+      } else {
+        // Move to next challenge
+        setCurrentChallengeIndex(nextIndex);
+        setCurrentChallenge(challenges[nextIndex]);
+      }
     }, 4500);
-    
-    // TODO: Progress to next challenge (will be implemented in later tasks)
   };
 
   const handleAttempt = (isCorrect: boolean) => {
@@ -81,10 +92,23 @@ function App() {
 
   const handleSelectChallenge = (index: number) => {
     if (index >= 0 && index < challenges.length) {
+      setCurrentChallengeIndex(index);
       setCurrentChallenge(challenges[index]);
       // TODO: Update game state with selected challenge (will be implemented in later tasks)
       console.log('Selected challenge:', index);
     }
+  };
+
+  const handleNextLevel = () => {
+    console.log('Moving to next level...');
+    // TODO: Implement level progression logic in future tasks
+    // For now, just close the modal
+    setShowLevelComplete(false);
+    // Could reset to first challenge or load next level's challenges
+  };
+
+  const handleCloseLevelComplete = () => {
+    setShowLevelComplete(false);
   };
 
   const handleProgressClick = () => {
@@ -126,6 +150,14 @@ function App() {
           onClose={handleCloseProgress}
         />
       )}
+
+      <LevelCompleteTransition
+        isVisible={showLevelComplete}
+        level={state.currentLevel}
+        earnedBadges={state.badges}
+        onNextLevel={handleNextLevel}
+        onClose={handleCloseLevelComplete}
+      />
     </>
   )
 }

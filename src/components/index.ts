@@ -3,4 +3,5 @@ export { GameBoard } from './GameBoard.tsx';
 export { CodeEditor } from './CodeEditor.tsx';
 export { GhostCharacter } from './GhostCharacter.tsx';
 export { ProgressTracker } from './ProgressTracker.tsx';
+export { LevelCompleteTransition } from './LevelCompleteTransition.tsx';
 export type { GhostState } from './GhostCharacter.tsx';

@@ -100,6 +100,8 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           Start Debugging
         </button>
 
+        <br/>
+        
         {/* Instructions Toggle */}
         <button 
           className="instructions-toggle"

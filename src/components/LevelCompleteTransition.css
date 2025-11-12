@@ -1,0 +1,321 @@
+/**
+ * LevelCompleteTransition styles
+ * High-contrast, accessible design with celebration theme
+ */
+
+.level-complete-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.level-complete-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(26, 31, 46, 0.9);
+}
+
+.level-complete-card {
+  position: relative;
+  background: linear-gradient(135deg, #1A1F2E 0%, #2A2F3E 100%);
+  border: 3px solid #A3FF00;
+  border-radius: 20px;
+  padding: 2.5rem;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 
+    0 0 40px rgba(163, 255, 0, 0.3),
+    0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Celebration header */
+.celebration-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.celebration-emoji {
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.level-complete-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #A3FF00;
+  margin: 0;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(163, 255, 0, 0.5);
+}
+
+/* Success message */
+.success-message {
+  font-size: 1.25rem;
+  color: #FFFFFF;
+  text-align: center;
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+/* Earned badges section */
+.earned-badges-section {
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(107, 70, 193, 0.2);
+  border: 2px solid #6B46C1;
+  border-radius: 12px;
+}
+
+.badges-title {
+  font-size: 1.5rem;
+  color: #00D9FF;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.badges-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(0, 217, 255, 0.1);
+  border: 2px solid #00D9FF;
+  border-radius: 8px;
+  transition: transform 0.2s ease;
+}
+
+.badge-item:hover {
+  transform: translateX(5px);
+  background: rgba(0, 217, 255, 0.15);
+}
+
+.badge-icon {
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(163, 255, 0, 0.2);
+  border: 2px solid #A3FF00;
+  border-radius: 50%;
+}
+
+.badge-icon img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.badge-emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.badge-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.badge-name {
+  font-size: 1.125rem;
+  font-weight: bold;
+  color: #FFFFFF;
+  margin: 0 0 0.25rem 0;
+}
+
+.badge-description {
+  font-size: 0.875rem;
+  color: #00D9FF;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Action buttons */
+.level-complete-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.next-level-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #1A1F2E;
+  background: linear-gradient(135deg, #A3FF00 0%, #7FCC00 100%);
+  border: 3px solid #A3FF00;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.next-level-button:hover {
+  background: linear-gradient(135deg, #B8FF1A 0%, #8FDD00 100%);
+  transform: translateY(-2px);
+}
+
+.next-level-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+.next-level-button:active {
+  transform: translateY(0);
+}
+
+.button-text {
+  font-size: 1.25rem;
+}
+
+.button-arrow {
+  font-size: 1.5rem;
+  display: inline-block;
+}
+
+.close-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  color: #FFFFFF;
+  background: transparent;
+  border: 2px solid #6B46C1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.close-button:hover {
+  background: rgba(107, 70, 193, 0.2);
+  border-color: #8B66E1;
+}
+
+.close-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+/* Floating particles */
+.floating-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.floating-particle {
+  position: absolute;
+  font-size: 1.5rem;
+  left: 50%;
+  bottom: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .level-complete-card {
+    padding: 1.5rem;
+  }
+
+  .level-complete-title {
+    font-size: 2rem;
+  }
+
+  .celebration-emoji {
+    font-size: 2rem;
+  }
+
+  .success-message {
+    font-size: 1.125rem;
+  }
+
+  .badges-title {
+    font-size: 1.25rem;
+  }
+
+  .badge-item {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .badge-icon {
+    width: 50px;
+    height: 50px;
+  }
+
+  .badge-emoji {
+    font-size: 1.5rem;
+  }
+
+  .next-level-button {
+    font-size: 1.125rem;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .celebration-emoji,
+  .next-level-button,
+  .floating-particle {
+    animation: none !important;
+  }
+
+  .level-complete-card,
+  .celebration-header,
+  .success-message,
+  .earned-badges-section,
+  .badge-item,
+  .level-complete-actions {
+    transition: opacity 0.3s ease !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .level-complete-card {
+    border-width: 4px;
+  }
+
+  .badge-item,
+  .earned-badges-section {
+    border-width: 3px;
+  }
+
+  .next-level-button,
+  .close-button {
+    border-width: 4px;
+  }
+}
