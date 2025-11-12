@@ -70,10 +70,48 @@
     0 0 20px rgba(163, 255, 0, 0.3);
 }
 
-.challenge-counter {
-  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+/* Progress Button - Clickable challenge counter */
+.progress-button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: rgba(107, 70, 193, 0.3);
+  border: 2px solid #6B46C1;
+  border-radius: 8px;
   color: #FFFFFF;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.progress-button:hover {
+  background: rgba(107, 70, 193, 0.5);
+  border-color: #00D9FF;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.progress-button:active {
+  transform: translateY(0);
+}
+
+.progress-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+.progress-button-text {
   letter-spacing: 0.02em;
+}
+
+.progress-button-percentage {
+  color: #A3FF00;
+  font-weight: 700;
+  font-size: 1.125em;
 }
 
 /* Main Game Grid */
@@ -83,10 +121,9 @@
   flex: 1;
   display: grid;
   grid-template-columns: 1fr 400px;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr;
   grid-template-areas:
-    "code sidebar"
-    "progress progress";
+    "code sidebar";
   gap: 1.5rem;
   padding: 1.5rem 2rem 2rem 2rem;
   overflow: hidden;
@@ -143,45 +180,26 @@
   backdrop-filter: blur(10px);
 }
 
-/* Progress Tracker Section */
-.progress-section {
-  grid-area: progress;
-  background: rgba(26, 31, 46, 0.9);
-  border: 2px solid rgba(107, 70, 193, 0.4);
-  border-radius: 12px;
-  padding: 1.5rem;
-  max-height: 150px;
-  overflow-y: auto;
-  box-shadow: 
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 0 20px rgba(107, 70, 193, 0.1);
-  backdrop-filter: blur(10px);
-}
-
 /* Custom Scrollbar Styling */
 .code-section::-webkit-scrollbar,
-.sidebar::-webkit-scrollbar,
-.progress-section::-webkit-scrollbar {
+.sidebar::-webkit-scrollbar {
   width: 10px;
 }
 
 .code-section::-webkit-scrollbar-track,
-.sidebar::-webkit-scrollbar-track,
-.progress-section::-webkit-scrollbar-track {
+.sidebar::-webkit-scrollbar-track {
   background: rgba(26, 31, 46, 0.5);
   border-radius: 5px;
 }
 
 .code-section::-webkit-scrollbar-thumb,
-.sidebar::-webkit-scrollbar-thumb,
-.progress-section::-webkit-scrollbar-thumb {
+.sidebar::-webkit-scrollbar-thumb {
   background: rgba(0, 217, 255, 0.5);
   border-radius: 5px;
 }
 
 .code-section::-webkit-scrollbar-thumb:hover,
-.sidebar::-webkit-scrollbar-thumb:hover,
-.progress-section::-webkit-scrollbar-thumb:hover {
+.sidebar::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 217, 255, 0.7);
 }
 
@@ -210,12 +228,11 @@
 @media (max-width: 768px) {
   .game-grid {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto;
     grid-template-areas:
       "code"
       "ghost"
-      "hints"
-      "progress";
+      "hints";
     gap: 1rem;
     padding: 1rem;
   }
@@ -250,10 +267,6 @@
 
   .code-section {
     min-height: 300px;
-  }
-
-  .progress-section {
-    max-height: 120px;
   }
 }
 
@@ -301,8 +314,7 @@
   .game-header,
   .code-section,
   .ghost-section,
-  .hint-section,
-  .progress-section {
+  .hint-section {
     border-width: 3px;
   }
 
@@ -310,12 +322,15 @@
     text-shadow: none;
     font-weight: 900;
   }
+
+  .progress-button {
+    border-width: 3px;
+  }
 }
 
 /* Focus Indicators for Accessibility */
 .code-section:focus-within,
-.hint-section:focus-within,
-.progress-section:focus-within {
+.hint-section:focus-within {
   outline: 3px solid #FFD700;
   outline-offset: 2px;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -10,6 +10,7 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false);
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [showProgressModal, setShowProgressModal] = useState(false);
 
   // Load challenges on mount
   useEffect(() => {
@@ -64,13 +65,21 @@ function App() {
     />
   );
 
-  const progressTrackerPlaceholder = (
-    <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
-      <h3 style={{ color: '#6B46C1', marginBottom: '1rem' }}>Progress Tracker</h3>
-      <p>Level progress and challenge map will be displayed here.</p>
-      <p style={{ color: '#A3FF00', fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 14!</p>
-    </div>
-  );
+  const handleSelectChallenge = (index: number) => {
+    if (index >= 0 && index < challenges.length) {
+      setCurrentChallenge(challenges[index]);
+      // TODO: Update game state with selected challenge (will be implemented in later tasks)
+      console.log('Selected challenge:', index);
+    }
+  };
+
+  const handleProgressClick = () => {
+    setShowProgressModal(true);
+  };
+
+  const handleCloseProgress = () => {
+    setShowProgressModal(false);
+  };
 
   const hintPanelPlaceholder = (
     <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
@@ -81,15 +90,28 @@ function App() {
   );
 
   return (
-    <GameBoard
-      level={state.currentLevel}
-      challenge={state.currentChallenge}
-      totalChallenges={challenges.length}
-      codeEditor={codeEditorComponent}
-      ghostCharacter={ghostCharacterComponent}
-      progressTracker={progressTrackerPlaceholder}
-      hintPanel={hintPanelPlaceholder}
-    />
+    <>
+      <GameBoard
+        level={state.currentLevel}
+        challenge={state.currentChallenge + 1}
+        totalChallenges={challenges.length}
+        completedCount={state.completedChallenges.size}
+        codeEditor={codeEditorComponent}
+        ghostCharacter={ghostCharacterComponent}
+        hintPanel={hintPanelPlaceholder}
+        onProgressClick={handleProgressClick}
+      />
+      
+      {showProgressModal && (
+        <ProgressTracker
+          challenges={challenges}
+          completedChallengeIds={state.completedChallenges}
+          currentChallengeIndex={state.currentChallenge}
+          onSelectChallenge={handleSelectChallenge}
+          onClose={handleCloseProgress}
+        />
+      )}
+    </>
   )
 }
 

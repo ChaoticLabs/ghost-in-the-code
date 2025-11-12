@@ -5,30 +5,45 @@ interface GameBoardProps {
   level: number;
   challenge: number;
   totalChallenges: number;
+  completedCount: number;
   codeEditor: ReactNode;
   ghostCharacter: ReactNode;
-  progressTracker: ReactNode;
   hintPanel: ReactNode;
+  onProgressClick: () => void;
 }
 
 export const GameBoard = ({
   level,
   challenge,
   totalChallenges,
+  completedCount,
   codeEditor,
   ghostCharacter,
-  progressTracker,
-  hintPanel
+  hintPanel,
+  onProgressClick
 }: GameBoardProps) => {
+  const progressPercentage = totalChallenges > 0 
+    ? Math.round((completedCount / totalChallenges) * 100) 
+    : 0;
+
   return (
     <div className="game-board">
       {/* Level/Challenge Display Header */}
       <header className="game-header">
         <div className="level-info">
           <span className="level-label">Level {level}</span>
-          <span className="challenge-counter">
-            Challenge {challenge} / {totalChallenges}
-          </span>
+          <button 
+            className="progress-button" 
+            onClick={onProgressClick}
+            aria-label="View progress tracker"
+          >
+            <span className="progress-button-text">
+              Challenge {challenge} / {totalChallenges}
+            </span>
+            <span className="progress-button-percentage">
+              {progressPercentage}%
+            </span>
+          </button>
         </div>
       </header>
 
@@ -51,11 +66,6 @@ export const GameBoard = ({
             {hintPanel}
           </div>
         </aside>
-
-        {/* Bottom: Progress Tracker */}
-        <section className="progress-section" aria-label="Progress tracker">
-          {progressTracker}
-        </section>
       </div>
     </div>
   );

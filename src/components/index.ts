@@ -1,5 +1,6 @@
-export { WelcomeScreen } from './WelcomeScreen';
-export { GameBoard } from './GameBoard';
-export { CodeEditor } from './CodeEditor';
-export { GhostCharacter } from './GhostCharacter';
-export type { GhostState } from './GhostCharacter';
+export { WelcomeScreen } from './WelcomeScreen.tsx';
+export { GameBoard } from './GameBoard.tsx';
+export { CodeEditor } from './CodeEditor.tsx';
+export { GhostCharacter } from './GhostCharacter.tsx';
+export { ProgressTracker } from './ProgressTracker.tsx';
+export type { GhostState } from './GhostCharacter.tsx';

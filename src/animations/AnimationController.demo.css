@@ -1,0 +1,160 @@
+/* Demo styles for AnimationController */
+
+.animation-demo {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.animation-demo h1 {
+  color: #6B46C1;
+  margin-bottom: 2rem;
+}
+
+.animation-demo h2 {
+  color: #1A1F2E;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.demo-controls {
+  background: #f5f5f5;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.button-group button {
+  padding: 0.75rem 1.5rem;
+  background: #6B46C1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button-group button:hover:not(:disabled) {
+  background: #5a3aa3;
+  transform: translateY(-2px);
+}
+
+.button-group button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.demo-status {
+  background: #e8f4f8;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.status-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.status-info p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.status-info strong {
+  color: #6B46C1;
+}
+
+.demo-log {
+  background: #1A1F2E;
+  color: #A3FF00;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.demo-log h2 {
+  color: #00D9FF;
+  margin-top: 0;
+}
+
+.log-content {
+  max-height: 300px;
+  overflow-y: auto;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.log-entry {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(163, 255, 0, 0.1);
+}
+
+.log-empty {
+  color: #888;
+  font-style: italic;
+}
+
+.demo-preview {
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.preview-area {
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.preview-code {
+  background: #1A1F2E;
+  color: #A3FF00;
+  padding: 1rem;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  margin-bottom: 1rem;
+}
+
+.preview-code pre {
+  margin: 0;
+}
+
+.preview-note {
+  color: #666;
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Scrollbar styling for log */
+.log-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.log-content::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.log-content::-webkit-scrollbar-thumb {
+  background: #00D9FF;
+  border-radius: 4px;
+}
+
+.log-content::-webkit-scrollbar-thumb:hover {
+  background: #00b8d4;
+}

@@ -1,0 +1,451 @@
+/**
+ * ProgressTracker Component Styles
+ * High-contrast, accessible design for kids
+ * Modal overlay design
+ */
+
+/* Modal Overlay */
+.progress-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal Container */
+.progress-modal {
+  position: relative;
+  max-width: 900px;
+  max-height: 90vh;
+  width: 100%;
+  background: #1A1F2E;
+  border-radius: 16px;
+  border: 3px solid #6B46C1;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(107, 70, 193, 0.3);
+  overflow: hidden;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button */
+.progress-modal-close {
+  position: absolute;
+  right: 0;
+  width: 36px;
+  height: 36px;
+  background: rgba(255, 149, 0, 0.2);
+  border: 2px solid #FF9500;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.progress-modal-close:hover {
+  background: rgba(255, 149, 0, 0.4);
+  transform: scale(1.05);
+}
+
+.progress-modal-close:active {
+  transform: scale(0.95);
+}
+
+.progress-modal-close:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+/* Progress Tracker Content */
+.progress-tracker {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem;
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #FFFFFF;
+}
+
+/* Custom Scrollbar for Modal */
+.progress-tracker::-webkit-scrollbar {
+  width: 12px;
+}
+
+.progress-tracker::-webkit-scrollbar-track {
+  background: rgba(26, 31, 46, 0.5);
+  border-radius: 6px;
+}
+
+.progress-tracker::-webkit-scrollbar-thumb {
+  background: rgba(107, 70, 193, 0.6);
+  border-radius: 6px;
+}
+
+.progress-tracker::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 70, 193, 0.8);
+}
+
+/* Progress Summary Section */
+.progress-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.progress-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00D9FF;
+  margin: 0;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.progress-stats {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.challenge-counter {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  padding: 0.5rem 1rem;
+  background: rgba(107, 70, 193, 0.3);
+  border-radius: 8px;
+  border: 2px solid #6B46C1;
+}
+
+.progress-percentage {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #A3FF00;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 22px;
+  border: 2px solid #6B46C1;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6B46C1 0%, #00D9FF 50%, #A3FF00 100%);
+  border-radius: 20px;
+  transition: width 0.5s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+}
+
+.progress-bar-label {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+/* Level Map Section */
+.level-map {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.level-map-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #00D9FF;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.challenge-type-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.challenge-type-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.challenge-nodes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Challenge Node Buttons */
+.challenge-node {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: 12px;
+  border: 3px solid;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.challenge-node:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+.challenge-node:hover:not(:disabled) {
+  transform: scale(1.1);
+}
+
+.challenge-node:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Challenge Node States */
+.challenge-node--completed {
+  border-color: #A3FF00;
+  background: rgba(163, 255, 0, 0.2);
+}
+
+.challenge-node--completed:hover:not(:disabled) {
+  background: rgba(163, 255, 0, 0.3);
+  box-shadow: 0 0 20px rgba(163, 255, 0, 0.5);
+}
+
+.challenge-node--current {
+  border-color: #00D9FF;
+  background: rgba(0, 217, 255, 0.2);
+  animation: pulse-current 2s ease-in-out infinite;
+}
+
+.challenge-node--current:hover:not(:disabled) {
+  background: rgba(0, 217, 255, 0.3);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.5);
+}
+
+.challenge-node--locked {
+  border-color: #666;
+  background: rgba(0, 0, 0, 0.6);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.challenge-node:disabled {
+  cursor: not-allowed;
+}
+
+/* Challenge Node Content */
+.challenge-node-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+
+.challenge-node-number {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* Pulse Animation for Current Challenge */
+@keyframes pulse-current {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.8);
+  }
+}
+
+/* Legend */
+.progress-legend {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(107, 70, 193, 0.3);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #FFFFFF;
+}
+
+.legend-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 2px solid;
+  font-size: 1rem;
+}
+
+.legend-icon--completed {
+  border-color: #A3FF00;
+  background: rgba(163, 255, 0, 0.2);
+}
+
+.legend-icon--current {
+  border-color: #00D9FF;
+  background: rgba(0, 217, 255, 0.2);
+}
+
+.legend-icon--locked {
+  border-color: #666;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0.5;
+}
+
+.legend-label {
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .progress-tracker {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .progress-modal-close {
+    width: 32px;
+    height: 32px;
+    font-size: 1.125rem;
+  }
+
+  .progress-title {
+    font-size: 1.25rem;
+  }
+
+  .progress-header {
+    gap: 0.75rem;
+  }
+
+  .progress-stats {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .challenge-counter,
+  .progress-percentage {
+    font-size: 1rem;
+  }
+
+  .progress-bar-container {
+    height: 40px;
+  }
+
+  .challenge-node {
+    width: 52px;
+    height: 52px;
+  }
+
+  .progress-legend {
+    gap: 1rem;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .challenge-node--current {
+    animation: none;
+  }
+
+  .progress-bar-fill,
+  .challenge-node {
+    transition: none;
+  }
+
+  .challenge-node:hover:not(:disabled) {
+    transform: none;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .progress-tracker {
+    border-width: 3px;
+  }
+
+  .challenge-node {
+    border-width: 4px;
+  }
+
+  .progress-bar-container {
+    border-width: 3px;
+  }
+}
