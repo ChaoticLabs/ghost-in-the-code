@@ -2,8 +2,10 @@
  * SettingsPanel - User preferences and accessibility settings
  */
 
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePreferences } from '../engine';
+import { usePreferences, useGame } from '../engine';
+import { gameActions } from '../engine/gameActions';
 import './SettingsPanel.css';
 
 interface SettingsPanelProps {
@@ -13,6 +15,8 @@ interface SettingsPanelProps {
 
 export const SettingsPanel = ({ isVisible, onClose }: SettingsPanelProps) => {
   const { preferences, updatePreference, resetPreferences } = usePreferences();
+  const { dispatch } = useGame();
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const handleToggle = (key: keyof typeof preferences) => {
     updatePreference(key, !preferences[key]);
@@ -24,6 +28,14 @@ export const SettingsPanel = ({ isVisible, onClose }: SettingsPanelProps) => {
 
   const handleVolumeChange = (volume: number) => {
     updatePreference('volume', volume);
+  };
+
+  const handleResetGame = () => {
+    dispatch(gameActions.resetGame());
+    setShowResetConfirm(false);
+    onClose();
+    // Reload the page to reset to first challenge
+    window.location.reload();
   };
 
   return (
@@ -182,15 +194,54 @@ export const SettingsPanel = ({ isVisible, onClose }: SettingsPanelProps) => {
                 </div>
               </section>
 
-              {/* Reset Button */}
+              {/* Reset Buttons */}
               <div className="settings-actions">
                 <button
                   className="reset-button"
                   onClick={resetPreferences}
                 >
-                  Reset to Defaults
+                  Reset Settings
                 </button>
               </div>
+
+              {/* Danger Zone - Reset Game */}
+              <section className="settings-section danger-zone">
+                <h3 className="settings-section-title danger-title">Danger Zone</h3>
+                <div className="danger-zone-content">
+                  <div className="setting-info">
+                    <p className="setting-label">Reset Game Progress</p>
+                    <p className="setting-description">
+                      This will clear all your progress, completed challenges, hints used, and badges. You'll start from the beginning.
+                    </p>
+                  </div>
+                  {!showResetConfirm ? (
+                    <button
+                      className="reset-game-button"
+                      onClick={() => setShowResetConfirm(true)}
+                    >
+                      Reset Game
+                    </button>
+                  ) : (
+                    <div className="reset-confirm">
+                      <p className="reset-confirm-text">Are you sure?</p>
+                      <div className="reset-confirm-buttons">
+                        <button
+                          className="reset-confirm-yes"
+                          onClick={handleResetGame}
+                        >
+                          Yes, Reset
+                        </button>
+                        <button
+                          className="reset-confirm-no"
+                          onClick={() => setShowResetConfirm(false)}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
             </div>
           </motion.div>
         </motion.div>

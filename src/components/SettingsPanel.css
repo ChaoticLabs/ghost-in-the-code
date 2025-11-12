@@ -295,6 +295,113 @@
   outline-offset: 2px;
 }
 
+/* Danger Zone */
+.danger-zone {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(255, 0, 0, 0.3);
+}
+
+.danger-title {
+  color: #FF4444 !important;
+}
+
+.danger-zone-content {
+  padding: 1rem;
+  background: rgba(255, 0, 0, 0.05);
+  border: 2px solid rgba(255, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.reset-game-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 2px solid #FF4444;
+  border-radius: 8px;
+  color: #FF4444;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.reset-game-button:hover {
+  background: rgba(255, 68, 68, 0.1);
+  border-color: #FF6666;
+  color: #FF6666;
+}
+
+.reset-game-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Reset Confirmation */
+.reset-confirm {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 68, 68, 0.1);
+  border-radius: 8px;
+}
+
+.reset-confirm-text {
+  color: #FF4444;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.reset-confirm-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.reset-confirm-yes,
+.reset-confirm-no {
+  flex: 1;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.reset-confirm-yes {
+  background: #FF4444;
+  border: 2px solid #FF4444;
+  color: #FFFFFF;
+}
+
+.reset-confirm-yes:hover {
+  background: #FF6666;
+  border-color: #FF6666;
+}
+
+.reset-confirm-no {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+}
+
+.reset-confirm-no:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.reset-confirm-yes:focus,
+.reset-confirm-no:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .settings-panel {
