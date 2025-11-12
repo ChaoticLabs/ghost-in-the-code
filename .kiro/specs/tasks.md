@@ -182,16 +182,19 @@
   - Add challenge counter (e.g., "Challenge 3/10")
   - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-## Hint System and AI Integration
+## Hint System
 
-- [ ] 15. Implement static hint system
+- [ ] 15. Implement hint system with challenge data
   - Create HintPanel component with hint button
-  - Display hints from challenge data progressively
+  - Display hints from challenge.hints array progressively
   - Track hints used per challenge (max 3)
   - Show hint counter and disable button when limit reached
+  - Display hints in ghost character speech bubble
   - _Requirements: 4.1, 4.2, 4.3, 4.5_
 
-- [ ] 16. Build Lambda function for Bedrock AI hints
+## Future Work: AI Integration with Bedrock (Deferred)
+
+- [ ] 16. Build Lambda function for Bedrock AI hints (FUTURE)
   - Create Node.js Lambda handler in `/lambda/bedrock`
   - Implement Bedrock API call using AWS SDK v3
   - Format prompts for child-friendly hint generation
@@ -199,23 +202,23 @@
   - Return JSON response with generated hint
   - _Requirements: 4.2, 4.4_
 
-- [ ] 17. Create AI service client in React app
+- [ ] 17. Create AI service client in React app (FUTURE)
   - Build API client for calling hint generation endpoint
   - Add loading states and error handling
   - Implement fallback to static hints on API failure
   - Cache AI-generated hints in session storage
   - _Requirements: 4.2, 4.4_
 
-- [ ] 18. Integrate dynamic AI hints into HintPanel
+- [ ] 18. Integrate dynamic AI hints into HintPanel (FUTURE)
   - Add toggle or automatic use of AI hints when available
   - Show loading spinner during AI generation
   - Display AI-generated hints with ghost character
   - Track AI hint usage in statistics
   - _Requirements: 4.2, 4.3, 4.4_
 
-## Voice Integration with Polly
+## Future Work: Voice Integration with Polly (Deferred)
 
-- [ ] 19. Build Lambda function for Polly voice synthesis
+- [ ] 19. Build Lambda function for Polly voice synthesis (FUTURE)
   - Create Node.js Lambda handler in `/lambda/polly`
   - Implement Polly SynthesizeSpeech API call
   - Save audio files to S3 audio cache bucket
@@ -223,14 +226,14 @@
   - Add caching logic to avoid regenerating common phrases
   - _Requirements: 1.2, 4.3_
 
-- [ ] 20. Create VoiceController service in React app
+- [ ] 20. Create VoiceController service in React app (FUTURE)
   - Build API client for voice synthesis endpoint
   - Implement audio playback queue management
   - Add volume control and mute functionality
   - Handle audio loading and error states
   - _Requirements: 1.2, 4.3_
 
-- [ ] 21. Integrate voice into GhostCharacter
+- [ ] 21. Integrate voice into GhostCharacter (FUTURE)
   - Add voice playback for ghost dialogue
   - Trigger voice on hints, feedback, and celebrations
   - Sync speech bubble text with audio playback
@@ -238,7 +241,7 @@
   - Store voice preferences in localStorage
   - _Requirements: 1.2, 4.3_
 
-- [ ]* 22. Pre-generate common voice phrases
+- [ ]* 22. Pre-generate common voice phrases (FUTURE)
   - Create script to generate common phrases using Polly
   - Upload pre-generated audio files to S3
   - Update app to use cached audio for common phrases
