@@ -256,15 +256,15 @@ export const ParticleBurst = ({
           emoji: emojis[Math.floor(Math.random() * emojis.length)],
           angle,
           distance,
-          delay: Math.random() * 0.3,
+          delay: Math.random() * 0.5,
         });
       }
       
       setParticles(newParticles);
 
-      // Call onComplete after animation (increased duration)
+      // Call onComplete after animation (much longer duration)
       if (onComplete) {
-        const timer = setTimeout(onComplete, 3000);
+        const timer = setTimeout(onComplete, 4500);
         return () => clearTimeout(timer);
       }
     } else {
@@ -277,9 +277,18 @@ export const ParticleBurst = ({
       {isActive && (
         <div className="particle-burst-container">
           {particles.map((particle) => {
-            // Calculate end position in viewport percentage
+            // Create curved path with multiple waypoints
             const endX = particle.x + Math.cos(particle.angle) * particle.distance;
             const endY = particle.y + Math.sin(particle.angle) * particle.distance;
+            
+            // Add curve by creating waypoints that arc
+            const curveOffset = (Math.random() - 0.5) * 80; // Random curve direction
+            const mid1X = particle.x + Math.cos(particle.angle) * (particle.distance * 0.25) + curveOffset * 0.3;
+            const mid1Y = particle.y + Math.sin(particle.angle) * (particle.distance * 0.25) - 20;
+            const mid2X = particle.x + Math.cos(particle.angle) * (particle.distance * 0.5) + curveOffset * 0.7;
+            const mid2Y = particle.y + Math.sin(particle.angle) * (particle.distance * 0.5) - 30;
+            const mid3X = particle.x + Math.cos(particle.angle) * (particle.distance * 0.75) + curveOffset;
+            const mid3Y = particle.y + Math.sin(particle.angle) * (particle.distance * 0.75) - 20;
 
             return (
               <motion.div
@@ -293,16 +302,16 @@ export const ParticleBurst = ({
                   rotate: 0,
                 }}
                 animate={{
-                  left: `${endX}%`,
-                  top: `${endY}%`,
-                  scale: [0, 1.3, 1.2, 1, 0.8, 0],
-                  opacity: [0, 1, 1, 1, 0.8, 0],
-                  rotate: [0, 120, 240, 360, 480, 600],
+                  left: [`${particle.x}%`, `${mid1X}%`, `${mid2X}%`, `${mid3X}%`, `${endX}%`],
+                  top: [`${particle.y}%`, `${mid1Y}%`, `${mid2Y}%`, `${mid3Y}%`, `${endY}%`],
+                  scale: [0, 1.4, 1.3, 1.2, 1, 0.7, 0],
+                  opacity: [0, 1, 1, 1, 1, 0.8, 0],
+                  rotate: [0, 180, 360, 540, 720, 900],
                 }}
                 transition={{
-                  duration: 3,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                  times: [0, 0.15, 0.35, 0.6, 0.85, 1],
+                  duration: 4.5,
+                  ease: [0.16, 1, 0.3, 1],
+                  times: [0, 0.2, 0.4, 0.6, 0.8, 1],
                   delay: particle.delay,
                 }}
                 style={{

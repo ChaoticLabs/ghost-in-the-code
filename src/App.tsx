@@ -38,11 +38,11 @@ function App() {
     setShowSuccessAnimation(true);
     setGhostState('celebrating');
     
-    // Reset animations after they complete (3 seconds for slower particles)
+    // Reset animations after they complete (4.5 seconds for slow, curved particles)
     setTimeout(() => {
       setShowSuccessAnimation(false);
       setGhostState('idle');
-    }, 3000);
+    }, 4500);
     
     // TODO: Progress to next challenge (will be implemented in later tasks)
   };

@@ -79,18 +79,19 @@ Halloween-themed emoji particles that burst outward across the **entire screen**
 - `particleCount`: Number of particles (default: 20)
 - `onComplete`: Callback when animation completes
 
-**Duration:** 3 seconds (slowed down for graceful effect)
+**Duration:** 4.5 seconds (very slow for magical, floating effect)
 
 **Visual Effects:**
 - Random Halloween emojis: ✨, ⭐, 🎃, 👻, 💚, 🌟, 💫
-- Particles burst outward in a circular pattern **across the entire viewport**
-- Travel distance: 200-500 pixels from center
-- Each particle rotates smoothly (600°) with gentle easing
-- Scales gradually through 6 keyframes for smooth motion
-- Staggered delays (0-0.3s) for natural, flowing feel
+- Particles follow **curved, arcing paths** across the entire viewport
+- Travel distance: 200-500 pixels from center with graceful curves
+- Each particle rotates smoothly (900°) with gentle easing
+- Scales gradually through 7 keyframes for ultra-smooth motion
+- **Curved motion**: Particles arc upward then float down in beautiful curves
+- Staggered delays (0-0.5s) for natural, flowing feel
 - Enhanced glowing effects with multiple drop shadows
 - Uses `position: fixed` to cover full screen
-- Slower, more graceful animation allows players to appreciate the celebration
+- Very slow, magical animation creates a dreamy celebration effect
 
 #### 4. SuccessAnimation (Combined)
 Orchestrates all animations in sequence for a complete success effect.
@@ -217,20 +218,31 @@ When `prefers-contrast: high` is detected:
 
 ## Animation Timing
 
-All animations are designed to complete within 3 seconds for a graceful, satisfying celebration:
+All animations are designed to create a magical, dreamy celebration experience:
 
 | Animation | Duration | Delay | Total Time |
 |-----------|----------|-------|------------|
 | CodeHeal | 1500ms | 0ms | 1500ms |
 | TerminalGlow | 2000ms | 300ms | 2300ms |
-| ParticleBurst | 3000ms | 600ms | 3600ms* |
+| ParticleBurst | 4500ms | 600ms | 5100ms* |
 | GhostCelebrate | 1500ms | 0ms | 1500ms |
 
-**Maximum total time:** 3000ms (3 seconds)
+**Maximum total time:** 4500ms (4.5 seconds)
 
-*ParticleBurst extends slightly beyond the 3s window but fades out gracefully
+*ParticleBurst extends beyond the main window but creates a beautiful, lingering effect
 
-The animations overlap intentionally to create a smooth, flowing celebration effect rather than sequential steps. The slower particle animation allows players to fully appreciate the Halloween-themed celebration!
+The animations overlap intentionally to create a smooth, flowing celebration effect rather than sequential steps. The very slow, curved particle animation creates a magical, floating effect that makes the celebration feel truly special and rewarding!
+
+### Curved Path Animation
+
+Particles don't travel in straight lines - they follow beautiful arcing paths:
+1. Start from center
+2. Arc upward and outward (waypoint 1)
+3. Continue curving with maximum arc (waypoint 2)
+4. Begin gentle descent (waypoint 3)
+5. Float to final position
+
+Each particle has a random curve offset, creating organic, natural-looking motion like magical sparkles floating through the air!
 
 ## Performance
 
