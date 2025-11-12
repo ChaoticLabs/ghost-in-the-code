@@ -1,14 +1,41 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor } from './components'
+import { getAllChallengesFlat } from './data'
+import type { Challenge } from './engine/types'
 import './App.css'
 
 function App() {
   const { state } = useGame();
   const [gameStarted, setGameStarted] = useState(false);
+  const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
+  const [challenges, setChallenges] = useState<Challenge[]>([]);
+
+  // Load challenges on mount
+  useEffect(() => {
+    try {
+      const allChallenges = getAllChallengesFlat();
+      setChallenges(allChallenges);
+      if (allChallenges.length > 0) {
+        setCurrentChallenge(allChallenges[0]);
+      }
+    } catch (error) {
+      console.error('Failed to load challenges:', error);
+    }
+  }, []);
 
   const handleStartGame = () => {
     setGameStarted(true);
+  };
+
+  const handleChallengeSuccess = () => {
+    console.log('Challenge completed successfully!');
+    // TODO: Progress to next challenge (will be implemented in later tasks)
+  };
+
+  const handleAttempt = (isCorrect: boolean) => {
+    console.log('Attempt made:', isCorrect ? 'correct' : 'incorrect');
+    // TODO: Track attempts in game state (will be implemented in later tasks)
   };
 
   // Show welcome screen if game hasn't started
@@ -16,12 +43,16 @@ function App() {
     return <WelcomeScreen onStart={handleStartGame} />;
   }
 
-  // Placeholder components for GameBoard sections
-  const codeEditorPlaceholder = (
+  // Code editor component
+  const codeEditorComponent = currentChallenge ? (
+    <CodeEditor
+      challenge={currentChallenge}
+      onSuccess={handleChallengeSuccess}
+      onAttempt={handleAttempt}
+    />
+  ) : (
     <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
-      <h3 style={{ color: '#00D9FF', marginBottom: '1rem' }}>Code Editor</h3>
-      <p style={{ marginBottom: '0.5rem' }}>This is where the interactive code editor will be displayed.</p>
-      <p style={{ color: '#A3FF00' }}>Coming soon in task 12!</p>
+      <p style={{ color: '#FF9500' }}>Loading challenge...</p>
     </div>
   );
 
@@ -53,8 +84,8 @@ function App() {
     <GameBoard
       level={state.currentLevel}
       challenge={state.currentChallenge}
-      totalChallenges={10}
-      codeEditor={codeEditorPlaceholder}
+      totalChallenges={challenges.length}
+      codeEditor={codeEditorComponent}
       ghostCharacter={ghostCharacterPlaceholder}
       progressTracker={progressTrackerPlaceholder}
       hintPanel={hintPanelPlaceholder}

@@ -1,0 +1,290 @@
+/* CodeEditor Component Styles */
+
+.code-editor {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.code-editor-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.challenge-title {
+  color: #00D9FF;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.challenge-description {
+  color: #FFFFFF;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Code Container */
+.code-container {
+  background: #0D1117;
+  border: 2px solid #6B46C1;
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+/* Code Lines */
+.code-line {
+  display: flex;
+  align-items: flex-start;
+  min-height: 1.6rem;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+
+.code-line:hover {
+  background-color: rgba(107, 70, 193, 0.1);
+}
+
+/* Line Numbers */
+.line-number {
+  display: inline-block;
+  width: 2.5rem;
+  text-align: right;
+  color: #6B46C1;
+  user-select: none;
+  flex-shrink: 0;
+  padding-right: 1rem;
+  font-weight: 500;
+}
+
+/* Buggy Line Indicator */
+.buggy-line .line-number {
+  color: #FF9500;
+  font-weight: 700;
+}
+
+.buggy-line {
+  background-color: rgba(255, 149, 0, 0.1);
+  border-left: 3px solid #FF9500;
+  padding-left: 0.5rem;
+  margin-left: -0.5rem;
+}
+
+/* Editable Line Indicator */
+.editable-line {
+  background-color: rgba(0, 217, 255, 0.05);
+}
+
+/* Code Content (non-editable) */
+.code-content {
+  flex: 1;
+  margin: 0;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: pre;
+}
+
+.code-content code {
+  font-family: inherit;
+}
+
+/* Code Input (editable) */
+.code-input {
+  flex: 1;
+  background: rgba(0, 217, 255, 0.1);
+  border: 1px solid #00D9FF;
+  border-radius: 4px;
+  color: #FFFFFF;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 0.25rem 0.5rem;
+  resize: vertical;
+  min-height: 1.6rem;
+  transition: all 0.2s ease;
+}
+
+.code-input:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+  background: rgba(0, 217, 255, 0.15);
+  border-color: #00D9FF;
+}
+
+.code-input:hover {
+  border-color: #00D9FF;
+  background: rgba(0, 217, 255, 0.12);
+}
+
+/* Simple Syntax Highlighting */
+.code-content code {
+  font-family: inherit;
+}
+
+.syntax-keyword {
+  color: #C792EA;
+  font-weight: 600;
+}
+
+.syntax-string {
+  color: #A3FF00;
+}
+
+.syntax-number {
+  color: #00D9FF;
+}
+
+.syntax-comment {
+  color: #6B7280;
+  font-style: italic;
+}
+
+/* Feedback Messages */
+.feedback {
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 500;
+  text-align: center;
+  animation: slideIn 0.3s ease-out;
+}
+
+.feedback-success {
+  background: rgba(163, 255, 0, 0.2);
+  border: 2px solid #A3FF00;
+  color: #A3FF00;
+}
+
+.feedback-error {
+  background: rgba(255, 149, 0, 0.2);
+  border: 2px solid #FF9500;
+  color: #FF9500;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Submit Button */
+.submit-button {
+  background: linear-gradient(135deg, #6B46C1 0%, #8B5CF6 100%);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  min-width: 44px;
+  align-self: center;
+}
+
+.submit-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(107, 70, 193, 0.4);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.submit-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+}
+
+.submit-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: linear-gradient(135deg, #4B5563 0%, #6B7280 100%);
+}
+
+/* Shake animation for incorrect submission */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.feedback-error {
+  animation: slideIn 0.3s ease-out, shake 0.5s ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .code-editor {
+    gap: 1rem;
+  }
+
+  .challenge-title {
+    font-size: 1.25rem;
+  }
+
+  .challenge-description {
+    font-size: 1rem;
+  }
+
+  .code-container {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
+
+  .line-number {
+    width: 2rem;
+    padding-right: 0.5rem;
+  }
+
+  .submit-button {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .code-container {
+    border-width: 3px;
+  }
+
+  .code-input {
+    border-width: 2px;
+  }
+
+  .feedback {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .code-line,
+  .code-input,
+  .submit-button,
+  .feedback {
+    transition: none;
+    animation: none;
+  }
+
+  .submit-button:hover:not(:disabled) {
+    transform: none;
+  }
+}
