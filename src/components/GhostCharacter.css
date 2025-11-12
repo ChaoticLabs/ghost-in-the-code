@@ -1,0 +1,303 @@
+.ghost-character-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Speech Bubble */
+.speech-bubble {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  border: 3px solid #6B46C1;
+  border-radius: 20px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  animation: bubbleAppear 0.3s ease-out;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.speech-bubble-content {
+  color: #1A1F2E;
+  font-size: 1rem;
+  line-height: 1.5;
+  text-align: center;
+  font-weight: 500;
+}
+
+.speech-bubble-tail {
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 15px solid #6B46C1;
+}
+
+.speech-bubble-tail::after {
+  content: '';
+  position: absolute;
+  bottom: 3px;
+  left: -12px;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid rgba(255, 255, 255, 0.95);
+}
+
+@keyframes bubbleAppear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Ghost Character SVG */
+.ghost-character {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+/* Idle State - Gentle floating animation */
+.ghost-idle {
+  animation: ghostFloat 3s ease-in-out infinite;
+}
+
+@keyframes ghostFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.ghost-idle .ghost-body {
+  animation: ghostGlow 3s ease-in-out infinite;
+}
+
+@keyframes ghostGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
+  }
+}
+
+/* Happy State - Gentle bounce */
+.ghost-happy {
+  animation: ghostBounce 0.6s ease-in-out 2;
+}
+
+@keyframes ghostBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-20px) scale(1.05);
+  }
+}
+
+.ghost-happy .ghost-blush {
+  animation: blushPulse 0.6s ease-in-out 2;
+}
+
+@keyframes blushPulse {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+}
+
+/* Thinking State - Head tilt and sway */
+.ghost-thinking {
+  animation: ghostThink 2s ease-in-out infinite;
+}
+
+@keyframes ghostThink {
+  0%, 100% {
+    transform: rotate(-3deg) translateY(0);
+  }
+  50% {
+    transform: rotate(3deg) translateY(-8px);
+  }
+}
+
+.ghost-thinking .thinking-symbols {
+  animation: symbolsFloat 2s ease-in-out infinite;
+}
+
+.ghost-thinking .thinking-symbol {
+  animation: symbolFade 2s ease-in-out infinite;
+}
+
+@keyframes symbolsFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes symbolFade {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* Celebrating State - Spin and bounce with sparkles */
+.ghost-celebrating {
+  animation: ghostCelebrate 1.5s ease-in-out;
+}
+
+@keyframes ghostCelebrate {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-30px) rotate(-15deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(-40px) rotate(0deg) scale(1.15);
+  }
+  75% {
+    transform: translateY(-30px) rotate(15deg) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+}
+
+.ghost-celebrating .ghost-body {
+  animation: celebrateGlow 1.5s ease-in-out;
+}
+
+@keyframes celebrateGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(163, 255, 0, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(163, 255, 0, 0.8));
+  }
+}
+
+.ghost-celebrating .celebration-sparkles .sparkle {
+  animation: sparkleAnimation 1.5s ease-in-out;
+}
+
+@keyframes sparkleAnimation {
+  0% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8) rotate(360deg);
+  }
+}
+
+/* Arm animations for different states */
+.ghost-happy .ghost-arm-left,
+.ghost-happy .ghost-arm-right {
+  animation: armWave 0.6s ease-in-out 2;
+}
+
+@keyframes armWave {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.ghost-celebrating .ghost-arm-left {
+  animation: armCelebrateLeft 1.5s ease-in-out;
+}
+
+.ghost-celebrating .ghost-arm-right {
+  animation: armCelebrateRight 1.5s ease-in-out;
+}
+
+@keyframes armCelebrateLeft {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25%, 75% {
+    transform: rotate(-20deg) translateY(-10px);
+  }
+  50% {
+    transform: rotate(20deg) translateY(-15px);
+  }
+}
+
+@keyframes armCelebrateRight {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25%, 75% {
+    transform: rotate(20deg) translateY(-10px);
+  }
+  50% {
+    transform: rotate(-20deg) translateY(-15px);
+  }
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ghost-character,
+  .ghost-body,
+  .ghost-arm-left,
+  .ghost-arm-right,
+  .thinking-symbols,
+  .celebration-sparkles .sparkle,
+  .speech-bubble {
+    animation: none !important;
+  }
+  
+  .ghost-character {
+    transform: none !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .ghost-character-container {
+    max-width: 200px;
+  }
+  
+  .speech-bubble {
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+  }
+}

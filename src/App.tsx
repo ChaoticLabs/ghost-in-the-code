@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -56,12 +56,12 @@ function App() {
     </div>
   );
 
-  const ghostCharacterPlaceholder = (
-    <div style={{ color: '#FFFFFF', textAlign: 'center', fontSize: '1.125rem' }}>
-      <h3 style={{ color: '#A3FF00', marginBottom: '1rem' }}>Ghost Character</h3>
-      <p>👻</p>
-      <p style={{ fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 13!</p>
-    </div>
+  const ghostCharacterComponent = (
+    <GhostCharacter 
+      state="idle"
+      message="Hi! I'm here to help you debug code!"
+      showSpeechBubble={true}
+    />
   );
 
   const progressTrackerPlaceholder = (
@@ -86,7 +86,7 @@ function App() {
       challenge={state.currentChallenge}
       totalChallenges={challenges.length}
       codeEditor={codeEditorComponent}
-      ghostCharacter={ghostCharacterPlaceholder}
+      ghostCharacter={ghostCharacterComponent}
       progressTracker={progressTrackerPlaceholder}
       hintPanel={hintPanelPlaceholder}
     />

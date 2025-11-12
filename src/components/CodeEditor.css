@@ -91,6 +91,7 @@
   font-size: inherit;
   line-height: inherit;
   white-space: pre;
+  text-align: left;
 }
 
 .code-content code {
@@ -111,6 +112,11 @@
   resize: vertical;
   min-height: 1.6rem;
   transition: all 0.2s ease;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
+  tab-size: 2;
+  text-align: left;
 }
 
 .code-input:focus {

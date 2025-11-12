@@ -24,6 +24,66 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt }: CodeEditorProps)
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, lineNumber: number) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      
+      const textarea = e.currentTarget;
+      const cursorPosition = textarea.selectionStart;
+      const currentContent = textarea.value;
+      
+      // Get the current line up to cursor
+      const beforeCursor = currentContent.substring(0, cursorPosition);
+      const afterCursor = currentContent.substring(cursorPosition);
+      
+      // Calculate indentation from the current line
+      const currentLineStart = beforeCursor.lastIndexOf('\n') + 1;
+      const currentLine = beforeCursor.substring(currentLineStart);
+      const indentMatch = currentLine.match(/^(\s*)/);
+      const currentIndent = indentMatch ? indentMatch[1] : '';
+      
+      // Check if we need to increase indentation
+      const trimmedLine = currentLine.trim();
+      let additionalIndent = '';
+      
+      // Add extra indent after opening braces, parentheses, or brackets
+      if (trimmedLine.endsWith('{') || trimmedLine.endsWith('(') || trimmedLine.endsWith('[')) {
+        additionalIndent = '  '; // 2 spaces
+      }
+      
+      // Build the new content with proper indentation
+      const newIndent = currentIndent + additionalIndent;
+      const newContent = beforeCursor + '\n' + newIndent + afterCursor;
+      
+      // Update the content
+      handleLineEdit(lineNumber, newContent);
+      
+      // Set cursor position after the indentation on the next frame
+      setTimeout(() => {
+        const newCursorPosition = cursorPosition + 1 + newIndent.length;
+        textarea.setSelectionRange(newCursorPosition, newCursorPosition);
+      }, 0);
+    } else if (e.key === 'Tab') {
+      e.preventDefault();
+      
+      const textarea = e.currentTarget;
+      const cursorPosition = textarea.selectionStart;
+      const currentContent = textarea.value;
+      
+      // Insert 2 spaces for tab
+      const beforeCursor = currentContent.substring(0, cursorPosition);
+      const afterCursor = currentContent.substring(cursorPosition);
+      const newContent = beforeCursor + '  ' + afterCursor;
+      
+      handleLineEdit(lineNumber, newContent);
+      
+      // Set cursor position after the tab
+      setTimeout(() => {
+        textarea.setSelectionRange(cursorPosition + 2, cursorPosition + 2);
+      }, 0);
+    }
+  };
+
   const handleSubmit = () => {
     setIsSubmitting(true);
     
@@ -113,6 +173,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt }: CodeEditorProps)
                   className="code-input"
                   value={lineContent}
                   onChange={(e) => handleLineEdit(line.lineNumber, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e, line.lineNumber)}
                   rows={lineContent.split('\n').length}
                   spellCheck={false}
                   aria-label={`Edit line ${line.lineNumber}`}
