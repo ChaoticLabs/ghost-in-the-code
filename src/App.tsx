@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -16,6 +16,8 @@ function App() {
   const [showLevelComplete, setShowLevelComplete] = useState(false);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
   const [showSettings, setShowSettings] = useState(false);
+  const [ghostMessage, setGhostMessage] = useState("Hi! I'm here to help you debug code!");
+  const [showGhostSpeechBubble, setShowGhostSpeechBubble] = useState(true);
 
   // Load challenges on mount
   useEffect(() => {
@@ -40,11 +42,14 @@ function App() {
     // Trigger all success animations
     setShowSuccessAnimation(true);
     setGhostState('celebrating');
+    setGhostMessage("Amazing work! You fixed it! 🎉");
+    setShowGhostSpeechBubble(true);
     
     // Reset animations after they complete (4.5 seconds for slow, curved particles)
     setTimeout(() => {
       setShowSuccessAnimation(false);
       setGhostState('idle');
+      setGhostMessage("Hi! I'm here to help you debug code!");
       
       // Check if this was the last challenge in the level
       const nextIndex = currentChallengeIndex + 1;
@@ -83,11 +88,24 @@ function App() {
     </div>
   );
 
+  const handleHintDisplayed = (hint: string) => {
+    // Display hint in ghost's speech bubble
+    setGhostState('thinking');
+    setGhostMessage(hint);
+    setShowGhostSpeechBubble(true);
+
+    // Return to idle after a few seconds
+    setTimeout(() => {
+      setGhostState('idle');
+      setGhostMessage("Hi! I'm here to help you debug code!");
+    }, 5000);
+  };
+
   const ghostCharacterComponent = (
     <GhostCharacter 
       state={ghostState}
-      message={ghostState === 'celebrating' ? "Amazing work! You fixed it! 🎉" : "Hi! I'm here to help you debug code!"}
-      showSpeechBubble={true}
+      message={ghostMessage}
+      showSpeechBubble={showGhostSpeechBubble}
     />
   );
 
@@ -128,13 +146,12 @@ function App() {
     setShowSettings(false);
   };
 
-  const hintPanelPlaceholder = (
-    <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
-      <h3 style={{ color: '#FF9500', marginBottom: '1rem' }}>Hint Panel</h3>
-      <p>Hints and tips will appear here when you need help.</p>
-      <p style={{ color: '#A3FF00', fontSize: '0.875rem', marginTop: '0.5rem' }}>Coming soon in task 15!</p>
-    </div>
-  );
+  const hintPanelComponent = currentChallenge ? (
+    <HintPanel 
+      challenge={currentChallenge}
+      onHintDisplayed={handleHintDisplayed}
+    />
+  ) : null;
 
   return (
     <>
@@ -145,7 +162,7 @@ function App() {
         completedCount={state.completedChallenges.size}
         codeEditor={codeEditorComponent}
         ghostCharacter={ghostCharacterComponent}
-        hintPanel={hintPanelPlaceholder}
+        hintPanel={hintPanelComponent}
         onProgressClick={handleProgressClick}
         onSettingsClick={handleSettingsClick}
         showSuccessAnimation={showSuccessAnimation}
