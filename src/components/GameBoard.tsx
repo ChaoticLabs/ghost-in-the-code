@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { TerminalGlow, ParticleBurst } from '../animations/SuccessAnimations';
 import './GameBoard.css';
 
 interface GameBoardProps {
@@ -10,6 +11,7 @@ interface GameBoardProps {
   ghostCharacter: ReactNode;
   hintPanel: ReactNode;
   onProgressClick: () => void;
+  showSuccessAnimation?: boolean;
 }
 
 export const GameBoard = ({
@@ -20,14 +22,18 @@ export const GameBoard = ({
   codeEditor,
   ghostCharacter,
   hintPanel,
-  onProgressClick
+  onProgressClick,
+  showSuccessAnimation = false
 }: GameBoardProps) => {
   const progressPercentage = totalChallenges > 0 
     ? Math.round((completedCount / totalChallenges) * 100) 
     : 0;
 
   return (
-    <div className="game-board">
+    <div className="game-board" style={{ position: 'relative' }}>
+      {/* Success Animations Overlay - covers entire game board */}
+      <TerminalGlow isActive={showSuccessAnimation} />
+      <ParticleBurst isActive={showSuccessAnimation} centerX={50} centerY={40} particleCount={20} />
       {/* Level/Challenge Display Header */}
       <header className="game-header">
         <div className="level-info">

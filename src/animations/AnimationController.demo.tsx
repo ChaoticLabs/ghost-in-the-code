@@ -6,21 +6,15 @@
  */
 
 import { useState } from 'react';
-import { AnimationProvider, useAnimations } from './index';
+import { AnimationProvider, useAnimationController } from './index';
 import './AnimationController.demo.css';
 
 function AnimationDemo() {
   const { 
-    codeHeal, 
-    terminalGlow, 
-    ghostCelebrate, 
-    particleBurst,
-    successSequence,
-    isPlaying,
-    getQueueLength,
-    getCurrentAnimation,
+    state,
+    triggerAnimation,
     clearAnimations
-  } = useAnimations();
+  } = useAnimationController();
 
   const [log, setLog] = useState<string[]>([]);
 
@@ -30,7 +24,8 @@ function AnimationDemo() {
 
   const handleCodeHeal = () => {
     addLog('Triggering codeHeal animation');
-    codeHeal({
+    triggerAnimation({
+      type: 'codeHeal',
       target: 'demo-code',
       onComplete: () => addLog('codeHeal completed')
     });
@@ -38,28 +33,50 @@ function AnimationDemo() {
 
   const handleTerminalGlow = () => {
     addLog('Triggering terminalGlow animation');
-    terminalGlow({
+    triggerAnimation({
+      type: 'terminalGlow',
       onComplete: () => addLog('terminalGlow completed')
     });
   };
 
   const handleGhostCelebrate = () => {
     addLog('Triggering ghostCelebrate animation');
-    ghostCelebrate({
+    triggerAnimation({
+      type: 'ghostCelebrate',
       onComplete: () => addLog('ghostCelebrate completed')
     });
   };
 
   const handleParticleBurst = () => {
     addLog('Triggering particleBurst animation');
-    particleBurst({
+    triggerAnimation({
+      type: 'particleBurst',
       onComplete: () => addLog('particleBurst completed')
     });
   };
 
   const handleSuccessSequence = () => {
     addLog('Triggering success sequence (all animations)');
-    successSequence({
+    // Trigger animations in sequence
+    triggerAnimation({
+      type: 'codeHeal',
+      target: 'demo-code',
+      duration: 2000
+    });
+    triggerAnimation({
+      type: 'terminalGlow',
+      duration: 2500,
+      delay: 500
+    });
+    triggerAnimation({
+      type: 'ghostCelebrate',
+      duration: 1500,
+      delay: 800
+    });
+    triggerAnimation({
+      type: 'particleBurst',
+      duration: 2000,
+      delay: 800,
       onComplete: () => addLog('Success sequence completed!')
     });
   };
@@ -68,8 +85,6 @@ function AnimationDemo() {
     setLog([]);
   };
 
-  const currentAnim = getCurrentAnimation();
-
   return (
     <div className="animation-demo">
       <h1>Animation Controller Demo</h1>
@@ -77,30 +92,30 @@ function AnimationDemo() {
       <div className="demo-controls">
         <h2>Individual Animations</h2>
         <div className="button-group">
-          <button onClick={handleCodeHeal} disabled={isPlaying()}>
+          <button onClick={handleCodeHeal} disabled={state.isPlaying}>
             Code Heal
           </button>
-          <button onClick={handleTerminalGlow} disabled={isPlaying()}>
+          <button onClick={handleTerminalGlow} disabled={state.isPlaying}>
             Terminal Glow
           </button>
-          <button onClick={handleGhostCelebrate} disabled={isPlaying()}>
+          <button onClick={handleGhostCelebrate} disabled={state.isPlaying}>
             Ghost Celebrate
           </button>
-          <button onClick={handleParticleBurst} disabled={isPlaying()}>
+          <button onClick={handleParticleBurst} disabled={state.isPlaying}>
             Particle Burst
           </button>
         </div>
 
         <h2>Composite Animations</h2>
         <div className="button-group">
-          <button onClick={handleSuccessSequence} disabled={isPlaying()}>
+          <button onClick={handleSuccessSequence} disabled={state.isPlaying}>
             Success Sequence (All)
           </button>
         </div>
 
         <h2>Controls</h2>
         <div className="button-group">
-          <button onClick={clearAnimations} disabled={!isPlaying()}>
+          <button onClick={clearAnimations} disabled={!state.isPlaying}>
             Clear Queue
           </button>
           <button onClick={handleClearLog}>
@@ -112,13 +127,13 @@ function AnimationDemo() {
       <div className="demo-status">
         <h2>Animation Status</h2>
         <div className="status-info">
-          <p><strong>Playing:</strong> {isPlaying() ? 'Yes' : 'No'}</p>
-          <p><strong>Queue Length:</strong> {getQueueLength()}</p>
-          <p><strong>Current Animation:</strong> {currentAnim?.type || 'None'}</p>
-          {currentAnim && (
+          <p><strong>Playing:</strong> {state.isPlaying ? 'Yes' : 'No'}</p>
+          <p><strong>Queue Length:</strong> {state.queue.length}</p>
+          <p><strong>Current Animation:</strong> {state.currentAnimation?.type || 'None'}</p>
+          {state.currentAnimation && (
             <>
-              <p><strong>Target:</strong> {currentAnim.target || 'N/A'}</p>
-              <p><strong>Duration:</strong> {currentAnim.duration}ms</p>
+              <p><strong>Target:</strong> {state.currentAnimation.target || 'N/A'}</p>
+              <p><strong>Duration:</strong> {state.currentAnimation.duration}ms</p>
             </>
           )}
         </div>

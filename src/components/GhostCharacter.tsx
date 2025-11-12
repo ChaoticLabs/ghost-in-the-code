@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import './GhostCharacter.css';
 
 export type GhostState = 'idle' | 'happy' | 'thinking' | 'celebrating';
@@ -20,6 +21,25 @@ export const GhostCharacter = ({
     setCurrentState(state);
   }, [state]);
 
+  // Animation variants for celebrating state
+  const celebrateVariants = {
+    initial: { 
+      y: 0, 
+      rotate: 0, 
+      scale: 1 
+    },
+    celebrating: {
+      y: [-30, -40, -30, 0],
+      rotate: [-15, 0, 15, 0],
+      scale: [1.1, 1.15, 1.1, 1],
+      transition: {
+        duration: 1.5,
+        times: [0.25, 0.5, 0.75, 1],
+        ease: "easeInOut" as const
+      }
+    }
+  };
+
   return (
     <div className="ghost-character-container">
       {/* Speech Bubble */}
@@ -32,12 +52,15 @@ export const GhostCharacter = ({
         </div>
       )}
 
-      {/* Ghost Character SVG */}
-      <svg 
+      {/* Ghost Character SVG with Framer Motion */}
+      <motion.svg 
         className={`ghost-character ghost-${currentState}`}
         viewBox="0 0 200 240" 
         xmlns="http://www.w3.org/2000/svg"
         aria-label={`Ghost character feeling ${currentState}`}
+        variants={celebrateVariants}
+        initial="initial"
+        animate={currentState === 'celebrating' ? 'celebrating' : 'initial'}
       >
         {/* Ghost body - rounded and cute */}
         <path
@@ -183,13 +206,57 @@ export const GhostCharacter = ({
         {/* Celebration sparkles - only show when celebrating */}
         {currentState === 'celebrating' && (
           <g className="celebration-sparkles">
-            <text x="20" y="60" fontSize="28" fill="#A3FF00" className="sparkle">✨</text>
-            <text x="170" y="70" fontSize="28" fill="#A3FF00" className="sparkle">✨</text>
-            <text x="30" y="160" fontSize="24" fill="#FFD700" className="sparkle">⭐</text>
-            <text x="165" y="150" fontSize="24" fill="#FFD700" className="sparkle">⭐</text>
+            <motion.text 
+              x="20" y="60" fontSize="28" fill="#A3FF00" className="sparkle"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 1, 0],
+                scale: [0, 1.3, 0.8],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 1.5, ease: "easeInOut" }}
+            >
+              ✨
+            </motion.text>
+            <motion.text 
+              x="170" y="70" fontSize="28" fill="#A3FF00" className="sparkle"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 1, 0],
+                scale: [0, 1.3, 0.8],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.1 }}
+            >
+              ✨
+            </motion.text>
+            <motion.text 
+              x="30" y="160" fontSize="24" fill="#FFD700" className="sparkle"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 1, 0],
+                scale: [0, 1.3, 0.8],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.2 }}
+            >
+              ⭐
+            </motion.text>
+            <motion.text 
+              x="165" y="150" fontSize="24" fill="#FFD700" className="sparkle"
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 1, 0],
+                scale: [0, 1.3, 0.8],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 1.5, ease: "easeInOut", delay: 0.3 }}
+            >
+              ⭐
+            </motion.text>
           </g>
         )}
-      </svg>
+      </motion.svg>
     </div>
   );
 };

@@ -11,6 +11,8 @@ function App() {
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [showProgressModal, setShowProgressModal] = useState(false);
+  const [ghostState, setGhostState] = useState<'idle' | 'happy' | 'thinking' | 'celebrating'>('idle');
+  const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
 
   // Load challenges on mount
   useEffect(() => {
@@ -31,6 +33,17 @@ function App() {
 
   const handleChallengeSuccess = () => {
     console.log('Challenge completed successfully!');
+    
+    // Trigger all success animations
+    setShowSuccessAnimation(true);
+    setGhostState('celebrating');
+    
+    // Reset animations after they complete (3 seconds for slower particles)
+    setTimeout(() => {
+      setShowSuccessAnimation(false);
+      setGhostState('idle');
+    }, 3000);
+    
     // TODO: Progress to next challenge (will be implemented in later tasks)
   };
 
@@ -50,6 +63,7 @@ function App() {
       challenge={currentChallenge}
       onSuccess={handleChallengeSuccess}
       onAttempt={handleAttempt}
+      showSuccessAnimation={showSuccessAnimation}
     />
   ) : (
     <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
@@ -59,8 +73,8 @@ function App() {
 
   const ghostCharacterComponent = (
     <GhostCharacter 
-      state="idle"
-      message="Hi! I'm here to help you debug code!"
+      state={ghostState}
+      message={ghostState === 'celebrating' ? "Amazing work! You fixed it! 🎉" : "Hi! I'm here to help you debug code!"}
       showSpeechBubble={true}
     />
   );
@@ -100,6 +114,7 @@ function App() {
         ghostCharacter={ghostCharacterComponent}
         hintPanel={hintPanelPlaceholder}
         onProgressClick={handleProgressClick}
+        showSuccessAnimation={showSuccessAnimation}
       />
       
       {showProgressModal && (

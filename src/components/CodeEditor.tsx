@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import type { Challenge } from '../engine/types';
 import { validateSolution } from '../engine/solutionValidator';
+import { CodeHeal } from '../animations/SuccessAnimations';
 import './CodeEditor.css';
 
 interface CodeEditorProps {
   challenge: Challenge;
   onSuccess: () => void;
   onAttempt?: (isCorrect: boolean) => void;
+  showSuccessAnimation?: boolean;
 }
 
-export const CodeEditor = ({ challenge, onSuccess, onAttempt }: CodeEditorProps) => {
+export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimation = false }: CodeEditorProps) => {
   const [editedLines, setEditedLines] = useState<Map<number, string>>(new Map());
   const [feedback, setFeedback] = useState<{ message: string; isCorrect: boolean } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -114,10 +116,8 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt }: CodeEditorProps)
     }
 
     if (result.isCorrect) {
-      // Delay success callback to show feedback
-      setTimeout(() => {
-        onSuccess();
-      }, 1500);
+      // Notify parent immediately - parent will handle animation timing
+      onSuccess();
     }
 
     setIsSubmitting(false);
@@ -156,7 +156,12 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt }: CodeEditorProps)
         <p className="challenge-description">{challenge.description}</p>
       </div>
 
-      <div className="code-container">
+      <div className="code-container" style={{ position: 'relative' }}>
+        {/* Code Heal Animation - just for the fixed line */}
+        <CodeHeal 
+          lineNumber={challenge.solution.lineNumber}
+          isActive={showSuccessAnimation}
+        />
         {challenge.codeFragment.lines.map((line) => {
           const isEditable = line.isEditable;
           const isBuggy = line.isBuggy;

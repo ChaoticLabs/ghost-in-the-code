@@ -1,0 +1,143 @@
+/* Success Animations Styles */
+
+/* CodeHeal Animation */
+.code-heal-overlay {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  overflow: visible;
+}
+
+.heal-wave {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(163, 255, 0, 0.2) 10%,
+    rgba(163, 255, 0, 0.6) 50%, 
+    rgba(163, 255, 0, 0.2) 90%,
+    transparent 100%
+  );
+  border-radius: 8px;
+  box-shadow: 
+    0 0 20px rgba(163, 255, 0, 0.4),
+    inset 0 0 20px rgba(163, 255, 0, 0.2);
+  transform-origin: left center;
+}
+
+.heal-sparkle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 8px rgba(163, 255, 0, 0.8));
+  pointer-events: none;
+}
+
+/* TerminalGlow Animation */
+.terminal-glow-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 5;
+  border-radius: 8px;
+}
+
+.glow-effect {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  border: 3px solid rgba(163, 255, 0, 0.4);
+  background: radial-gradient(
+    circle at center,
+    rgba(163, 255, 0, 0.05) 0%,
+    transparent 70%
+  );
+}
+
+.corner-sparkle {
+  position: absolute;
+  font-size: 1.5rem;
+  pointer-events: none;
+  filter: drop-shadow(0 0 8px rgba(163, 255, 0, 0.8));
+}
+
+.corner-sparkle.top-left {
+  top: -10px;
+  left: -10px;
+}
+
+.corner-sparkle.top-right {
+  top: -10px;
+  right: -10px;
+}
+
+.corner-sparkle.bottom-left {
+  bottom: -10px;
+  left: -10px;
+}
+
+.corner-sparkle.bottom-right {
+  bottom: -10px;
+  right: -10px;
+}
+
+/* ParticleBurst Animation */
+.particle-burst-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 20;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  pointer-events: none;
+  transform-origin: center;
+  line-height: 1;
+  will-change: transform, opacity;
+}
+
+.halloween-particle {
+  filter: drop-shadow(0 0 10px rgba(163, 255, 0, 0.8))
+          drop-shadow(0 0 16px rgba(255, 215, 0, 0.6));
+  text-shadow: 
+    0 0 12px rgba(163, 255, 0, 0.9),
+    0 0 24px rgba(255, 215, 0, 0.7),
+    0 0 36px rgba(163, 255, 0, 0.5);
+}
+
+/* Accessibility: Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .code-heal-overlay,
+  .terminal-glow-overlay,
+  .particle-burst-container {
+    display: none;
+  }
+}
+
+/* High contrast mode adjustments */
+@media (prefers-contrast: high) {
+  .heal-glow {
+    background: linear-gradient(90deg, 
+      transparent 0%, 
+      rgba(163, 255, 0, 0.5) 20%, 
+      rgba(163, 255, 0, 0.8) 50%, 
+      rgba(163, 255, 0, 0.5) 80%, 
+      transparent 100%
+    );
+  }
+
+  .glow-effect {
+    border-width: 3px;
+  }
+}
