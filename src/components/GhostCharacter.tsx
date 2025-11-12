@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
+import { usePreferences } from '../engine';
 import './GhostCharacter.css';
 
 export type GhostState = 'idle' | 'happy' | 'thinking' | 'celebrating';
@@ -15,6 +16,8 @@ export const GhostCharacter = ({
   message = '',
   showSpeechBubble = false 
 }: GhostCharacterProps) => {
+  const { preferences } = usePreferences();
+  const reducedMotion = preferences.reducedMotion;
   const [currentState, setCurrentState] = useState<GhostState>(state);
 
   useEffect(() => {
@@ -28,7 +31,12 @@ export const GhostCharacter = ({
       rotate: 0, 
       scale: 1 
     },
-    celebrating: {
+    celebrating: reducedMotion ? {
+      y: 0,
+      rotate: 0,
+      scale: 1,
+      transition: { duration: 0 }
+    } : {
       y: [-30, -40, -30, 0],
       rotate: [-15, 0, 15, 0],
       scale: [1.1, 1.15, 1.1, 1],
@@ -204,7 +212,7 @@ export const GhostCharacter = ({
         )}
 
         {/* Celebration sparkles - only show when celebrating */}
-        {currentState === 'celebrating' && (
+        {currentState === 'celebrating' && !reducedMotion && (
           <g className="celebration-sparkles">
             <motion.text 
               x="20" y="60" fontSize="28" fill="#A3FF00" className="sparkle"

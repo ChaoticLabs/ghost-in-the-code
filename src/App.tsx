@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -15,6 +15,7 @@ function App() {
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   const [showLevelComplete, setShowLevelComplete] = useState(false);
   const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
+  const [showSettings, setShowSettings] = useState(false);
 
   // Load challenges on mount
   useEffect(() => {
@@ -119,6 +120,14 @@ function App() {
     setShowProgressModal(false);
   };
 
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+
   const hintPanelPlaceholder = (
     <div style={{ color: '#FFFFFF', fontSize: '1.125rem' }}>
       <h3 style={{ color: '#FF9500', marginBottom: '1rem' }}>Hint Panel</h3>
@@ -138,6 +147,7 @@ function App() {
         ghostCharacter={ghostCharacterComponent}
         hintPanel={hintPanelPlaceholder}
         onProgressClick={handleProgressClick}
+        onSettingsClick={handleSettingsClick}
         showSuccessAnimation={showSuccessAnimation}
       />
       
@@ -157,6 +167,11 @@ function App() {
         earnedBadges={state.badges}
         onNextLevel={handleNextLevel}
         onClose={handleCloseLevelComplete}
+      />
+
+      <SettingsPanel
+        isVisible={showSettings}
+        onClose={handleCloseSettings}
       />
     </>
   )

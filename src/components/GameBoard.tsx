@@ -11,6 +11,7 @@ interface GameBoardProps {
   ghostCharacter: ReactNode;
   hintPanel: ReactNode;
   onProgressClick: () => void;
+  onSettingsClick?: () => void;
   showSuccessAnimation?: boolean;
 }
 
@@ -23,6 +24,7 @@ export const GameBoard = ({
   ghostCharacter,
   hintPanel,
   onProgressClick,
+  onSettingsClick,
   showSuccessAnimation = false
 }: GameBoardProps) => {
   const progressPercentage = totalChallenges > 0 
@@ -51,6 +53,15 @@ export const GameBoard = ({
             </span>
           </button>
         </div>
+        {onSettingsClick && (
+          <button 
+            className="settings-button" 
+            onClick={onSettingsClick}
+            aria-label="Open settings"
+          >
+            ⚙️
+          </button>
+        )}
       </header>
 
       {/* Main Game Grid */}

@@ -284,7 +284,12 @@
   - Implement "Next Level" button with animation
   - _Requirements: 3.1, 5.3_
 
-- [ ] 26. Implement reduced motion mode
+- [x] 26. Implement reduced motion mode
+
+
+
+
+
   - Add preference toggle for reduced motion
   - Replace animations with simple fades when enabled
   - Respect prefers-reduced-motion media query

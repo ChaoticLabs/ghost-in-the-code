@@ -9,6 +9,7 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { usePreferences } from '../engine';
 import './SuccessAnimations.css';
 
 // CodeHeal Animation - Cute healing effect for fixed code lines
@@ -19,12 +20,15 @@ interface CodeHealProps {
 }
 
 export const CodeHeal = ({ lineNumber, isActive, onComplete }: CodeHealProps) => {
+  const { preferences } = usePreferences();
+  const reducedMotion = preferences.reducedMotion;
+
   useEffect(() => {
     if (isActive && onComplete) {
-      const timer = setTimeout(onComplete, 1500);
+      const timer = setTimeout(onComplete, reducedMotion ? 300 : 1500);
       return () => clearTimeout(timer);
     }
-  }, [isActive, onComplete]);
+  }, [isActive, onComplete, reducedMotion]);
 
   return (
     <AnimatePresence>
@@ -34,7 +38,7 @@ export const CodeHeal = ({ lineNumber, isActive, onComplete }: CodeHealProps) =>
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: reducedMotion ? 0.15 : 0.3 }}
           style={{
             position: 'absolute',
             left: '-10px',
@@ -45,58 +49,62 @@ export const CodeHeal = ({ lineNumber, isActive, onComplete }: CodeHealProps) =>
             zIndex: 10,
           }}
         >
-          {/* Healing wave effect */}
-          <motion.div
-            className="heal-wave"
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ 
-              scaleX: [0, 1.2, 1],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{ 
-              duration: 1.5,
-              times: [0, 0.5, 1],
-              ease: "easeOut"
-            }}
-          />
-          
-          {/* Sparkle emojis */}
-          <motion.div
-            className="heal-sparkle"
-            initial={{ x: '0%', opacity: 0, scale: 0 }}
-            animate={{ 
-              x: ['0%', '100%'],
-              opacity: [0, 1, 1, 0],
-              scale: [0, 1.2, 1, 0.8],
-              rotate: [0, 360],
-            }}
-            transition={{ 
-              duration: 1.5,
-              times: [0, 0.2, 0.6, 1],
-              ease: "easeOut"
-            }}
-          >
-            ✨
-          </motion.div>
-          
-          <motion.div
-            className="heal-sparkle"
-            initial={{ x: '0%', opacity: 0, scale: 0 }}
-            animate={{ 
-              x: ['0%', '100%'],
-              opacity: [0, 1, 1, 0],
-              scale: [0, 1, 0.9, 0.7],
-              rotate: [0, -360],
-            }}
-            transition={{ 
-              duration: 1.5,
-              times: [0, 0.2, 0.6, 1],
-              ease: "easeOut",
-              delay: 0.2,
-            }}
-          >
-            💚
-          </motion.div>
+          {!reducedMotion && (
+            <>
+              {/* Healing wave effect */}
+              <motion.div
+                className="heal-wave"
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={{ 
+                  scaleX: [0, 1.2, 1],
+                  opacity: [0, 0.8, 0],
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  times: [0, 0.5, 1],
+                  ease: "easeOut"
+                }}
+              />
+              
+              {/* Sparkle emojis */}
+              <motion.div
+                className="heal-sparkle"
+                initial={{ x: '0%', opacity: 0, scale: 0 }}
+                animate={{ 
+                  x: ['0%', '100%'],
+                  opacity: [0, 1, 1, 0],
+                  scale: [0, 1.2, 1, 0.8],
+                  rotate: [0, 360],
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  times: [0, 0.2, 0.6, 1],
+                  ease: "easeOut"
+                }}
+              >
+                ✨
+              </motion.div>
+              
+              <motion.div
+                className="heal-sparkle"
+                initial={{ x: '0%', opacity: 0, scale: 0 }}
+                animate={{ 
+                  x: ['0%', '100%'],
+                  opacity: [0, 1, 1, 0],
+                  scale: [0, 1, 0.9, 0.7],
+                  rotate: [0, -360],
+                }}
+                transition={{ 
+                  duration: 1.5,
+                  times: [0, 0.2, 0.6, 1],
+                  ease: "easeOut",
+                  delay: 0.2,
+                }}
+              >
+                💚
+              </motion.div>
+            </>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
@@ -110,12 +118,15 @@ interface TerminalGlowProps {
 }
 
 export const TerminalGlow = ({ isActive, onComplete }: TerminalGlowProps) => {
+  const { preferences } = usePreferences();
+  const reducedMotion = preferences.reducedMotion;
+
   useEffect(() => {
     if (isActive && onComplete) {
-      const timer = setTimeout(onComplete, 2000);
+      const timer = setTimeout(onComplete, reducedMotion ? 300 : 2000);
       return () => clearTimeout(timer);
     }
-  }, [isActive, onComplete]);
+  }, [isActive, onComplete, reducedMotion]);
 
   return (
     <AnimatePresence>
@@ -125,83 +136,87 @@ export const TerminalGlow = ({ isActive, onComplete }: TerminalGlowProps) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          transition={{ duration: reducedMotion ? 0.15 : 0.3 }}
         >
-          <motion.div
-            className="glow-effect"
-            animate={{
-              boxShadow: [
-                '0 0 15px rgba(163, 255, 0, 0.3), inset 0 0 15px rgba(163, 255, 0, 0.1)',
-                '0 0 40px rgba(163, 255, 0, 0.7), inset 0 0 30px rgba(163, 255, 0, 0.3)',
-                '0 0 25px rgba(163, 255, 0, 0.5), inset 0 0 20px rgba(163, 255, 0, 0.2)',
-                '0 0 15px rgba(163, 255, 0, 0.3), inset 0 0 15px rgba(163, 255, 0, 0.1)',
-              ],
-              borderColor: [
-                'rgba(163, 255, 0, 0.4)',
-                'rgba(163, 255, 0, 1)',
-                'rgba(163, 255, 0, 0.7)',
-                'rgba(163, 255, 0, 0.4)',
-              ],
-            }}
-            transition={{
-              duration: 2,
-              times: [0, 0.4, 0.7, 1],
-              ease: [0.4, 0, 0.2, 1],
-            }}
-          />
-          
-          {/* Corner sparkles */}
-          <motion.div
-            className="corner-sparkle top-left"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: [0, 1.2, 1, 0],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{ duration: 2, ease: "easeOut" }}
-          >
-            ✨
-          </motion.div>
-          
-          <motion.div
-            className="corner-sparkle top-right"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: [0, 1.2, 1, 0],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, -180, -360],
-            }}
-            transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
-          >
-            ⭐
-          </motion.div>
-          
-          <motion.div
-            className="corner-sparkle bottom-left"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: [0, 1.2, 1, 0],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, 180, 360],
-            }}
-            transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
-          >
-            🎃
-          </motion.div>
-          
-          <motion.div
-            className="corner-sparkle bottom-right"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ 
-              scale: [0, 1.2, 1, 0],
-              opacity: [0, 1, 1, 0],
-              rotate: [0, -180, -360],
-            }}
-            transition={{ duration: 2, ease: "easeOut", delay: 0.6 }}
-          >
-            👻
-          </motion.div>
+          {!reducedMotion && (
+            <>
+              <motion.div
+                className="glow-effect"
+                animate={{
+                  boxShadow: [
+                    '0 0 15px rgba(163, 255, 0, 0.3), inset 0 0 15px rgba(163, 255, 0, 0.1)',
+                    '0 0 40px rgba(163, 255, 0, 0.7), inset 0 0 30px rgba(163, 255, 0, 0.3)',
+                    '0 0 25px rgba(163, 255, 0, 0.5), inset 0 0 20px rgba(163, 255, 0, 0.2)',
+                    '0 0 15px rgba(163, 255, 0, 0.3), inset 0 0 15px rgba(163, 255, 0, 0.1)',
+                  ],
+                  borderColor: [
+                    'rgba(163, 255, 0, 0.4)',
+                    'rgba(163, 255, 0, 1)',
+                    'rgba(163, 255, 0, 0.7)',
+                    'rgba(163, 255, 0, 0.4)',
+                  ],
+                }}
+                transition={{
+                  duration: 2,
+                  times: [0, 0.4, 0.7, 1],
+                  ease: [0.4, 0, 0.2, 1],
+                }}
+              />
+              
+              {/* Corner sparkles */}
+              <motion.div
+                className="corner-sparkle top-left"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 1, 0],
+                  opacity: [0, 1, 1, 0],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{ duration: 2, ease: "easeOut" }}
+              >
+                ✨
+              </motion.div>
+              
+              <motion.div
+                className="corner-sparkle top-right"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 1, 0],
+                  opacity: [0, 1, 1, 0],
+                  rotate: [0, -180, -360],
+                }}
+                transition={{ duration: 2, ease: "easeOut", delay: 0.2 }}
+              >
+                ⭐
+              </motion.div>
+              
+              <motion.div
+                className="corner-sparkle bottom-left"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 1, 0],
+                  opacity: [0, 1, 1, 0],
+                  rotate: [0, 180, 360],
+                }}
+                transition={{ duration: 2, ease: "easeOut", delay: 0.4 }}
+              >
+                🎃
+              </motion.div>
+              
+              <motion.div
+                className="corner-sparkle bottom-right"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 1, 0],
+                  opacity: [0, 1, 1, 0],
+                  rotate: [0, -180, -360],
+                }}
+                transition={{ duration: 2, ease: "easeOut", delay: 0.6 }}
+              >
+                👻
+              </motion.div>
+            </>
+          )}
         </motion.div>
       )}
     </AnimatePresence>
@@ -235,6 +250,8 @@ export const ParticleBurst = ({
   particleCount = 20,
   onComplete 
 }: ParticleBurstProps) => {
+  const { preferences } = usePreferences();
+  const reducedMotion = preferences.reducedMotion;
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
@@ -264,19 +281,52 @@ export const ParticleBurst = ({
 
       // Call onComplete after animation (much longer duration)
       if (onComplete) {
-        const timer = setTimeout(onComplete, 4500);
+        const timer = setTimeout(onComplete, reducedMotion ? 300 : 4500);
         return () => clearTimeout(timer);
       }
     } else {
       setParticles([]);
     }
-  }, [isActive, centerX, centerY, particleCount, onComplete]);
+  }, [isActive, centerX, centerY, particleCount, onComplete, reducedMotion]);
 
   return (
     <AnimatePresence>
       {isActive && (
         <div className="particle-burst-container">
           {particles.map((particle) => {
+            if (reducedMotion) {
+              // Simple fade at final position for reduced motion
+              // Use smaller distance for percentage-based positioning
+              const reducedDistance = 15 + Math.random() * 10; // 15-25% from center
+              const endX = particle.x + Math.cos(particle.angle) * reducedDistance;
+              const endY = particle.y + Math.sin(particle.angle) * reducedDistance;
+              
+              return (
+                <motion.div
+                  key={particle.id}
+                  className="particle halloween-particle"
+                  initial={{
+                    left: `${endX}%`,
+                    top: `${endY}%`,
+                    opacity: 0,
+                  }}
+                  animate={{
+                    opacity: [0, 1, 0],
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: "easeInOut",
+                  }}
+                  style={{
+                    fontSize: particle.size,
+                    position: 'absolute',
+                  }}
+                >
+                  {particle.emoji}
+                </motion.div>
+              );
+            }
+
             // Create curved path with multiple waypoints
             const endX = particle.x + Math.cos(particle.angle) * particle.distance;
             const endY = particle.y + Math.sin(particle.angle) * particle.distance;
@@ -341,37 +391,51 @@ export const SuccessAnimation = ({
   fixedLineNumber,
   onComplete 
 }: SuccessAnimationProps) => {
+  const { preferences } = usePreferences();
+  const reducedMotion = preferences.reducedMotion;
   const [showCodeHeal, setShowCodeHeal] = useState(false);
   const [showTerminalGlow, setShowTerminalGlow] = useState(false);
   const [showParticleBurst, setShowParticleBurst] = useState(false);
 
   useEffect(() => {
     if (isActive) {
-      // Sequence the animations for a cute, flowing effect
-      // 1. Code heals first
-      setShowCodeHeal(true);
-      
-      // 2. Terminal glows as code heals
-      setTimeout(() => {
+      if (reducedMotion) {
+        // Show all at once with simple fade
+        setShowCodeHeal(true);
         setShowTerminalGlow(true);
-      }, 300);
-      
-      // 3. Particle burst for celebration
-      setTimeout(() => {
         setShowParticleBurst(true);
-      }, 600);
 
-      // Complete after all animations (reduced to 2.5s for snappier feel)
-      if (onComplete) {
-        const timer = setTimeout(onComplete, 2500);
-        return () => clearTimeout(timer);
+        if (onComplete) {
+          const timer = setTimeout(onComplete, 300);
+          return () => clearTimeout(timer);
+        }
+      } else {
+        // Sequence the animations for a cute, flowing effect
+        // 1. Code heals first
+        setShowCodeHeal(true);
+        
+        // 2. Terminal glows as code heals
+        setTimeout(() => {
+          setShowTerminalGlow(true);
+        }, 300);
+        
+        // 3. Particle burst for celebration
+        setTimeout(() => {
+          setShowParticleBurst(true);
+        }, 600);
+
+        // Complete after all animations (reduced to 2.5s for snappier feel)
+        if (onComplete) {
+          const timer = setTimeout(onComplete, 2500);
+          return () => clearTimeout(timer);
+        }
       }
     } else {
       setShowCodeHeal(false);
       setShowTerminalGlow(false);
       setShowParticleBurst(false);
     }
-  }, [isActive, onComplete]);
+  }, [isActive, onComplete, reducedMotion]);
 
   return (
     <>
