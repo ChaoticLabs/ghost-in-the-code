@@ -1,5 +1,24 @@
 {
   "levelId": "logic-1",
+  "levelIntroduction": {
+    "title": "Welcome to Logic Lab! 🧩",
+    "description": "Logic puzzles are like solving mysteries! You need to think step-by-step and figure out what makes sense. In code, logic helps us solve problems by thinking carefully about each piece.",
+    "concepts": [
+      {
+        "name": "What is Logic?",
+        "explanation": "Logic is about thinking through problems step by step. Each step needs to make sense and lead to the solution!"
+      },
+      {
+        "name": "Variables and Values",
+        "explanation": "Variables are like boxes that hold information. We need to be careful when moving things between boxes so we don't lose anything!"
+      },
+      {
+        "name": "Order Matters",
+        "explanation": "The order we do things in code is very important. Doing steps in the wrong order can cause problems!"
+      }
+    ],
+    "readyMessage": "Ready to solve some spooky logic puzzles? Let's go!"
+  },
   "challenges": [
     {
       "id": "logic-basic-1",

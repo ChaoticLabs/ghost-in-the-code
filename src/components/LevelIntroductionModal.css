@@ -1,0 +1,279 @@
+/**
+ * LevelIntroductionModal styles
+ */
+
+.level-intro-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.level-intro-modal {
+  background: linear-gradient(135deg, #2D1B4E 0%, #1A1F2E 100%);
+  border: 3px solid #00D9FF;
+  border-radius: 20px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 217, 255, 0.4);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.level-intro-content {
+  padding: 2rem 2rem 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.level-intro-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.level-intro-title {
+  color: #00D9FF;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 0 15px rgba(0, 217, 255, 0.5);
+  flex: 1;
+}
+
+.level-intro-close {
+  background: transparent;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.level-intro-close:hover {
+  background: #FFFFFF;
+  color: #1A1F2E;
+  transform: scale(1.1);
+}
+
+.level-intro-close:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+.level-intro-ghost {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.level-intro-ghost .ghost-icon {
+  font-size: 4rem;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.level-intro-description {
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin: 0 0 2rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.level-intro-concepts {
+  margin-bottom: 2rem;
+}
+
+.concepts-title {
+  color: #A3FF00;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  text-align: center;
+}
+
+.concept-card {
+  background: rgba(0, 217, 255, 0.1);
+  border: 2px solid #00D9FF;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.concept-card:last-child {
+  margin-bottom: 0;
+}
+
+.concept-name {
+  color: #00D9FF;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+}
+
+.concept-explanation {
+  color: #FFFFFF;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.level-intro-ready {
+  color: #A3FF00;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+  background: rgba(163, 255, 0, 0.1);
+  border-radius: 8px;
+}
+
+.level-intro-actions {
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: center;
+  border-top: 2px solid rgba(0, 217, 255, 0.3);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #2D1B4E 0%, #1A1F2E 100%);
+}
+
+.level-intro-button {
+  background: linear-gradient(135deg, #00D9FF 0%, #0099CC 100%);
+  color: #1A1F2E;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 3rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 44px;
+  min-width: 200px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+}
+
+.level-intro-button:hover {
+  background: linear-gradient(135deg, #33E0FF 0%, #00AADD 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 217, 255, 0.5);
+}
+
+.level-intro-button:active {
+  transform: translateY(0);
+}
+
+.level-intro-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .level-intro-modal {
+    max-width: 95%;
+  }
+
+  .level-intro-title {
+    font-size: 1.5rem;
+  }
+
+  .level-intro-description {
+    font-size: 1.05rem;
+  }
+
+  .concept-name {
+    font-size: 1.1rem;
+  }
+
+  .concept-explanation {
+    font-size: 0.95rem;
+  }
+
+  .level-intro-button {
+    width: 100%;
+    padding: 0.875rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .level-intro-modal-overlay,
+  .level-intro-modal {
+    animation: none;
+  }
+
+  .level-intro-ghost .ghost-icon {
+    animation: none;
+  }
+
+  .level-intro-button:hover {
+    transform: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .level-intro-modal {
+    border-width: 4px;
+  }
+
+  .level-intro-close,
+  .concept-card {
+    border-width: 3px;
+  }
+}

@@ -1,5 +1,24 @@
 {
   "levelId": "loops-1",
+  "levelIntroduction": {
+    "title": "Welcome to Loop Land! 🔄",
+    "description": "Loops are like doing something over and over again! Just like when you count to 10 or brush each tooth. In code, loops help us repeat actions without writing the same thing many times.",
+    "concepts": [
+      {
+        "name": "What is a Loop?",
+        "explanation": "A loop repeats code multiple times. Instead of writing the same code 10 times, we can use a loop to do it automatically!"
+      },
+      {
+        "name": "Loop Counter",
+        "explanation": "Most loops use a counter variable that changes each time. This helps the loop know when to stop."
+      },
+      {
+        "name": "Stopping the Loop",
+        "explanation": "Every loop needs a way to stop! We use conditions like 'count < 10' to tell the loop when to finish."
+      }
+    ],
+    "readyMessage": "Ready to help our ghost fix some loopy code? Let's go!"
+  },
   "challenges": [
     {
       "id": "loop-basic-1",

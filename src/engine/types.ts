@@ -21,6 +21,18 @@ export interface Solution {
   alternativeCorrectContent?: string[];
 }
 
+export interface LevelConcept {
+  name: string;
+  explanation: string;
+}
+
+export interface LevelIntroduction {
+  title: string;
+  description: string;
+  concepts: LevelConcept[];
+  readyMessage: string;
+}
+
 export interface Challenge {
   id: string;
   type: 'loop' | 'conditional' | 'logic';

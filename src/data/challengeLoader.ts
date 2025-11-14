@@ -3,7 +3,7 @@
  * Loads challenge data from JSON files and validates structure
  */
 
-import type { Challenge } from '../engine/types';
+import type { Challenge, LevelIntroduction } from '../engine/types';
 import loopsData from './challenges/loops.json';
 import conditionalsData from './challenges/conditionals.json';
 import logicData from './challenges/logic.json';
@@ -220,4 +220,18 @@ export function getChallengeCount(): { loops: number; conditionals: number; logi
     logic: allChallenges.get('logic')?.length || 0,
     total: getAllChallengesFlat().length
   };
+}
+
+/**
+ * Gets level introduction by type
+ */
+export function getLevelIntroduction(type: 'loop' | 'conditional' | 'logic'): LevelIntroduction | null {
+  const dataMap: Record<string, any> = {
+    loop: loopsData,
+    conditional: conditionalsData,
+    logic: logicData
+  };
+
+  const data = dataMap[type];
+  return data?.levelIntroduction || null;
 }

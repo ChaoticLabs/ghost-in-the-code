@@ -9,6 +9,7 @@ export {
   getChallengeById,
   getAllChallengesFlat,
   getChallengeCount,
+  getLevelIntroduction,
   ChallengeValidationError
 } from './challengeLoader';
 

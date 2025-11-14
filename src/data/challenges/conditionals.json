@@ -1,5 +1,24 @@
 {
   "levelId": "conditionals-1",
+  "levelIntroduction": {
+    "title": "Welcome to Conditional Castle! 🤔",
+    "description": "Conditionals are like making choices! Just like 'IF it's raining, THEN bring an umbrella.' In code, conditionals help the computer make decisions based on what's true or false.",
+    "concepts": [
+      {
+        "name": "What is a Conditional?",
+        "explanation": "A conditional checks if something is true or false, then decides what to do. It's like asking a question before taking action!"
+      },
+      {
+        "name": "IF and ELSE",
+        "explanation": "IF means 'do this when true'. ELSE means 'do this when false'. Together they help make smart decisions."
+      },
+      {
+        "name": "Comparison Operators",
+        "explanation": "We use symbols like === (equals), > (greater than), < (less than) to compare things and make decisions."
+      }
+    ],
+    "readyMessage": "Ready to help our ghost make the right choices? Let's go!"
+  },
   "challenges": [
     {
       "id": "conditional-basic-1",

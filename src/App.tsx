@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection } from './components'
-import { getAllChallengesFlat } from './data'
-import type { Challenge, Badge } from './engine/types'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal } from './components'
+import { getAllChallengesFlat, getLevelIntroduction } from './data'
+import type { Challenge, Badge, LevelIntroduction } from './engine/types'
 import './App.css'
 
 function App() {
@@ -23,6 +23,9 @@ function App() {
   const [educationalModalMode, setEducationalModalMode] = useState<'introduction' | 'completion'>('introduction');
   const [showBadgeCollection, setShowBadgeCollection] = useState(false);
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<Badge | null>(null);
+  const [showLevelIntroduction, setShowLevelIntroduction] = useState(false);
+  const [levelIntroduction, setLevelIntroduction] = useState<LevelIntroduction | null>(null);
+  const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(false);
   
   const { checkAndAwardBadges } = useBadgeSystem(challenges);
 
@@ -50,6 +53,16 @@ function App() {
 
   const handleStartGame = () => {
     setGameStarted(true);
+    
+    // Show level introduction if we have challenges
+    if (challenges.length > 0 && !hasSeenLevelIntro) {
+      const firstChallengeType = challenges[0].type;
+      const intro = getLevelIntroduction(firstChallengeType);
+      if (intro) {
+        setLevelIntroduction(intro);
+        setShowLevelIntroduction(true);
+      }
+    }
   };
 
   const handleChallengeSuccess = () => {
@@ -191,6 +204,11 @@ function App() {
     setNewlyEarnedBadge(null);
   };
 
+  const handleCloseLevelIntroduction = () => {
+    setShowLevelIntroduction(false);
+    setHasSeenLevelIntro(true);
+  };
+
   const hintPanelComponent = currentChallenge ? (
     <HintPanel 
       challenge={currentChallenge}
@@ -252,6 +270,12 @@ function App() {
           newlyEarnedBadgeId={newlyEarnedBadge?.id}
         />
       )}
+
+      <LevelIntroductionModal
+        isVisible={showLevelIntroduction}
+        introduction={levelIntroduction}
+        onClose={handleCloseLevelIntroduction}
+      />
     </>
   )
 }
