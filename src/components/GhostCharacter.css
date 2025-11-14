@@ -77,6 +77,36 @@
   }
 }
 
+/* Click bubble special styling */
+.speech-bubble--click {
+  background: linear-gradient(135deg, rgba(163, 255, 0, 0.95) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border-color: #A3FF00;
+  animation: bubbleAppear 0.3s ease-out, bubblePulse 0.6s ease-in-out;
+  box-shadow: 0 4px 16px rgba(163, 255, 0, 0.4);
+}
+
+.speech-bubble--click .speech-bubble-content {
+  color: #1A1F2E;
+  font-weight: 600;
+}
+
+.speech-bubble--click .speech-bubble-tail {
+  border-top-color: #A3FF00;
+}
+
+.speech-bubble--click .speech-bubble-tail::after {
+  border-top-color: rgba(163, 255, 0, 0.95);
+}
+
+@keyframes bubblePulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 /* Ghost Character SVG */
 .ghost-character {
   width: 100%;
@@ -84,6 +114,55 @@
   max-width: min(200px, 100%);
   max-height: 180px;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.ghost-character:hover {
+  filter: drop-shadow(0 6px 12px rgba(163, 255, 0, 0.4));
+  transform: translateY(-2px);
+}
+
+.ghost-character:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.ghost-clickable {
+  animation: ghostClickBounce 0.6s ease-in-out;
+}
+
+@keyframes ghostClickBounce {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  15% {
+    transform: translateY(-15px) rotate(-8deg) scale(1.05);
+  }
+  30% {
+    transform: translateY(-25px) rotate(8deg) scale(1.1);
+  }
+  45% {
+    transform: translateY(-20px) rotate(-5deg) scale(1.08);
+  }
+  60% {
+    transform: translateY(-10px) rotate(5deg) scale(1.05);
+  }
+  75% {
+    transform: translateY(-5px) rotate(-2deg) scale(1.02);
+  }
+}
+
+.ghost-clickable .ghost-body {
+  animation: ghostClickGlow 0.6s ease-in-out;
+}
+
+@keyframes ghostClickGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(163, 255, 0, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 25px rgba(163, 255, 0, 0.9));
+  }
 }
 
 /* Idle State - Gentle floating animation */

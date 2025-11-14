@@ -19,10 +19,49 @@ export const GhostCharacter = ({
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
   const [currentState, setCurrentState] = useState<GhostState>(state);
+  const [clickMessage, setClickMessage] = useState<string>('');
+  const [showClickBubble, setShowClickBubble] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     setCurrentState(state);
   }, [state]);
+
+  const cuteMessages = [
+    "Boo! Did I scare you? 👻",
+    "Hehe, that tickles!",
+    "I'm here to help! 💚",
+    "You're doing great!",
+    "Keep debugging! ✨",
+    "Ghosts love coding too!",
+    "Want a hint? Just ask!",
+    "You've got this! 💪",
+    "Debugging is fun!",
+    "Let's fix some bugs! 🐛",
+    "I believe in you!",
+    "High five! ✋",
+    "You're awesome! ⭐",
+    "Coding is cool! 😎",
+    "Boo-tiful work!",
+    "Spook-tacular! 🎉"
+  ];
+
+  const handleGhostClick = () => {
+    if (isAnimating) return;
+    
+    setIsAnimating(true);
+    const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+    setClickMessage(randomMessage);
+    setShowClickBubble(true);
+    setCurrentState('happy');
+
+    // Reset after animation
+    setTimeout(() => {
+      setShowClickBubble(false);
+      setIsAnimating(false);
+      setCurrentState(state);
+    }, 3000);
+  };
 
   // Animation variants for celebrating state
   const celebrateVariants = {
@@ -51,7 +90,7 @@ export const GhostCharacter = ({
   return (
     <div className="ghost-character-container">
       {/* Speech Bubble */}
-      {showSpeechBubble && message && (
+      {showSpeechBubble && message && !showClickBubble && (
         <div className="speech-bubble" role="status" aria-live="polite">
           <div className="speech-bubble-content">
             {message}
@@ -60,15 +99,29 @@ export const GhostCharacter = ({
         </div>
       )}
 
+      {/* Click Message Bubble */}
+      {showClickBubble && (
+        <div className="speech-bubble speech-bubble--click" role="status" aria-live="polite">
+          <div className="speech-bubble-content">
+            {clickMessage}
+          </div>
+          <div className="speech-bubble-tail" />
+        </div>
+      )}
+
       {/* Ghost Character SVG with Framer Motion */}
       <motion.svg 
-        className={`ghost-character ghost-${currentState}`}
+        className={`ghost-character ghost-${currentState} ${isAnimating ? 'ghost-clickable' : ''}`}
         viewBox="0 0 200 240" 
         xmlns="http://www.w3.org/2000/svg"
         aria-label={`Ghost character feeling ${currentState}`}
         variants={celebrateVariants}
         initial="initial"
         animate={currentState === 'celebrating' ? 'celebrating' : 'initial'}
+        onClick={handleGhostClick}
+        style={{ cursor: 'pointer' }}
+        whileHover={reducedMotion ? {} : { scale: 1.05 }}
+        whileTap={reducedMotion ? {} : { scale: 0.95 }}
       >
         {/* Ghost body - rounded and cute */}
         <path
