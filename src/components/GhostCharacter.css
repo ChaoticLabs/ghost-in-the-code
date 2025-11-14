@@ -131,6 +131,51 @@
   animation: ghostClickBounce 0.6s ease-in-out;
 }
 
+/* Spin animations - randomly chosen on click */
+.ghost-spin-right {
+  animation: ghostSpinRight 0.8s ease-in-out !important;
+}
+
+.ghost-spin-left {
+  animation: ghostSpinLeft 0.8s ease-in-out !important;
+}
+
+@keyframes ghostSpinRight {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) rotate(180deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(-30px) rotate(360deg) scale(1.15);
+  }
+  75% {
+    transform: translateY(-20px) rotate(540deg) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) rotate(720deg) scale(1);
+  }
+}
+
+@keyframes ghostSpinLeft {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translateY(-20px) rotate(-180deg) scale(1.1);
+  }
+  50% {
+    transform: translateY(-30px) rotate(-360deg) scale(1.15);
+  }
+  75% {
+    transform: translateY(-20px) rotate(-540deg) scale(1.1);
+  }
+  100% {
+    transform: translateY(0) rotate(-720deg) scale(1);
+  }
+}
+
 @keyframes ghostClickBounce {
   0%, 100% {
     transform: translateY(0) rotate(0deg) scale(1);
@@ -152,8 +197,10 @@
   }
 }
 
-.ghost-clickable .ghost-body {
-  animation: ghostClickGlow 0.6s ease-in-out;
+.ghost-clickable .ghost-body,
+.ghost-spin-right .ghost-body,
+.ghost-spin-left .ghost-body {
+  animation: ghostClickGlow 0.8s ease-in-out;
 }
 
 @keyframes ghostClickGlow {
@@ -161,7 +208,7 @@
     filter: drop-shadow(0 0 8px rgba(163, 255, 0, 0.3));
   }
   50% {
-    filter: drop-shadow(0 0 25px rgba(163, 255, 0, 0.9));
+    filter: drop-shadow(0 0 30px rgba(163, 255, 0, 1));
   }
 }
 

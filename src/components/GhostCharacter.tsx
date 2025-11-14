@@ -24,6 +24,7 @@ export const GhostCharacter = ({
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSleeping, setIsSleeping] = useState(false);
   const [inactivityTimer, setInactivityTimer] = useState<number | null>(null);
+  const [spinDirection, setSpinDirection] = useState<'left' | 'right'>('right');
 
   useEffect(() => {
     setCurrentState(state);
@@ -113,6 +114,9 @@ export const GhostCharacter = ({
     
     setIsAnimating(true);
     
+    // Randomly choose spin direction
+    setSpinDirection(Math.random() > 0.5 ? 'right' : 'left');
+    
     // If sleeping, wake up with special message
     if (isSleeping) {
       const wakeUpMessage = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
@@ -182,7 +186,7 @@ export const GhostCharacter = ({
 
       {/* Ghost Character SVG with Framer Motion */}
       <motion.svg 
-        className={`ghost-character ghost-${currentState} ${isAnimating ? 'ghost-clickable' : ''}`}
+        className={`ghost-character ghost-${currentState} ${isAnimating ? `ghost-clickable ghost-spin-${spinDirection}` : ''}`}
         viewBox="0 0 200 240" 
         xmlns="http://www.w3.org/2000/svg"
         aria-label={`Ghost character feeling ${currentState}`}
