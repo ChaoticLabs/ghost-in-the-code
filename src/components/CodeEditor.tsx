@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { Challenge } from '../engine/types';
 import { validateSolution } from '../engine/solutionValidator';
 import { CodeHeal } from '../animations/SuccessAnimations';
@@ -15,6 +15,13 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
   const [editedLines, setEditedLines] = useState<Map<number, string>>(new Map());
   const [feedback, setFeedback] = useState<{ message: string; isCorrect: boolean } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Reset state when challenge changes
+  useEffect(() => {
+    setEditedLines(new Map());
+    setFeedback(null);
+    setIsSubmitting(false);
+  }, [challenge.id]);
 
   const handleLineEdit = (lineNumber: number, content: string) => {
     const newEditedLines = new Map(editedLines);
