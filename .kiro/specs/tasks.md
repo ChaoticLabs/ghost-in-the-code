@@ -331,7 +331,12 @@
   - Store earned badges in localStorage
   - _Requirements: 10.1, 10.2_
 
-- [ ] 29. Create printable badge certificate
+- [x] 29. Create printable badge certificate
+
+
+
+
+
   - Design print-friendly HTML template for badges
   - Generate certificate with player name and earned badges
   - Add print CSS styles for A4/Letter size

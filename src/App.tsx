@@ -6,6 +6,22 @@ import { getAllChallengesFlat, getLevelIntroduction } from './data'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
 import './App.css'
 
+/**
+ * Get player name from localStorage or return default
+ */
+function getPlayerName(): string {
+  try {
+    const saved = localStorage.getItem('ghost-in-the-code-save');
+    if (saved) {
+      const data = JSON.parse(saved);
+      return data.playerName || 'Ghost Debugger';
+    }
+  } catch (error) {
+    console.error('Failed to get player name:', error);
+  }
+  return 'Ghost Debugger';
+}
+
 function App() {
   const { state } = useGame();
   const [gameStarted, setGameStarted] = useState(false);
@@ -268,6 +284,8 @@ function App() {
           badges={state.badges}
           onClose={handleCloseBadgeCollection}
           newlyEarnedBadgeId={newlyEarnedBadge?.id}
+          playerName={getPlayerName()}
+          totalChallenges={state.completedChallenges.size}
         />
       )}
 

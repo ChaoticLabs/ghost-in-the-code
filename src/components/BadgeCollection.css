@@ -304,6 +304,17 @@
   outline-offset: 2px;
 }
 
+.badge-action-button--primary {
+  background: linear-gradient(135deg, #00d9ff 0%, #00c0e6 100%);
+  border-color: #ffffff;
+  color: #1a1f2e;
+}
+
+.badge-action-button--primary:hover {
+  background: linear-gradient(135deg, #00c0e6 0%, #00a8cc 100%);
+  box-shadow: 0 4px 12px rgba(0, 217, 255, 0.4);
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
   .badge-modal {

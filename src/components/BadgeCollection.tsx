@@ -5,16 +5,26 @@
 import { useState, useEffect } from 'react';
 import type { Badge } from '../engine/types';
 import { BADGE_DEFINITIONS } from '../data/badges';
+import { BadgeCertificate } from './BadgeCertificate';
 import './BadgeCollection.css';
 
 interface BadgeCollectionProps {
   badges: Badge[];
   onClose: () => void;
   newlyEarnedBadgeId?: string;
+  playerName?: string;
+  totalChallenges: number;
 }
 
-export const BadgeCollection = ({ badges, onClose, newlyEarnedBadgeId }: BadgeCollectionProps) => {
+export const BadgeCollection = ({ 
+  badges, 
+  onClose, 
+  newlyEarnedBadgeId,
+  playerName = 'Ghost Debugger',
+  totalChallenges 
+}: BadgeCollectionProps) => {
   const [animatingBadgeId, setAnimatingBadgeId] = useState<string | undefined>(newlyEarnedBadgeId);
+  const [showCertificate, setShowCertificate] = useState(false);
 
   useEffect(() => {
     if (newlyEarnedBadgeId) {
@@ -128,11 +138,28 @@ export const BadgeCollection = ({ badges, onClose, newlyEarnedBadgeId }: BadgeCo
         </div>
 
         <div className="badge-actions">
+          {badges.length > 0 && (
+            <button 
+              className="badge-action-button badge-action-button--primary" 
+              onClick={() => setShowCertificate(true)}
+            >
+              📜 View Certificate
+            </button>
+          )}
           <button className="badge-action-button" onClick={onClose}>
             Close
           </button>
         </div>
       </div>
+
+      {showCertificate && (
+        <BadgeCertificate
+          playerName={playerName}
+          badges={badges}
+          totalChallenges={totalChallenges}
+          onClose={() => setShowCertificate(false)}
+        />
+      )}
     </div>
   );
 };

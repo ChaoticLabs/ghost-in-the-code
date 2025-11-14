@@ -1,0 +1,451 @@
+/**
+ * BadgeCertificate styles - print-friendly certificate design
+ * Optimized for A4/Letter size printing with ghost-themed decorations
+ */
+
+/* Modal overlay */
+.certificate-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.certificate-modal {
+  background: white;
+  border-radius: 8px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* Action buttons */
+.certificate-actions {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.certificate-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.certificate-button--print {
+  background: #6B46C1;
+  color: white;
+  flex: 1;
+}
+
+.certificate-button--print:hover {
+  background: #5a3aa3;
+  transform: translateY(-1px);
+}
+
+.certificate-button--download {
+  background: #00D9FF;
+  color: #1A1F2E;
+  flex: 1;
+}
+
+.certificate-button--download:hover {
+  background: #00c0e6;
+  transform: translateY(-1px);
+}
+
+.certificate-button--close {
+  background: #666;
+  color: white;
+  padding: 10px 16px;
+}
+
+.certificate-button--close:hover {
+  background: #555;
+}
+
+/* Certificate container */
+.certificate-container {
+  background: white;
+  padding: 40px;
+  position: relative;
+  /* A4 aspect ratio for print */
+  max-width: 210mm;
+  min-height: 297mm;
+  margin: 0 auto;
+}
+
+/* Ghost-themed border */
+.certificate-border {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+  border: 4px solid #6B46C1;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.certificate-corner {
+  position: absolute;
+  font-size: 32px;
+  line-height: 1;
+  background: white;
+  padding: 4px;
+}
+
+.certificate-corner--tl {
+  top: -16px;
+  left: -16px;
+}
+
+.certificate-corner--tr {
+  top: -16px;
+  right: -16px;
+}
+
+.certificate-corner--bl {
+  bottom: -16px;
+  left: -16px;
+}
+
+.certificate-corner--br {
+  bottom: -16px;
+  right: -16px;
+}
+
+/* Certificate content */
+.certificate-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+/* Header */
+.certificate-header {
+  margin-bottom: 40px;
+}
+
+.certificate-ghost-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.certificate-title {
+  font-size: 36px;
+  color: #6B46C1;
+  margin-bottom: 8px;
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.certificate-subtitle {
+  font-size: 18px;
+  color: #666;
+}
+
+/* Body */
+.certificate-body {
+  margin-bottom: 40px;
+}
+
+.certificate-presented-to {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.certificate-player-name {
+  font-size: 42px;
+  color: #1A1F2E;
+  margin-bottom: 24px;
+  font-weight: bold;
+  border-bottom: 2px solid #6B46C1;
+  display: inline-block;
+  padding-bottom: 8px;
+}
+
+.certificate-achievement {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.certificate-badge-count {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.certificate-badge-number {
+  font-size: 72px;
+  color: #6B46C1;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.certificate-badge-label {
+  font-size: 20px;
+  color: #666;
+  margin-top: 8px;
+}
+
+/* Badge sections */
+.certificate-badge-section {
+  margin-bottom: 32px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.certificate-section-title {
+  font-size: 20px;
+  color: #6B46C1;
+  margin-bottom: 16px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.certificate-badge-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.certificate-badge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.certificate-badge-item:last-child {
+  border-bottom: none;
+}
+
+.certificate-badge-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.certificate-badge-name {
+  flex: 1;
+  font-size: 16px;
+  color: #1A1F2E;
+  font-weight: 500;
+}
+
+.certificate-badge-date {
+  font-size: 14px;
+  color: #666;
+  flex-shrink: 0;
+}
+
+/* Statistics */
+.certificate-stats {
+  display: flex;
+  justify-content: center;
+  gap: 48px;
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 2px solid #eee;
+}
+
+.certificate-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.certificate-stat-value {
+  font-size: 36px;
+  color: #6B46C1;
+  font-weight: bold;
+}
+
+.certificate-stat-label {
+  font-size: 14px;
+  color: #666;
+  margin-top: 4px;
+}
+
+/* Footer */
+.certificate-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 2px solid #eee;
+}
+
+.certificate-date {
+  text-align: left;
+}
+
+.certificate-date p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.certificate-date-value {
+  font-size: 16px;
+  color: #1A1F2E;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.certificate-signature {
+  text-align: right;
+}
+
+.certificate-signature-line {
+  width: 200px;
+  height: 2px;
+  background: #1A1F2E;
+  margin-bottom: 8px;
+}
+
+.certificate-signature-label {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Print styles */
+@media print {
+  .certificate-modal-overlay {
+    position: static;
+    background: none;
+    padding: 0;
+  }
+
+  .certificate-modal {
+    max-width: 100%;
+    max-height: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .certificate-actions,
+  .no-print {
+    display: none !important;
+  }
+
+  .certificate-container {
+    max-width: 100%;
+    min-height: 100vh;
+    padding: 20mm;
+    page-break-after: always;
+  }
+
+  .certificate-ghost-icon {
+    animation: none;
+  }
+
+  /* Ensure colors print correctly */
+  .certificate-border,
+  .certificate-title,
+  .certificate-section-title,
+  .certificate-badge-number,
+  .certificate-stat-value {
+    color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .certificate-container {
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .certificate-title {
+    font-size: 28px;
+  }
+
+  .certificate-player-name {
+    font-size: 32px;
+  }
+
+  .certificate-badge-number {
+    font-size: 56px;
+  }
+
+  .certificate-stats {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .certificate-footer {
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .certificate-date,
+  .certificate-signature {
+    text-align: center;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .certificate-border {
+    border-width: 6px;
+  }
+
+  .certificate-badge-item {
+    border-bottom-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .certificate-ghost-icon {
+    animation: none;
+  }
+
+  .certificate-button {
+    transition: none;
+  }
+}
