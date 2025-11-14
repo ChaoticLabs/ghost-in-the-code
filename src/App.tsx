@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary } from './components'
 import { getAllChallengesFlat, getLevelIntroduction } from './data'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
 import './App.css'
@@ -42,6 +42,7 @@ function App() {
   const [showLevelIntroduction, setShowLevelIntroduction] = useState(false);
   const [levelIntroduction, setLevelIntroduction] = useState<LevelIntroduction | null>(null);
   const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(false);
+  const [showProgressSummary, setShowProgressSummary] = useState(false);
   
   const { checkAndAwardBadges } = useBadgeSystem(challenges);
 
@@ -225,6 +226,14 @@ function App() {
     setHasSeenLevelIntro(true);
   };
 
+  const handleProgressSummaryClick = () => {
+    setShowProgressSummary(true);
+  };
+
+  const handleCloseProgressSummary = () => {
+    setShowProgressSummary(false);
+  };
+
   const hintPanelComponent = currentChallenge ? (
     <HintPanel 
       challenge={currentChallenge}
@@ -245,6 +254,7 @@ function App() {
         onProgressClick={handleProgressClick}
         onSettingsClick={handleSettingsClick}
         onBadgeClick={handleBadgeClick}
+        onProgressSummaryClick={handleProgressSummaryClick}
         badgeCount={state.badges.length}
         showSuccessAnimation={showSuccessAnimation}
       />
@@ -294,6 +304,14 @@ function App() {
         introduction={levelIntroduction}
         onClose={handleCloseLevelIntroduction}
       />
+
+      {showProgressSummary && (
+        <ProgressSummary
+          gameState={state}
+          playerName={getPlayerName()}
+          onClose={handleCloseProgressSummary}
+        />
+      )}
     </>
   )
 }

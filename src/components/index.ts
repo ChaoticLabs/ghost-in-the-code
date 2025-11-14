@@ -10,4 +10,5 @@ export { EducationalContentModal } from './EducationalContentModal.tsx';
 export { BadgeCollection } from './BadgeCollection.tsx';
 export { BadgeCertificate } from './BadgeCertificate.tsx';
 export { LevelIntroductionModal } from './LevelIntroductionModal.tsx';
+export { ProgressSummary } from './ProgressSummary.tsx';
 export type { GhostState } from './GhostCharacter.tsx';

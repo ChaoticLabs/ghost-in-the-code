@@ -13,6 +13,7 @@ interface GameBoardProps {
   onProgressClick: () => void;
   onSettingsClick?: () => void;
   onBadgeClick?: () => void;
+  onProgressSummaryClick?: () => void;
   badgeCount?: number;
   showSuccessAnimation?: boolean;
 }
@@ -28,6 +29,7 @@ export const GameBoard = ({
   onProgressClick,
   onSettingsClick,
   onBadgeClick,
+  onProgressSummaryClick,
   badgeCount = 0,
   showSuccessAnimation = false
 }: GameBoardProps) => {
@@ -58,6 +60,16 @@ export const GameBoard = ({
           </button>
         </div>
         <div className="header-actions">
+          {onProgressSummaryClick && (
+            <button 
+              className="progress-summary-button" 
+              onClick={onProgressSummaryClick}
+              aria-label="View progress summary"
+              title="View detailed progress summary"
+            >
+              📊
+            </button>
+          )}
           {onBadgeClick && (
             <button 
               className="badge-button" 

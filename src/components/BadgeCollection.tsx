@@ -139,12 +139,14 @@ export const BadgeCollection = ({
 
         <div className="badge-actions">
           {badges.length > 0 && (
-            <button 
-              className="badge-action-button badge-action-button--primary" 
-              onClick={() => setShowCertificate(true)}
-            >
-              📜 View Certificate
-            </button>
+            <>
+              <button 
+                className="badge-action-button badge-action-button--primary" 
+                onClick={() => setShowCertificate(true)}
+              >
+                📜 View Certificate
+              </button>
+            </>
           )}
           <button className="badge-action-button" onClick={onClose}>
             Close
