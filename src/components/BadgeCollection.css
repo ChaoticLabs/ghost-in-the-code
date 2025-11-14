@@ -55,29 +55,28 @@
 
 .badge-modal-close {
   background: transparent;
-  border: 2px solid #ffffff;
+  border: none;
   color: #ffffff;
   font-size: 1.5rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
   cursor: pointer;
+  padding: 0.5rem;
+  line-height: 1;
+  transition: color 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s ease;
 }
 
 .badge-modal-close:hover {
-  background-color: #6b46c1;
-  border-color: #a3ff00;
-  color: #a3ff00;
-  transform: scale(1.1);
+  color: #FF9500;
 }
 
 .badge-modal-close:focus {
   outline: 3px solid #ffd700;
   outline-offset: 2px;
+  border-radius: 4px;
 }
 
 .badge-stats {

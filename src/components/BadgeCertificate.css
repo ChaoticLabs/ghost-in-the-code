@@ -77,13 +77,16 @@
 }
 
 .certificate-button--close {
-  background: #666;
-  color: white;
-  padding: 10px 16px;
+  background: transparent;
+  border: none;
+  color: #666;
+  padding: 0.5rem;
 }
 
 .certificate-button--close:hover {
-  background: #555;
+  background: transparent;
+  color: #FF9500;
+  transform: none;
 }
 
 /* Certificate container */
