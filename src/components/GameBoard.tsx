@@ -12,6 +12,8 @@ interface GameBoardProps {
   hintPanel: ReactNode;
   onProgressClick: () => void;
   onSettingsClick?: () => void;
+  onBadgeClick?: () => void;
+  badgeCount?: number;
   showSuccessAnimation?: boolean;
 }
 
@@ -25,6 +27,8 @@ export const GameBoard = ({
   hintPanel,
   onProgressClick,
   onSettingsClick,
+  onBadgeClick,
+  badgeCount = 0,
   showSuccessAnimation = false
 }: GameBoardProps) => {
   const progressPercentage = totalChallenges > 0 
@@ -53,15 +57,30 @@ export const GameBoard = ({
             </span>
           </button>
         </div>
-        {onSettingsClick && (
-          <button 
-            className="settings-button" 
-            onClick={onSettingsClick}
-            aria-label="Open settings"
-          >
-            ⚙️
-          </button>
-        )}
+        <div className="header-actions">
+          {onBadgeClick && (
+            <button 
+              className="badge-button" 
+              onClick={onBadgeClick}
+              aria-label="View badges"
+              title="View your badges"
+            >
+              🏆
+              {badgeCount > 0 && (
+                <span className="badge-count-indicator">{badgeCount}</span>
+              )}
+            </button>
+          )}
+          {onSettingsClick && (
+            <button 
+              className="settings-button" 
+              onClick={onSettingsClick}
+              aria-label="Open settings"
+            >
+              ⚙️
+            </button>
+          )}
+        </div>
       </header>
 
       {/* Main Game Grid */}

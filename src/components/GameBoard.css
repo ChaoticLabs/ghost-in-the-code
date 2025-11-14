@@ -105,6 +105,62 @@
   transform: translateY(0);
 }
 
+/* Header Actions Container */
+.header-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+/* Badge Button */
+.badge-button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0.5rem;
+  background: rgba(107, 70, 193, 0.3);
+  border: 2px solid #6B46C1;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.badge-button:hover {
+  background: rgba(107, 70, 193, 0.5);
+  border-color: #A3FF00;
+  box-shadow: 0 0 20px rgba(163, 255, 0, 0.4);
+  transform: translateY(-2px) scale(1.05);
+}
+
+.badge-button:active {
+  transform: translateY(0) scale(1);
+}
+
+.badge-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+.badge-count-indicator {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #A3FF00;
+  color: #1A1F2E;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.125rem 0.375rem;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 /* Settings Button */
 .settings-button {
   min-width: 44px;

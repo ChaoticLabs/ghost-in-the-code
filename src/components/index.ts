@@ -7,4 +7,5 @@ export { LevelCompleteTransition } from './LevelCompleteTransition.tsx';
 export { SettingsPanel } from './SettingsPanel.tsx';
 export { HintPanel } from './HintPanel.tsx';
 export { EducationalContentModal } from './EducationalContentModal.tsx';
+export { BadgeCollection } from './BadgeCollection.tsx';
 export type { GhostState } from './GhostCharacter.tsx';

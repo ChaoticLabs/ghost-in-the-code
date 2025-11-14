@@ -8,3 +8,4 @@ export * from './gameReducer';
 export * from './GameContext';
 export * from './solutionValidator';
 export * from './PreferencesContext';
+export { useBadgeSystem } from './useBadgeSystem';

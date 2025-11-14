@@ -11,3 +11,12 @@ export {
   getChallengeCount,
   ChallengeValidationError
 } from './challengeLoader';
+
+export {
+  BADGE_DEFINITIONS,
+  checkForNewBadges,
+  getBadgeDefinition,
+  getBadgesByCategory
+} from './badges';
+
+export type { BadgeDefinition, BadgeEarnStats } from './badges';

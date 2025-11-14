@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal } from './components'
+import { useBadgeSystem } from './engine/useBadgeSystem'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection } from './components'
 import { getAllChallengesFlat } from './data'
-import type { Challenge } from './engine/types'
+import type { Challenge, Badge } from './engine/types'
 import './App.css'
 
 function App() {
@@ -20,6 +21,10 @@ function App() {
   const [showGhostSpeechBubble, setShowGhostSpeechBubble] = useState(true);
   const [showEducationalModal, setShowEducationalModal] = useState(false);
   const [educationalModalMode, setEducationalModalMode] = useState<'introduction' | 'completion'>('introduction');
+  const [showBadgeCollection, setShowBadgeCollection] = useState(false);
+  const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<Badge | null>(null);
+  
+  const { checkAndAwardBadges } = useBadgeSystem(challenges);
 
   // Load challenges on mount
   useEffect(() => {
@@ -61,6 +66,14 @@ function App() {
     setGhostState('celebrating');
     setGhostMessage("Amazing work! You fixed it! 🎉");
     setShowGhostSpeechBubble(true);
+    
+    // Check for newly earned badges
+    const newBadges = checkAndAwardBadges();
+    if (newBadges.length > 0) {
+      // Show the first newly earned badge
+      setNewlyEarnedBadge(newBadges[0]);
+      console.log('New badge earned:', newBadges[0].name);
+    }
     
     // Show educational completion modal after a brief delay
     setTimeout(() => {
@@ -175,6 +188,15 @@ function App() {
     }
   };
 
+  const handleBadgeClick = () => {
+    setShowBadgeCollection(true);
+  };
+
+  const handleCloseBadgeCollection = () => {
+    setShowBadgeCollection(false);
+    setNewlyEarnedBadge(null);
+  };
+
   const hintPanelComponent = currentChallenge ? (
     <HintPanel 
       challenge={currentChallenge}
@@ -194,6 +216,8 @@ function App() {
         hintPanel={hintPanelComponent}
         onProgressClick={handleProgressClick}
         onSettingsClick={handleSettingsClick}
+        onBadgeClick={handleBadgeClick}
+        badgeCount={state.badges.length}
         showSuccessAnimation={showSuccessAnimation}
       />
       
@@ -226,6 +250,14 @@ function App() {
         mode={educationalModalMode}
         onClose={handleCloseEducationalModal}
       />
+
+      {showBadgeCollection && (
+        <BadgeCollection
+          badges={state.badges}
+          onClose={handleCloseBadgeCollection}
+          newlyEarnedBadgeId={newlyEarnedBadge?.id}
+        />
+      )}
     </>
   )
 }
