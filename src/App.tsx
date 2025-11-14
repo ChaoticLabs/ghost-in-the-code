@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal } from './components'
 import { getAllChallengesFlat } from './data'
 import type { Challenge } from './engine/types'
 import './App.css'
@@ -18,6 +18,8 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [ghostMessage, setGhostMessage] = useState("Hi! I'm here to help you debug code!");
   const [showGhostSpeechBubble, setShowGhostSpeechBubble] = useState(true);
+  const [showEducationalModal, setShowEducationalModal] = useState(false);
+  const [educationalModalMode, setEducationalModalMode] = useState<'introduction' | 'completion'>('introduction');
 
   // Load challenges on mount
   useEffect(() => {
@@ -32,6 +34,21 @@ function App() {
     }
   }, []);
 
+  // Show educational introduction when a new challenge loads
+  useEffect(() => {
+    if (currentChallenge && gameStarted) {
+      // Check if this is a new challenge type
+      const seenTypes = localStorage.getItem('seenChallengeTypes');
+      const seenTypesSet = seenTypes ? new Set(JSON.parse(seenTypes)) : new Set();
+      
+      if (!seenTypesSet.has(currentChallenge.type)) {
+        // Show introduction modal for new challenge type
+        setEducationalModalMode('introduction');
+        setShowEducationalModal(true);
+      }
+    }
+  }, [currentChallenge, gameStarted]);
+
   const handleStartGame = () => {
     setGameStarted(true);
   };
@@ -45,22 +62,17 @@ function App() {
     setGhostMessage("Amazing work! You fixed it! 🎉");
     setShowGhostSpeechBubble(true);
     
+    // Show educational completion modal after a brief delay
+    setTimeout(() => {
+      setEducationalModalMode('completion');
+      setShowEducationalModal(true);
+    }, 2000);
+    
     // Reset animations after they complete (4.5 seconds for slow, curved particles)
     setTimeout(() => {
       setShowSuccessAnimation(false);
       setGhostState('idle');
       setGhostMessage("Hi! I'm here to help you debug code!");
-      
-      // Check if this was the last challenge in the level
-      const nextIndex = currentChallengeIndex + 1;
-      if (nextIndex >= challenges.length) {
-        // Level complete! Show transition
-        setShowLevelComplete(true);
-      } else {
-        // Move to next challenge
-        setCurrentChallengeIndex(nextIndex);
-        setCurrentChallenge(challenges[nextIndex]);
-      }
     }, 4500);
   };
 
@@ -146,6 +158,23 @@ function App() {
     setShowSettings(false);
   };
 
+  const handleCloseEducationalModal = () => {
+    setShowEducationalModal(false);
+    
+    // If we just completed a challenge, move to next challenge
+    if (educationalModalMode === 'completion') {
+      const nextIndex = currentChallengeIndex + 1;
+      if (nextIndex >= challenges.length) {
+        // Level complete! Show transition
+        setShowLevelComplete(true);
+      } else {
+        // Move to next challenge
+        setCurrentChallengeIndex(nextIndex);
+        setCurrentChallenge(challenges[nextIndex]);
+      }
+    }
+  };
+
   const hintPanelComponent = currentChallenge ? (
     <HintPanel 
       challenge={currentChallenge}
@@ -189,6 +218,13 @@ function App() {
       <SettingsPanel
         isVisible={showSettings}
         onClose={handleCloseSettings}
+      />
+
+      <EducationalContentModal
+        isVisible={showEducationalModal}
+        challenge={currentChallenge}
+        mode={educationalModalMode}
+        onClose={handleCloseEducationalModal}
       />
     </>
   )

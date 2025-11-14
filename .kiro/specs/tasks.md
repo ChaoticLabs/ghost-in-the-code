@@ -306,7 +306,11 @@
 
 ## Educational Content and Badges
 
-- [ ] 27. Create educational content display
+- [x] 27. Create educational content display
+
+
+
+
   - Build modal or overlay for concept explanations
   - Display explanation when new challenge type is introduced
   - Show summary of practiced concept after completion

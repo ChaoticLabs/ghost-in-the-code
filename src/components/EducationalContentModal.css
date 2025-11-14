@@ -1,0 +1,283 @@
+/**
+ * Educational Content Modal Styles
+ * High contrast, accessible design with kid-friendly aesthetics
+ */
+
+.educational-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.educational-modal {
+  background: linear-gradient(135deg, #2D1B4E 0%, #1A1F2E 100%);
+  border: 3px solid #A3FF00;
+  border-radius: 20px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(163, 255, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.educational-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem;
+  border-bottom: 2px solid rgba(163, 255, 0, 0.3);
+}
+
+.educational-modal-title {
+  color: #FFFFFF;
+  font-size: 1.75rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.3;
+  letter-spacing: 0.02em;
+}
+
+.educational-modal-close {
+  background: transparent;
+  border: 2px solid #FFFFFF;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.educational-modal-close:hover {
+  background: #FFFFFF;
+  color: #1A1F2E;
+  transform: scale(1.1);
+}
+
+.educational-modal-close:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+.educational-modal-content {
+  padding: 2rem 1.5rem;
+}
+
+.educational-modal-ghost {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.ghost-icon {
+  font-size: 4rem;
+  display: inline-block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.educational-modal-text {
+  color: #FFFFFF;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  margin: 0 0 1.5rem;
+  letter-spacing: 0.02em;
+}
+
+.educational-modal-tip {
+  background: rgba(0, 217, 255, 0.15);
+  border-left: 4px solid #00D9FF;
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  color: #FFFFFF;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  margin-top: 1.5rem;
+}
+
+.educational-modal-tip strong {
+  color: #00D9FF;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.educational-modal-celebration {
+  text-align: center;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.celebration-emoji {
+  font-size: 2.5rem;
+  display: inline-block;
+  animation: bounce 0.6s ease-in-out infinite;
+}
+
+.celebration-emoji:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.celebration-emoji:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.educational-modal-actions {
+  padding: 1rem 1.5rem 1.5rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  border-top: 2px solid rgba(163, 255, 0, 0.3);
+}
+
+.educational-modal-button {
+  padding: 0.875rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  min-width: 120px;
+  min-height: 44px;
+  letter-spacing: 0.02em;
+}
+
+.educational-modal-button.primary {
+  background: linear-gradient(135deg, #A3FF00 0%, #7ACC00 100%);
+  color: #1A1F2E;
+  border: 2px solid #A3FF00;
+}
+
+.educational-modal-button.primary:hover {
+  background: linear-gradient(135deg, #B8FF33 0%, #8FDD00 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(163, 255, 0, 0.4);
+}
+
+.educational-modal-button.primary:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+.educational-modal-button.secondary {
+  background: transparent;
+  color: #FFFFFF;
+  border: 2px solid #FFFFFF;
+}
+
+.educational-modal-button.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.educational-modal-button.secondary:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .educational-modal-overlay,
+  .educational-modal {
+    animation: none;
+  }
+
+  .ghost-icon,
+  .celebration-emoji {
+    animation: none;
+  }
+
+  .educational-modal-button:hover {
+    transform: none;
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .educational-modal {
+    max-width: 95%;
+    margin: 1rem;
+  }
+
+  .educational-modal-title {
+    font-size: 1.5rem;
+  }
+
+  .educational-modal-text {
+    font-size: 1.125rem;
+  }
+
+  .educational-modal-actions {
+    flex-direction: column;
+  }
+
+  .educational-modal-button {
+    width: 100%;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .educational-modal {
+    border-width: 4px;
+  }
+
+  .educational-modal-close,
+  .educational-modal-button {
+    border-width: 3px;
+  }
+}

@@ -6,4 +6,5 @@ export { ProgressTracker } from './ProgressTracker.tsx';
 export { LevelCompleteTransition } from './LevelCompleteTransition.tsx';
 export { SettingsPanel } from './SettingsPanel.tsx';
 export { HintPanel } from './HintPanel.tsx';
+export { EducationalContentModal } from './EducationalContentModal.tsx';
 export type { GhostState } from './GhostCharacter.tsx';
