@@ -15,7 +15,8 @@ export const GhostCharacterDemo = () => {
     idle: "Hi there! I'm here to help you debug code!",
     happy: "Great job! You're doing awesome!",
     thinking: "Hmm... let me think about this...",
-    celebrating: "🎉 Amazing! You fixed the bug! 🎉"
+    celebrating: "🎉 Amazing! You fixed the bug! 🎉",
+    sleeping: "Zzz... 😴"
   };
 
   const handleStateChange = (newState: GhostState) => {
@@ -66,6 +67,12 @@ export const GhostCharacterDemo = () => {
           style={buttonStyle}
         >
           Celebrating
+        </button>
+        <button 
+          onClick={() => handleStateChange('sleeping')}
+          style={buttonStyle}
+        >
+          Sleeping
         </button>
         <button 
           onClick={() => setShowBubble(!showBubble)}

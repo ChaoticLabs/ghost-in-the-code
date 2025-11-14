@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { usePreferences } from '../engine';
 import './GhostCharacter.css';
 
-export type GhostState = 'idle' | 'happy' | 'thinking' | 'celebrating';
+export type GhostState = 'idle' | 'happy' | 'thinking' | 'celebrating' | 'sleeping';
 
 interface GhostCharacterProps {
   state?: GhostState;
@@ -22,10 +22,64 @@ export const GhostCharacter = ({
   const [clickMessage, setClickMessage] = useState<string>('');
   const [showClickBubble, setShowClickBubble] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isSleeping, setIsSleeping] = useState(false);
+  const [inactivityTimer, setInactivityTimer] = useState<number | null>(null);
 
   useEffect(() => {
     setCurrentState(state);
   }, [state]);
+
+  // Inactivity detection - fall asleep after 30 seconds of no activity
+  useEffect(() => {
+    const startInactivityTimer = () => {
+      // Clear existing timer
+      if (inactivityTimer) {
+        clearTimeout(inactivityTimer);
+      }
+
+      // Set new timer for 30 seconds
+      const timer = window.setTimeout(() => {
+        if (state === 'idle' && !isAnimating) {
+          setIsSleeping(true);
+          setCurrentState('sleeping');
+        }
+      }, 30000); // 30 seconds
+
+      setInactivityTimer(timer);
+    };
+
+    const handleActivity = () => {
+      // Wake up if sleeping
+      if (isSleeping) {
+        setIsSleeping(false);
+        setCurrentState(state);
+      }
+      // Reset inactivity timer
+      startInactivityTimer();
+    };
+
+    // Listen for user activity
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('mousedown', handleActivity);
+    window.addEventListener('keydown', handleActivity);
+    window.addEventListener('touchstart', handleActivity);
+    window.addEventListener('scroll', handleActivity);
+
+    // Start initial timer
+    startInactivityTimer();
+
+    // Cleanup
+    return () => {
+      if (inactivityTimer) {
+        window.clearTimeout(inactivityTimer);
+      }
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('mousedown', handleActivity);
+      window.removeEventListener('keydown', handleActivity);
+      window.removeEventListener('touchstart', handleActivity);
+      window.removeEventListener('scroll', handleActivity);
+    };
+  }, [state, isAnimating, isSleeping]);
 
   const cuteMessages = [
     "Boo! Did I scare you? 👻",
@@ -46,12 +100,29 @@ export const GhostCharacter = ({
     "Spook-tacular! 🎉"
   ];
 
+  const wakeUpMessages = [
+    "Yawn... I'm awake! 😴",
+    "Oh! You're back! 👻",
+    "Zzz... Huh? Let's code!",
+    "I was just resting my eyes!",
+    "Ready to debug again! ✨"
+  ];
+
   const handleGhostClick = () => {
     if (isAnimating) return;
     
     setIsAnimating(true);
-    const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
-    setClickMessage(randomMessage);
+    
+    // If sleeping, wake up with special message
+    if (isSleeping) {
+      const wakeUpMessage = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
+      setClickMessage(wakeUpMessage);
+      setIsSleeping(false);
+    } else {
+      const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+      setClickMessage(randomMessage);
+    }
+    
     setShowClickBubble(true);
     setCurrentState('happy');
 
@@ -89,8 +160,8 @@ export const GhostCharacter = ({
 
   return (
     <div className="ghost-character-container">
-      {/* Speech Bubble */}
-      {showSpeechBubble && message && !showClickBubble && (
+      {/* Speech Bubble - hide when sleeping */}
+      {showSpeechBubble && message && !showClickBubble && !isSleeping && (
         <div className="speech-bubble" role="status" aria-live="polite">
           <div className="speech-bubble-content">
             {message}
@@ -147,7 +218,27 @@ export const GhostCharacter = ({
         />
         
         {/* Eyes - change based on state */}
-        {currentState === 'thinking' ? (
+        {currentState === 'sleeping' ? (
+          <>
+            {/* Sleeping eyes - closed */}
+            <path
+              d="M 55 90 L 85 90"
+              stroke="#1A1F2E"
+              strokeWidth="4"
+              fill="none"
+              strokeLinecap="round"
+              className="ghost-eye-sleeping"
+            />
+            <path
+              d="M 115 90 L 145 90"
+              stroke="#1A1F2E"
+              strokeWidth="4"
+              fill="none"
+              strokeLinecap="round"
+              className="ghost-eye-sleeping"
+            />
+          </>
+        ) : currentState === 'thinking' ? (
           <>
             {/* Thinking eyes - looking up */}
             <ellipse cx="70" cy="80" rx="18" ry="22" fill="#1A1F2E" className="ghost-eye" />
@@ -188,7 +279,16 @@ export const GhostCharacter = ({
         )}
         
         {/* Mouth - changes based on state */}
-        {currentState === 'happy' || currentState === 'celebrating' ? (
+        {currentState === 'sleeping' ? (
+          <ellipse 
+            cx="100" 
+            cy="130" 
+            rx="10" 
+            ry="8" 
+            fill="#1A1F2E" 
+            className="ghost-mouth-sleeping"
+          />
+        ) : currentState === 'happy' || currentState === 'celebrating' ? (
           <path
             d="M 70 125 Q 100 145, 130 125"
             stroke="#1A1F2E"
@@ -261,6 +361,59 @@ export const GhostCharacter = ({
             <text x="160" y="50" fontSize="24" fill="#00D9FF" className="thinking-symbol">?</text>
             <text x="175" y="35" fontSize="18" fill="#00D9FF" className="thinking-symbol" opacity="0.7">?</text>
             <text x="185" y="55" fontSize="14" fill="#00D9FF" className="thinking-symbol" opacity="0.5">?</text>
+          </g>
+        )}
+
+        {/* Sleeping Z's - only show when sleeping */}
+        {currentState === 'sleeping' && !reducedMotion && (
+          <g className="sleeping-zs">
+            <motion.text 
+              x="160" y="60" fontSize="24" fill="#6B46C1" className="sleeping-z"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0],
+                y: [0, -20, -40, -60]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeOut"
+              }}
+            >
+              Z
+            </motion.text>
+            <motion.text 
+              x="175" y="50" fontSize="20" fill="#6B46C1" className="sleeping-z"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0],
+                y: [0, -20, -40, -60]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: 0.5
+              }}
+            >
+              Z
+            </motion.text>
+            <motion.text 
+              x="185" y="65" fontSize="16" fill="#6B46C1" className="sleeping-z"
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ 
+                opacity: [0, 1, 1, 0],
+                y: [0, -20, -40, -60]
+              }}
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeOut",
+                delay: 1
+              }}
+            >
+              Z
+            </motion.text>
           </g>
         )}
 

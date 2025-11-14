@@ -259,6 +259,44 @@
   }
 }
 
+/* Sleeping State - Gentle breathing */
+.ghost-sleeping {
+  animation: ghostSleep 4s ease-in-out infinite;
+}
+
+@keyframes ghostSleep {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(5px) scale(0.98);
+  }
+}
+
+.ghost-sleeping .ghost-body {
+  animation: sleepGlow 4s ease-in-out infinite;
+}
+
+@keyframes sleepGlow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(107, 70, 193, 0.3));
+    opacity: 0.9;
+  }
+  50% {
+    filter: drop-shadow(0 0 15px rgba(107, 70, 193, 0.5));
+    opacity: 0.85;
+  }
+}
+
+.sleeping-zs {
+  opacity: 0.8;
+}
+
+.sleeping-z {
+  font-weight: bold;
+  font-family: serif;
+}
+
 /* Celebrating State - Spin and bounce with sparkles */
 .ghost-celebrating {
   animation: ghostCelebrate 1.5s ease-in-out;
