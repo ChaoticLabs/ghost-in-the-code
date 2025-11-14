@@ -125,12 +125,12 @@ export const BadgeCollection = ({ badges, onClose, newlyEarnedBadgeId }: BadgeCo
               </div>
             ))}
           </div>
+        </div>
 
-          <div className="badge-actions">
-            <button className="badge-action-button" onClick={onClose}>
-              Close
-            </button>
-          </div>
+        <div className="badge-actions">
+          <button className="badge-action-button" onClick={onClose}>
+            Close
+          </button>
         </div>
       </div>
     </div>

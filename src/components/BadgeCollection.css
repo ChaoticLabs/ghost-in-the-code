@@ -23,12 +23,17 @@
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-shadow: 0 8px 32px rgba(107, 70, 193, 0.4);
 }
 
 .badge-collection {
   padding: 2rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .badge-header {
@@ -266,10 +271,13 @@
 }
 
 .badge-actions {
-  margin-top: 2rem;
+  padding: 1.5rem 2rem;
   display: flex;
   justify-content: center;
   gap: 1rem;
+  border-top: 2px solid rgba(107, 70, 193, 0.5);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1a1f2e 0%, #2d1b4e 100%);
 }
 
 .badge-action-button {

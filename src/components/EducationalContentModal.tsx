@@ -20,15 +20,13 @@ interface EducationalContentModalProps {
   challenge: Challenge | null;
   mode: 'introduction' | 'completion';
   onClose: () => void;
-  onSkip?: () => void;
 }
 
 export function EducationalContentModal({
   isVisible,
   challenge,
   mode,
-  onClose,
-  onSkip
+  onClose
 }: EducationalContentModalProps) {
   const [hasSeenType, setHasSeenType] = useState<Set<string>>(new Set());
 
@@ -58,23 +56,7 @@ export function EducationalContentModal({
     onClose();
   };
 
-  const handleSkip = () => {
-    if (challenge && mode === 'introduction') {
-      markTypeAsSeen(challenge.type);
-    }
-    if (onSkip) {
-      onSkip();
-    } else {
-      onClose();
-    }
-  };
-
   if (!isVisible || !challenge) {
-    return null;
-  }
-
-  // Don't show introduction if already seen this type
-  if (mode === 'introduction' && hasSeenType.has(challenge.type)) {
     return null;
   }
 
@@ -105,12 +87,15 @@ export function EducationalContentModal({
   };
 
   const title = mode === 'introduction' 
-    ? getConceptTitle(challenge.type)
+    ? challenge.title
     : '🎉 Great Job! You Did It!';
 
   const content = mode === 'introduction'
-    ? getConceptIntroduction(challenge.type)
+    ? challenge.description
     : challenge.educationalContent;
+  
+  // Show concept introduction only for first challenge of each type
+  const showConceptIntro = mode === 'introduction' && !hasSeenType.has(challenge.type);
 
   return (
     <div className="educational-modal-overlay" onClick={handleClose}>
@@ -131,33 +116,40 @@ export function EducationalContentModal({
             <span className="ghost-icon">👻</span>
           </div>
           
-          <p className="educational-modal-text">{content}</p>
-
+          {showConceptIntro && (
+            <div className="educational-modal-concept-intro">
+              <h3 className="concept-intro-title">{getConceptTitle(challenge.type)}</h3>
+              <p className="concept-intro-text">{getConceptIntroduction(challenge.type)}</p>
+            </div>
+          )}
+          
           {mode === 'introduction' && (
-            <div className="educational-modal-tip">
-              <strong>💡 Tip:</strong> Take your time and read the challenge carefully. 
-              I'm here to help if you need hints!
+            <div className="educational-modal-challenge-intro">
+              <h3 className="challenge-intro-title">Your Challenge:</h3>
+              <p className="educational-modal-text">{content}</p>
             </div>
           )}
 
           {mode === 'completion' && (
-            <div className="educational-modal-celebration">
-              <span className="celebration-emoji">✨</span>
-              <span className="celebration-emoji">🎊</span>
-              <span className="celebration-emoji">⭐</span>
+            <>
+              <p className="educational-modal-text">{content}</p>
+              <div className="educational-modal-celebration">
+                <span className="celebration-emoji">✨</span>
+                <span className="celebration-emoji">🎊</span>
+                <span className="celebration-emoji">⭐</span>
+              </div>
+            </>
+          )}
+
+          {mode === 'introduction' && (
+            <div className="educational-modal-tip">
+              <strong>💡 Tip:</strong> Take your time and read the code carefully. 
+              I'm here to help if you need hints!
             </div>
           )}
         </div>
 
         <div className="educational-modal-actions">
-          {mode === 'introduction' && (
-            <button
-              className="educational-modal-button secondary"
-              onClick={handleSkip}
-            >
-              Skip Intro
-            </button>
-          )}
           <button
             className="educational-modal-button primary"
             onClick={handleClose}

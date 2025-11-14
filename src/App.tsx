@@ -39,18 +39,12 @@ function App() {
     }
   }, []);
 
-  // Show educational introduction when a new challenge loads
+  // Show educational introduction before each challenge
   useEffect(() => {
     if (currentChallenge && gameStarted) {
-      // Check if this is a new challenge type
-      const seenTypes = localStorage.getItem('seenChallengeTypes');
-      const seenTypesSet = seenTypes ? new Set(JSON.parse(seenTypes)) : new Set();
-      
-      if (!seenTypesSet.has(currentChallenge.type)) {
-        // Show introduction modal for new challenge type
-        setEducationalModalMode('introduction');
-        setShowEducationalModal(true);
-      }
+      // Show pre-challenge walkthrough for every challenge
+      setEducationalModalMode('introduction');
+      setShowEducationalModal(true);
     }
   }, [currentChallenge, gameStarted]);
 

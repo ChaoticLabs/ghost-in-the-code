@@ -30,14 +30,23 @@
   background: linear-gradient(135deg, #1A1F2E 0%, #2A2F3E 100%);
   border: 3px solid #A3FF00;
   border-radius: 20px;
-  padding: 2.5rem;
   max-width: 600px;
   width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   box-shadow: 
     0 0 40px rgba(163, 255, 0, 0.3),
     0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Scrollable content wrapper */
+.level-complete-content {
+  padding: 2.5rem;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Celebration header */
@@ -157,7 +166,10 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  margin-top: 2rem;
+  padding: 1.5rem 2.5rem;
+  border-top: 2px solid rgba(163, 255, 0, 0.3);
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #1A1F2E 0%, #2A2F3E 100%);
 }
 
 .next-level-button {

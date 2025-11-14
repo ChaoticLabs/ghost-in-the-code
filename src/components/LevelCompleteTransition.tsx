@@ -60,8 +60,10 @@ export const LevelCompleteTransition = ({
               delay: 0.1
             }}
           >
-            {/* Celebration header */}
-            <motion.div
+            {/* Scrollable content */}
+            <div className="level-complete-content">
+              {/* Celebration header */}
+              <motion.div
               className="celebration-header"
               initial={{ y: reducedMotion ? 0 : -20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -155,6 +157,7 @@ export const LevelCompleteTransition = ({
                 </div>
               </motion.div>
             )}
+            </div>
 
             {/* Action buttons */}
             <motion.div

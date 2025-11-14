@@ -5,9 +5,9 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 0.75rem;
 }
 
 /* Speech Bubble */
@@ -15,12 +15,12 @@
   position: relative;
   background: rgba(255, 255, 255, 0.95);
   border: 3px solid #6B46C1;
-  border-radius: 20px;
-  padding: 1rem 1.5rem;
-  margin-bottom: 1.5rem;
+  border-radius: 16px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   animation: bubbleAppear 0.3s ease-out;
-  min-height: 60px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -28,8 +28,8 @@
 
 .speech-bubble-content {
   color: #1A1F2E;
-  font-size: 1rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.4;
   text-align: center;
   font-weight: 500;
 }
