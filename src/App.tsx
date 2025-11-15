@@ -24,10 +24,65 @@ function getPlayerName(): string {
   return 'Ghost Debugger';
 }
 
+/**
+ * App-level state that needs to be persisted
+ */
+interface AppState {
+  gameStarted: boolean;
+  showLevelSelection: boolean;
+  currentLevelType: LevelType | null;
+  currentChallengeIndex: number;
+  hasSeenLevelIntro: boolean;
+}
+
+/**
+ * Save app state to localStorage
+ */
+function saveAppState(state: AppState): void {
+  try {
+    localStorage.setItem('ghost-app-state', JSON.stringify(state));
+  } catch (error) {
+    console.error('Failed to save app state:', error);
+  }
+}
+
+/**
+ * Load app state from localStorage
+ */
+function loadAppState(): AppState | null {
+  try {
+    const saved = localStorage.getItem('ghost-app-state');
+    if (saved) {
+      return JSON.parse(saved);
+    }
+  } catch (error) {
+    console.error('Failed to load app state:', error);
+  }
+  return null;
+}
+
+// Helper function to get level name
+const getLevelName = (levelType: LevelType): string => {
+  switch (levelType) {
+    case 'loop':
+      return 'Loops 🔄';
+    case 'conditional':
+      return 'Conditionals 🔀';
+    case 'logic':
+      return 'Logic Puzzles 🧩';
+    default:
+      return 'Level';
+  }
+};
+
 function App() {
   const { state, dispatch } = useGame();
-  const [gameStarted, setGameStarted] = useState(false);
-  const [showLevelSelection, setShowLevelSelection] = useState(false);
+  
+  // Load saved app state on mount
+  const savedAppState = loadAppState();
+  
+  const [gameStarted, setGameStarted] = useState(savedAppState?.gameStarted || false);
+  const [showLevelSelection, setShowLevelSelection] = useState(savedAppState?.showLevelSelection || false);
   const [currentLevelName, setCurrentLevelName] = useState<string>('');
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
@@ -36,7 +91,7 @@ function App() {
   const [ghostState, setGhostState] = useState<'idle' | 'happy' | 'thinking' | 'celebrating'>('idle');
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
   const [showLevelComplete, setShowLevelComplete] = useState(false);
-  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(0);
+  const [currentChallengeIndex, setCurrentChallengeIndex] = useState(savedAppState?.currentChallengeIndex || 0);
   const [showSettings, setShowSettings] = useState(false);
   const [ghostMessage, setGhostMessage] = useState("Hi! I'm here to help you debug code!");
   const [showGhostSpeechBubble, setShowGhostSpeechBubble] = useState(true);
@@ -46,34 +101,67 @@ function App() {
   const [newlyEarnedBadge, setNewlyEarnedBadge] = useState<Badge | null>(null);
   const [showLevelIntroduction, setShowLevelIntroduction] = useState(false);
   const [levelIntroduction, setLevelIntroduction] = useState<LevelIntroduction | null>(null);
-  const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(false);
+  const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(savedAppState?.hasSeenLevelIntro || false);
   const [showProgressSummary, setShowProgressSummary] = useState(false);
   const [attemptCount, setAttemptCount] = useState(0);
-  const [currentLevelType, setCurrentLevelType] = useState<LevelType | null>(null);
+  const [currentLevelType, setCurrentLevelType] = useState<LevelType | null>(savedAppState?.currentLevelType || null);
+  
+  // Track if this is the initial load
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   
   // Use allChallenges for badge system so it checks against ALL challenges in the game
   const { checkAndAwardBadges } = useBadgeSystem(allChallenges);
 
-  // Load all challenges on mount
+  // Load all challenges on mount and restore level if needed
   useEffect(() => {
     try {
       const loadedChallenges = getAllChallengesFlat();
       setAllChallenges(loadedChallenges);
+      
+      // Restore the current level if we have saved state
+      if (savedAppState?.currentLevelType && savedAppState.gameStarted) {
+        const levelChallenges = getChallengesByType(savedAppState.currentLevelType);
+        setChallenges(levelChallenges);
+        setCurrentLevelName(getLevelName(savedAppState.currentLevelType));
+        
+        if (levelChallenges.length > 0) {
+          const challengeIndex = Math.min(savedAppState.currentChallengeIndex, levelChallenges.length - 1);
+          setCurrentChallenge(levelChallenges[challengeIndex]);
+          setCurrentChallengeIndex(challengeIndex);
+        }
+      }
     } catch (error) {
       console.error('Failed to load challenges:', error);
     }
   }, []);
-
-  // Show educational introduction before each challenge
+  
+  // Save app state whenever key state changes
   useEffect(() => {
-    if (currentChallenge && gameStarted) {
+    const appState: AppState = {
+      gameStarted,
+      showLevelSelection,
+      currentLevelType,
+      currentChallengeIndex,
+      hasSeenLevelIntro
+    };
+    saveAppState(appState);
+  }, [gameStarted, showLevelSelection, currentLevelType, currentChallengeIndex, hasSeenLevelIntro]);
+  
+  // Show educational introduction before each challenge (but not on initial load/restore)
+  useEffect(() => {
+    if (currentChallenge && gameStarted && !isInitialLoad) {
       // Show pre-challenge walkthrough for every challenge
       setEducationalModalMode('introduction');
       setShowEducationalModal(true);
       // Reset attempt count for new challenge
       setAttemptCount(0);
     }
-  }, [currentChallenge, gameStarted]);
+    
+    // After first render, mark as no longer initial load
+    if (isInitialLoad && currentChallenge) {
+      setIsInitialLoad(false);
+    }
+  }, [currentChallenge, gameStarted, isInitialLoad]);
 
   const handleStartGame = (playerName: string) => {
     // Save player name to localStorage
@@ -89,18 +177,7 @@ function App() {
     setShowLevelSelection(true);
   };
 
-  const getLevelName = (levelType: LevelType): string => {
-    switch (levelType) {
-      case 'loop':
-        return 'Loops 🔄';
-      case 'conditional':
-        return 'Conditionals 🔀';
-      case 'logic':
-        return 'Logic Puzzles 🧩';
-      default:
-        return 'Level';
-    }
-  };
+
 
   const handleSelectLevel = (levelType: LevelType) => {
     const levelChallenges = getChallengesByType(levelType);
@@ -130,6 +207,7 @@ function App() {
       
       setCurrentChallenge(levelChallenges[resumeIndex]);
       setCurrentChallengeIndex(resumeIndex);
+      setIsInitialLoad(false); // Mark as not initial load when selecting a level
       
       console.log(`Resuming ${levelType} level at challenge ${resumeIndex + 1}/${levelChallenges.length}`);
     }
