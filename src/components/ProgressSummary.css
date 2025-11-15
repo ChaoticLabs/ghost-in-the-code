@@ -398,49 +398,6 @@
   color: var(--color-text-muted);
 }
 
-/* Print Styles */
-@media print {
-  .no-print {
-    display: none !important;
-  }
-
-  .summary-modal-overlay {
-    position: static;
-    background: none;
-    padding: 0;
-  }
-
-  .summary-modal {
-    max-width: 100%;
-    max-height: none;
-    overflow: visible;
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  .summary-container {
-    padding: 20px;
-  }
-
-  .summary-section {
-    page-break-inside: avoid;
-  }
-
-  .summary-stat-card,
-  .summary-concept-card,
-  .summary-badge-item {
-    box-shadow: none;
-    border: 1px solid #ccc;
-  }
-
-  .summary-stat-card:hover,
-  .summary-concept-card:hover,
-  .summary-badge-item:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   .summary-modal {
