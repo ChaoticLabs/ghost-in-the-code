@@ -49,8 +49,10 @@ function App() {
   const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(false);
   const [showProgressSummary, setShowProgressSummary] = useState(false);
   const [attemptCount, setAttemptCount] = useState(0);
+  const [currentLevelType, setCurrentLevelType] = useState<LevelType | null>(null);
   
-  const { checkAndAwardBadges } = useBadgeSystem(challenges);
+  // Use allChallenges for badge system so it checks against ALL challenges in the game
+  const { checkAndAwardBadges } = useBadgeSystem(allChallenges);
 
   // Load all challenges on mount
   useEffect(() => {
@@ -104,17 +106,40 @@ function App() {
     const levelChallenges = getChallengesByType(levelType);
     setChallenges(levelChallenges);
     setCurrentLevelName(getLevelName(levelType));
+    setCurrentLevelType(levelType);
     
     if (levelChallenges.length > 0) {
-      setCurrentChallenge(levelChallenges[0]);
-      setCurrentChallengeIndex(0);
+      // Find the first incomplete challenge in this level
+      let resumeIndex = 0;
+      for (let i = 0; i < levelChallenges.length; i++) {
+        if (!state.completedChallenges.has(levelChallenges[i].id)) {
+          resumeIndex = i;
+          break;
+        }
+      }
+      
+      // If all challenges are completed, start from the beginning
+      if (resumeIndex === 0 && state.completedChallenges.has(levelChallenges[0].id)) {
+        // Check if ALL challenges in this level are completed
+        const allCompleted = levelChallenges.every(c => state.completedChallenges.has(c.id));
+        if (allCompleted) {
+          // Start from beginning if replaying a completed level
+          resumeIndex = 0;
+        }
+      }
+      
+      setCurrentChallenge(levelChallenges[resumeIndex]);
+      setCurrentChallengeIndex(resumeIndex);
+      
+      console.log(`Resuming ${levelType} level at challenge ${resumeIndex + 1}/${levelChallenges.length}`);
     }
     
     setShowLevelSelection(false);
     setGameStarted(true);
     
-    // Show level introduction
-    if (!hasSeenLevelIntro) {
+    // Show level introduction only if this is the first time entering this level
+    const hasCompletedAnyInLevel = levelChallenges.some(c => state.completedChallenges.has(c.id));
+    if (!hasSeenLevelIntro && !hasCompletedAnyInLevel) {
       const intro = getLevelIntroduction(levelType);
       if (intro) {
         setLevelIntroduction(intro);
@@ -141,6 +166,7 @@ function App() {
     console.log(`Challenge ${currentChallenge.id} completed with ${hintsUsed} hints used and ${attempts} attempts`);
     console.log('Total hints used across all challenges:', state.assessmentMetrics.totalHintsUsed);
     console.log('Completed challenges:', Array.from(state.completedChallenges));
+    console.log('Total challenges in game:', allChallenges.length);
     
     dispatch(gameActions.completeChallenge(currentChallenge.id, hintsUsed, attempts));
     

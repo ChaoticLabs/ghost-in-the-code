@@ -36,6 +36,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     concept: 'loop',
     earnCondition: (stats) => {
       const loopChallenges = stats.challengesByType.get('loop') || [];
+      if (loopChallenges.length === 0) return false;
       return loopChallenges.every(id => stats.completedChallenges.has(id));
     }
   },
@@ -48,6 +49,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     concept: 'conditional',
     earnCondition: (stats) => {
       const conditionalChallenges = stats.challengesByType.get('conditional') || [];
+      if (conditionalChallenges.length === 0) return false;
       return conditionalChallenges.every(id => stats.completedChallenges.has(id));
     }
   },
@@ -60,6 +62,7 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
     concept: 'logic',
     earnCondition: (stats) => {
       const logicChallenges = stats.challengesByType.get('logic') || [];
+      if (logicChallenges.length === 0) return false;
       return logicChallenges.every(id => stats.completedChallenges.has(id));
     }
   },

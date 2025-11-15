@@ -127,7 +127,11 @@ export const LevelSelection = ({ levels, onSelectLevel }: LevelSelectionProps) =
 
                   {/* Start Button */}
                   <button className="level-card-button" style={{ backgroundColor: level.color }}>
-                    {level.completedCount > 0 ? 'Continue' : 'Start'} →
+                    {level.completedCount > 0 && level.completedCount < level.challengeCount
+                      ? `Continue (${level.completedCount + 1}/${level.challengeCount})`
+                      : level.completedCount === level.challengeCount && level.challengeCount > 0
+                      ? 'Replay'
+                      : 'Start'} →
                   </button>
                 </div>
               </motion.div>
