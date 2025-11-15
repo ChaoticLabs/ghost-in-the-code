@@ -198,7 +198,6 @@ function App() {
       <LevelSelection
         levels={levelInfo}
         onSelectLevel={handleSelectLevel}
-        onBack={() => setShowLevelSelection(false)}
       />
     );
   }

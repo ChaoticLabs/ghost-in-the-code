@@ -163,6 +163,66 @@
         "Add a '!' before isDoorLocked to flip it: '!isDoorLocked' means 'not locked'!"
       ],
       "educationalContent": "The '!' operator means NOT - it flips true to false and false to true. So '!isDoorLocked' means 'the door is not locked'. It's a quick way to check for the opposite of something!"
+    },
+    {
+      "id": "conditional-basic-4",
+      "type": "conditional",
+      "title": "The Age Check",
+      "description": "The ghost needs to check if someone is old enough (13 or older) to enter the haunted house!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let age = 15;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (age > 13) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  console.log('Welcome to the haunted house!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "  console.log('Sorry, too young!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "if (age >= 13) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "Someone who is exactly 13 should be allowed in!",
+        "'age > 13' means older than 13, but not 13 itself.",
+        "Change '>' to '>=' to include 13-year-olds!"
+      ],
+      "educationalContent": "When checking ages or limits, think carefully: do you want to include the number itself? Use >= or <= to include it, or > and < to exclude it."
+    },
+    {
+      "id": "conditional-intermediate-3",
+      "type": "conditional",
+      "title": "The Else If Chain",
+      "description": "The ghost wants different messages for different scare levels, but the conditions are wrong!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let scareLevel = 75;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "if (scareLevel > 80) {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "  console.log('Super scary!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "} else if (scareLevel > 50) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 5, "content": "  console.log('Pretty spooky!');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 6, "content": "} else {", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 7, "content": "  console.log('Not very scary');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 8, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [4]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 4,
+        "correctContent": "} else if (scareLevel >= 50) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "A scare level of exactly 50 should be 'Pretty spooky!'",
+        "The condition 'scareLevel > 50' doesn't include 50 itself.",
+        "Change '>' to '>=' to include 50 in the 'Pretty spooky' range!"
+      ],
+      "educationalContent": "Else if chains let us check multiple conditions in order. The first true condition wins! Make sure your ranges don't have gaps or overlaps."
     }
   ]
 }

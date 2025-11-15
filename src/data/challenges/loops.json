@@ -127,6 +127,114 @@
         "Change '<' to '<=' so the loop includes treat number 2!"
       ],
       "educationalContent": "Nested loops are loops inside loops! The inner loop runs completely for each time the outer loop runs. If the outer loop runs 3 times and the inner loop runs 2 times, we get 3 × 2 = 6 total actions!"
+    },
+    {
+      "id": "loop-basic-4",
+      "type": "loop",
+      "title": "The Skipping Ghost",
+      "description": "This ghost wants to count by 2s (2, 4, 6, 8, 10) but it's only counting by 1s! Fix the loop.",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "for (let i = 2; i <= 10; i++) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 2, "content": "  console.log(i);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [1]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 1,
+        "correctContent": "for (let i = 2; i <= 10; i += 2) {",
+        "alternativeCorrectContent": ["for (let i = 2; i <= 10; i = i + 2) {"]
+      },
+      "hints": [
+        "The loop needs to jump by 2 each time, not just 1!",
+        "Instead of i++, try i += 2 to add 2 each time!",
+        "i += 2 is the same as saying i = i + 2"
+      ],
+      "educationalContent": "Loops don't always have to count by 1! We can count by any number using += or -=. For example, i += 2 adds 2 each time, and i += 5 would add 5 each time!"
+    },
+    {
+      "id": "loop-basic-5",
+      "type": "loop",
+      "title": "The Backwards Counter",
+      "description": "Help the ghost count down from 5 to 1 for a spooky countdown!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "for (let i = 5; i >= 1; i++) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 2, "content": "  console.log(i + '...');", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "console.log('BOO!');", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [1]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 1,
+        "correctContent": "for (let i = 5; i >= 1; i--) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "We want to count DOWN from 5 to 1, not up!",
+        "i++ makes the number go UP. What makes it go DOWN?",
+        "Use i-- to subtract 1 each time and count backwards!"
+      ],
+      "educationalContent": "To count backwards, we use i-- which subtracts 1 each time. Make sure your condition (>=) matches your direction (--) or the loop won't work!"
+    },
+    {
+      "id": "loop-intermediate-2",
+      "type": "loop",
+      "title": "The Array Ghost",
+      "description": "The ghost has a list of friends to visit, but the loop goes too far and causes an error!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let friends = ['Casper', 'Boo', 'Spooky'];", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "for (let i = 0; i <= friends.length; i++) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  console.log('Visiting ' + friends[i]);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "for (let i = 0; i < friends.length; i++) {",
+        "alternativeCorrectContent": []
+      },
+      "hints": [
+        "Arrays start counting at 0! If there are 3 items, they're at positions 0, 1, and 2.",
+        "friends.length is 3, but there's no friends[3]!",
+        "Change '<=' to '<' so we stop BEFORE reaching friends.length"
+      ],
+      "educationalContent": "Arrays (lists) start counting at 0, not 1! If an array has 3 items, they're at positions 0, 1, and 2. So we use i < array.length, not i <= array.length."
+    },
+    {
+      "id": "loop-intermediate-3",
+      "type": "loop",
+      "title": "The While Loop Mystery",
+      "description": "This while loop should print numbers 1 through 5, but the condition is wrong!",
+      "codeFragment": {
+        "lines": [
+          { "lineNumber": 1, "content": "let num = 0;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 2, "content": "while (num < 5) {", "isEditable": true, "isBuggy": true },
+          { "lineNumber": 3, "content": "  num++;", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 4, "content": "  console.log(num);", "isEditable": false, "isBuggy": false },
+          { "lineNumber": 5, "content": "}", "isEditable": false, "isBuggy": false }
+        ],
+        "buggyLines": [2]
+      },
+      "solution": {
+        "type": "line-replacement",
+        "lineNumber": 2,
+        "correctContent": "while (num < 5) {",
+        "alternativeCorrectContent": ["while (num <= 4) {"]
+      },
+      "hints": [
+        "We start at 0, add 1, then print. So we get: 1, 2, 3, 4, 5",
+        "When num is 4, we add 1 to get 5, print it, then check: is 5 < 5? No! Loop stops.",
+        "The condition num < 5 actually works correctly for printing 1-5!"
+      ],
+      "educationalContent": "While loops check the condition BEFORE each loop. Since we increment BEFORE printing, starting at 0 with condition num < 5 correctly prints 1, 2, 3, 4, 5!"
     }
   ]
 }

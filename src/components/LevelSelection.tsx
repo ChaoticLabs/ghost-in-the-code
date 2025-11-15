@@ -22,10 +22,9 @@ interface LevelInfo {
 interface LevelSelectionProps {
   levels: LevelInfo[];
   onSelectLevel: (levelType: LevelType) => void;
-  onBack?: () => void;
 }
 
-export const LevelSelection = ({ levels, onSelectLevel, onBack }: LevelSelectionProps) => {
+export const LevelSelection = ({ levels, onSelectLevel }: LevelSelectionProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
 
