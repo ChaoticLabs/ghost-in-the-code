@@ -135,21 +135,6 @@ export const LevelSelection = ({ levels, onSelectLevel, onBack }: LevelSelection
             );
           })}
         </div>
-
-        {/* Back Button */}
-        {onBack && (
-          <motion.button
-            className="level-selection-back"
-            onClick={onBack}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: reducedMotion ? 0 : 0.5 }}
-            whileHover={reducedMotion ? {} : { scale: 1.05 }}
-            whileTap={reducedMotion ? {} : { scale: 0.95 }}
-          >
-            ← Back to Welcome
-          </motion.button>
-        )}
       </motion.div>
     </div>
   );

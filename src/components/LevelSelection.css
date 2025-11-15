@@ -218,22 +218,6 @@
   transform: translateY(0);
 }
 
-/* Back Button */
-.level-selection-back {
-  display: block;
-  margin: clamp(1rem, 2vh, 1.5rem) auto 0;
-  padding: clamp(0.65rem, 1.5vh, 0.75rem) clamp(1.25rem, 2.5vw, 1.75rem);
-  background: rgba(107, 70, 193, 0.3);
-  border: 2px solid #6B46C1;
-  border-radius: 10px;
-  color: #FFFFFF;
-  font-size: clamp(0.875rem, 1.8vw, 0.95rem);
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  min-height: 44px;
-}
-
 .level-selection-back:hover {
   background: rgba(107, 70, 193, 0.5);
   border-color: #00D9FF;
