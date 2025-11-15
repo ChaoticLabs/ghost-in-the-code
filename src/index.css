@@ -1,5 +1,8 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Avenir, 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -11,6 +14,18 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global font styles */
+body {
+  font-family: Avenir, 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Headers use Jolly Lodger */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Jolly Lodger', cursive;
+  font-weight: 400;
+  letter-spacing: 0.05em;
 }
 
 a {
@@ -37,6 +52,11 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+/* Ensure all text elements inherit proper fonts */
+p, span, div, button, input, textarea, select {
+  font-family: inherit;
 }
 
 button {

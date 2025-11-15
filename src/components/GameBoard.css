@@ -67,7 +67,6 @@
 
 /* Level Button - Clickable to return to level selection */
 .level-button {
-  font-family: 'Jolly Lodger', cursive;
   font-size: clamp(1.25rem, 3.5vw, 2rem);
   font-weight: 700;
   color: #A3FF00;
