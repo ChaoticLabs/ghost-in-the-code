@@ -312,6 +312,24 @@ function App() {
     setShowProgressSummary(false);
   };
 
+  const handleResetGame = () => {
+    // Reset all app state
+    setGameStarted(false);
+    setShowLevelSelection(false);
+    setCurrentLevelType(null);
+    setCurrentChallenge(null);
+    setChallenges([]);
+    setCurrentChallengeIndex(0);
+    setHasSeenLevelIntro(false);
+    setShowSettings(false);
+    setShowBadgeCollection(false);
+    setShowProgressSummary(false);
+    setNewlyEarnedBadge(null);
+    
+    // Clear localStorage
+    localStorage.removeItem('ghost-app-state');
+  };
+
   // Show welcome screen if game hasn't started
   if (!gameStarted && !showLevelSelection) {
     return <WelcomeScreen onStart={handleStartGame} />;
@@ -387,6 +405,7 @@ function App() {
         <SettingsPanel
           isVisible={showSettings}
           onClose={handleCloseSettings}
+          onResetGame={handleResetGame}
         />
       </>
     );
@@ -535,6 +554,7 @@ function App() {
       <SettingsPanel
         isVisible={showSettings}
         onClose={handleCloseSettings}
+        onResetGame={handleResetGame}
       />
 
       <EducationalContentModal

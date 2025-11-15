@@ -11,9 +11,10 @@ import './SettingsPanel.css';
 interface SettingsPanelProps {
   isVisible: boolean;
   onClose: () => void;
+  onResetGame?: () => void;
 }
 
-export const SettingsPanel = ({ isVisible, onClose }: SettingsPanelProps) => {
+export const SettingsPanel = ({ isVisible, onClose, onResetGame }: SettingsPanelProps) => {
   const { preferences, updatePreference, resetPreferences } = usePreferences();
   const { dispatch } = useGame();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
@@ -34,8 +35,17 @@ export const SettingsPanel = ({ isVisible, onClose }: SettingsPanelProps) => {
     dispatch(gameActions.resetGame());
     setShowResetConfirm(false);
     onClose();
-    // Reload the page to reset to first challenge
-    window.location.reload();
+    
+    // Clear app state from localStorage
+    localStorage.removeItem('ghost-app-state');
+    
+    // Call the parent's reset handler if provided
+    if (onResetGame) {
+      onResetGame();
+    } else {
+      // Fallback to reload if no handler provided
+      window.location.reload();
+    }
   };
 
   return (
