@@ -514,13 +514,18 @@ function App() {
     />
   ) : null;
 
+  // Calculate completed count for current level only
+  const levelCompletedCount = challenges.filter(c => 
+    state.completedChallenges.has(c.id)
+  ).length;
+
   return (
     <>
       <GameBoard
         levelName={currentLevelName}
-        challenge={state.currentChallenge + 1}
+        challenge={currentChallengeIndex + 1}
         totalChallenges={challenges.length}
-        completedCount={state.completedChallenges.size}
+        completedCount={levelCompletedCount}
         codeEditor={codeEditorComponent}
         ghostCharacter={ghostCharacterComponent}
         hintPanel={hintPanelComponent}
@@ -537,7 +542,7 @@ function App() {
         <ProgressTracker
           challenges={challenges}
           completedChallengeIds={state.completedChallenges}
-          currentChallengeIndex={state.currentChallenge}
+          currentChallengeIndex={currentChallengeIndex}
           onSelectChallenge={handleSelectChallenge}
           onClose={handleCloseProgress}
         />
@@ -546,6 +551,7 @@ function App() {
       <LevelCompleteTransition
         isVisible={showLevelComplete}
         level={state.currentLevel}
+        levelName={currentLevelName}
         earnedBadges={state.badges}
         onNextLevel={handleNextLevel}
         onClose={handleCloseLevelComplete}

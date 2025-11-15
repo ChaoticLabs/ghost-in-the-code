@@ -13,20 +13,49 @@ import './LevelCompleteTransition.css';
 interface LevelCompleteTransitionProps {
   isVisible: boolean;
   level: number;
+  levelName?: string;
   earnedBadges: Badge[];
   onNextLevel: () => void;
   onClose?: () => void;
 }
 
+/**
+ * Get appropriate emoji for each badge
+ */
+const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logic'): string => {
+  // Specific badge emojis
+  const badgeEmojis: Record<string, string> = {
+    'first-bug-fixed': '🐛',
+    'hint-free-hero': '🦸',
+    'persistent-debugger': '💪',
+    'perfect-start': '⭐',
+    'ghost-whisperer': '👻',
+    'loop-master': '🔄',
+    'conditional-champion': '🔀',
+    'logic-legend': '🧩'
+  };
+
+  // Return specific emoji if available, otherwise fall back to concept emoji
+  return badgeEmojis[badgeId] || (
+    concept === 'loop' ? '🔄' : 
+    concept === 'conditional' ? '🔀' : 
+    concept === 'logic' ? '🧩' : '🏆'
+  );
+};
+
 export const LevelCompleteTransition = ({
   isVisible,
   level,
+  levelName,
   earnedBadges,
   onNextLevel,
   onClose
 }: LevelCompleteTransitionProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
+  
+  // Use levelName if provided, otherwise fall back to "Level {number}"
+  const displayName = levelName || `Level ${level}`;
 
   return (
     <AnimatePresence>
@@ -85,7 +114,7 @@ export const LevelCompleteTransition = ({
               </motion.div>
               
               <h2 className="level-complete-title">
-                Level {level} Complete!
+                {displayName} Complete!
               </h2>
               
               <motion.div
@@ -139,14 +168,9 @@ export const LevelCompleteTransition = ({
                       }}
                     >
                       <div className="badge-icon">
-                        {badge.iconUrl ? (
-                          <img src={badge.iconUrl} alt={badge.name} />
-                        ) : (
-                          <span className="badge-emoji">
-                            {badge.concept === 'loop' ? '🔄' : 
-                             badge.concept === 'conditional' ? '🔀' : '🧩'}
-                          </span>
-                        )}
+                        <span className="badge-emoji">
+                          {getBadgeEmoji(badge.id, badge.concept)}
+                        </span>
                       </div>
                       <div className="badge-info">
                         <p className="badge-name">{badge.name}</p>
