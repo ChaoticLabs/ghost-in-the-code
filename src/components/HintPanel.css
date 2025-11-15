@@ -23,13 +23,11 @@
 
 .hint-panel-header h3 {
   margin: 0;
-  font-size: 1.1rem;
   color: #A3FF00;
   font-weight: 600;
 }
 
 .hint-counter {
-  font-size: 0.8rem;
   color: #00D9FF;
   background: rgba(0, 217, 255, 0.1);
   padding: 0.2rem 0.6rem;

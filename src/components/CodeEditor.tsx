@@ -159,7 +159,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
   return (
     <div className="code-editor">
       <div className="code-editor-header">
-        <h3 className="challenge-title">{challenge.title}</h3>
+        <h2 className="challenge-title">{challenge.title}</h2>
         <p className="challenge-description">{challenge.description}</p>
       </div>
 
