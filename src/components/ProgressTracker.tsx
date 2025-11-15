@@ -110,9 +110,11 @@ export const ProgressTracker = ({
             </div>
 
             <div className="progress-bar-container" role="progressbar" aria-valuenow={progressPercentage} aria-valuemin={0} aria-valuemax={100}>
-              <div className="progress-bar-fill" style={{ width: `${progressPercentage}%` }}>
-                <span className="progress-bar-label">{completedChallengeIds.size} / {challenges.length}</span>
-              </div>
+              {progressPercentage > 0 && (
+                <div className="progress-bar-fill" style={{ width: `${progressPercentage}%` }}>
+                  <span className="progress-bar-label">{completedChallengeIds.size} / {challenges.length}</span>
+                </div>
+              )}
             </div>
           </div>
 
