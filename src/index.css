@@ -33,6 +33,66 @@ body {
   font-family: Avenir, 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
+/* Font Size Adjustments - Applied to html element */
+/* Base font size - medium (default) */
+html.font-size-medium {
+  font-size: 16px;
+}
+
+/* Large font size - 12.5% increase */
+html.font-size-large {
+  font-size: 18px;
+}
+
+/* Extra large font size - 25% increase */
+html.font-size-xlarge {
+  font-size: 20px;
+}
+
+/* Scale all text content with font size preference */
+html.font-size-large body,
+html.font-size-large .code-line,
+html.font-size-large .hint-text,
+html.font-size-large .ghost-message,
+html.font-size-large p,
+html.font-size-large span,
+html.font-size-large button,
+html.font-size-large input,
+html.font-size-large label {
+  font-size: 1.125em;
+}
+
+html.font-size-xlarge body,
+html.font-size-xlarge .code-line,
+html.font-size-xlarge .hint-text,
+html.font-size-xlarge .ghost-message,
+html.font-size-xlarge p,
+html.font-size-xlarge span,
+html.font-size-xlarge button,
+html.font-size-xlarge input,
+html.font-size-xlarge label {
+  font-size: 1.25em;
+}
+
+/* Ensure headings scale proportionally */
+html.font-size-large h1,
+html.font-size-large h2,
+html.font-size-large h3,
+html.font-size-large h4,
+html.font-size-large h5,
+html.font-size-large h6 {
+  font-size: 1.125em;
+}
+
+html.font-size-xlarge h1,
+html.font-size-xlarge h2,
+html.font-size-xlarge h3,
+html.font-size-xlarge h4,
+html.font-size-xlarge h5,
+html.font-size-xlarge h6 {
+  font-size: 1.25em;
+}
+
 /* Headers use Jolly Lodger with consistent sizing */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Jolly Lodger', cursive;

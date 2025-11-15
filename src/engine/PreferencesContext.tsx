@@ -88,6 +88,15 @@ export function PreferencesProvider({ children }: PreferencesProviderProps) {
     }
   }, [preferences]);
 
+  // Apply font size to document
+  useEffect(() => {
+    // Remove all font size classes
+    document.documentElement.classList.remove('font-size-medium', 'font-size-large', 'font-size-xlarge');
+    
+    // Add the current font size class
+    document.documentElement.classList.add(`font-size-${preferences.fontSize}`);
+  }, [preferences.fontSize]);
+
   const updatePreference = <K extends keyof UserPreferences>(
     key: K,
     value: UserPreferences[K]
