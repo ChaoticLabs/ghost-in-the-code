@@ -25,7 +25,13 @@ export const initialGameState: GameState = {
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
     case 'COMPLETE_CHALLENGE': {
-      const { challengeId, hintsUsed, attempts } = action.payload;
+      const { challengeId, hintsUsed, attempts, challengeType } = action.payload;
+      
+      // Skip if already completed (avoid double-counting)
+      if (state.completedChallenges.has(challengeId)) {
+        return state;
+      }
+      
       const newCompletedChallenges = new Set(state.completedChallenges);
       newCompletedChallenges.add(challengeId);
 
@@ -40,6 +46,25 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
       const totalAttempts = state.assessmentMetrics.averageAttempts * state.assessmentMetrics.challengesCompleted + attempts;
       const newAverageAttempts = totalAttempts / totalChallenges;
 
+      // Calculate concept mastery (0-100 scale based on performance)
+      // Perfect score = 100, decreases with hints and attempts
+      const masteryScore = Math.max(100 - (hintsUsed * 15) - ((attempts - 1) * 10), 0);
+      const newConceptMastery = new Map(state.assessmentMetrics.conceptMastery);
+      const currentMastery = newConceptMastery.get(challengeType) || 0;
+      
+      // Count completed challenges of this type (including the one we just completed)
+      const conceptChallengeCount = Array.from(newCompletedChallenges).filter(id => {
+        // Challenge IDs follow pattern: loop-1, conditional-1, logic-1, etc.
+        return id.startsWith(challengeType + '-');
+      }).length;
+      
+      // Update mastery as weighted average of previous mastery and new score
+      const updatedMastery = conceptChallengeCount === 1 
+        ? masteryScore 
+        : Math.round((currentMastery * (conceptChallengeCount - 1) + masteryScore) / conceptChallengeCount);
+      
+      newConceptMastery.set(challengeType, updatedMastery);
+
       return {
         ...state,
         completedChallenges: newCompletedChallenges,
@@ -49,6 +74,7 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
           challengesCompleted: totalChallenges,
           averageAttempts: newAverageAttempts,
           totalHintsUsed: state.assessmentMetrics.totalHintsUsed + hintsUsed,
+          conceptMastery: newConceptMastery,
           lastActivity: new Date().toISOString()
         }
       };

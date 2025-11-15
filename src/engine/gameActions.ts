@@ -5,7 +5,7 @@
 import type { Badge } from './types';
 
 export type GameAction =
-  | { type: 'COMPLETE_CHALLENGE'; payload: { challengeId: string; hintsUsed: number; attempts: number } }
+  | { type: 'COMPLETE_CHALLENGE'; payload: { challengeId: string; hintsUsed: number; attempts: number; challengeType: 'loop' | 'conditional' | 'logic' } }
   | { type: 'NEXT_CHALLENGE' }
   | { type: 'NEXT_LEVEL' }
   | { type: 'USE_HINT'; payload: { challengeId: string } }
@@ -15,9 +15,9 @@ export type GameAction =
   | { type: 'LOAD_SAVED_STATE'; payload: any };
 
 export const gameActions = {
-  completeChallenge: (challengeId: string, hintsUsed: number, attempts: number): GameAction => ({
+  completeChallenge: (challengeId: string, hintsUsed: number, attempts: number, challengeType: 'loop' | 'conditional' | 'logic'): GameAction => ({
     type: 'COMPLETE_CHALLENGE',
-    payload: { challengeId, hintsUsed, attempts }
+    payload: { challengeId, hintsUsed, attempts, challengeType }
   }),
 
   nextChallenge: (): GameAction => ({

@@ -22,9 +22,20 @@ interface LevelInfo {
 interface LevelSelectionProps {
   levels: LevelInfo[];
   onSelectLevel: (levelType: LevelType) => void;
+  onProgressSummaryClick?: () => void;
+  onBadgeClick?: () => void;
+  onSettingsClick?: () => void;
+  badgeCount?: number;
 }
 
-export const LevelSelection = ({ levels, onSelectLevel }: LevelSelectionProps) => {
+export const LevelSelection = ({ 
+  levels, 
+  onSelectLevel,
+  onProgressSummaryClick,
+  onBadgeClick,
+  onSettingsClick,
+  badgeCount = 0
+}: LevelSelectionProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
 
@@ -46,6 +57,41 @@ export const LevelSelection = ({ levels, onSelectLevel }: LevelSelectionProps) =
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: reducedMotion ? 0.15 : 0.5 }}
       >
+        {/* Action Buttons - Top Right */}
+        <div className="level-selection-actions">
+          {onProgressSummaryClick && (
+            <button 
+              className="level-selection-action-button"
+              onClick={onProgressSummaryClick}
+              aria-label="View progress summary"
+              title="Progress Summary"
+            >
+              📊
+            </button>
+          )}
+          {onBadgeClick && (
+            <button 
+              className="level-selection-action-button level-selection-action-button--badge"
+              onClick={onBadgeClick}
+              aria-label="View badges"
+              title="View Badges"
+            >
+              🏆
+              {badgeCount > 0 && <span className="badge-count">{badgeCount}</span>}
+            </button>
+          )}
+          {onSettingsClick && (
+            <button 
+              className="level-selection-action-button"
+              onClick={onSettingsClick}
+              aria-label="Open settings"
+              title="Settings"
+            >
+              ⚙️
+            </button>
+          )}
+        </div>
+
         {/* Header */}
         <div className="level-selection-header">
           <motion.div

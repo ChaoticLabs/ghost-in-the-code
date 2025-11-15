@@ -246,7 +246,7 @@ function App() {
     console.log('Completed challenges:', Array.from(state.completedChallenges));
     console.log('Total challenges in game:', allChallenges.length);
     
-    dispatch(gameActions.completeChallenge(currentChallenge.id, hintsUsed, attempts));
+    dispatch(gameActions.completeChallenge(currentChallenge.id, hintsUsed, attempts, currentChallenge.type));
     
     // Trigger all success animations
     setShowSuccessAnimation(true);
@@ -285,6 +285,31 @@ function App() {
     if (!isCorrect) {
       setAttemptCount(prev => prev + 1);
     }
+  };
+
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
+
+  const handleBadgeClick = () => {
+    setShowBadgeCollection(true);
+  };
+
+  const handleCloseBadgeCollection = () => {
+    setShowBadgeCollection(false);
+    setNewlyEarnedBadge(null);
+  };
+
+  const handleProgressSummaryClick = () => {
+    setShowProgressSummary(true);
+  };
+
+  const handleCloseProgressSummary = () => {
+    setShowProgressSummary(false);
   };
 
   // Show welcome screen if game hasn't started
@@ -331,10 +356,39 @@ function App() {
     ];
 
     return (
-      <LevelSelection
-        levels={levelInfo}
-        onSelectLevel={handleSelectLevel}
-      />
+      <>
+        <LevelSelection
+          levels={levelInfo}
+          onSelectLevel={handleSelectLevel}
+          onProgressSummaryClick={handleProgressSummaryClick}
+          onBadgeClick={handleBadgeClick}
+          onSettingsClick={handleSettingsClick}
+          badgeCount={state.badges.length}
+        />
+        
+        {showProgressSummary && (
+          <ProgressSummary
+            gameState={state}
+            playerName={getPlayerName()}
+            onClose={handleCloseProgressSummary}
+          />
+        )}
+
+        {showBadgeCollection && (
+          <BadgeCollection
+            badges={state.badges}
+            onClose={handleCloseBadgeCollection}
+            newlyEarnedBadgeId={newlyEarnedBadge?.id}
+            playerName={getPlayerName()}
+            totalChallenges={state.completedChallenges.size}
+          />
+        )}
+
+        <SettingsPanel
+          isVisible={showSettings}
+          onClose={handleCloseSettings}
+        />
+      </>
     );
   }
 
@@ -412,14 +466,6 @@ function App() {
     setShowProgressModal(false);
   };
 
-  const handleSettingsClick = () => {
-    setShowSettings(true);
-  };
-
-  const handleCloseSettings = () => {
-    setShowSettings(false);
-  };
-
   const handleCloseEducationalModal = () => {
     setShowEducationalModal(false);
     
@@ -437,26 +483,9 @@ function App() {
     }
   };
 
-  const handleBadgeClick = () => {
-    setShowBadgeCollection(true);
-  };
-
-  const handleCloseBadgeCollection = () => {
-    setShowBadgeCollection(false);
-    setNewlyEarnedBadge(null);
-  };
-
   const handleCloseLevelIntroduction = () => {
     setShowLevelIntroduction(false);
     setHasSeenLevelIntro(true);
-  };
-
-  const handleProgressSummaryClick = () => {
-    setShowProgressSummary(true);
-  };
-
-  const handleCloseProgressSummary = () => {
-    setShowProgressSummary(false);
   };
 
   const hintPanelComponent = currentChallenge ? (
