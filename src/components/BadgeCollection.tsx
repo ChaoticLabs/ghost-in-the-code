@@ -16,15 +16,33 @@ interface BadgeCollectionProps {
   totalChallenges: number;
 }
 
+/**
+ * Get player name from localStorage
+ */
+function getPlayerName(): string {
+  try {
+    const saved = localStorage.getItem('ghost-in-the-code-save');
+    if (saved) {
+      const data = JSON.parse(saved);
+      return data.playerName || 'Ghost Debugger';
+    }
+  } catch (error) {
+    console.error('Failed to get player name:', error);
+  }
+  return 'Ghost Debugger';
+}
+
 export const BadgeCollection = ({ 
   badges, 
   onClose, 
   newlyEarnedBadgeId,
-  playerName = 'Ghost Debugger',
   totalChallenges 
 }: BadgeCollectionProps) => {
   const [animatingBadgeId, setAnimatingBadgeId] = useState<string | undefined>(newlyEarnedBadgeId);
   const [showCertificate, setShowCertificate] = useState(false);
+  
+  // Always get the latest player name from localStorage
+  const playerName = getPlayerName();
 
   useEffect(() => {
     if (newlyEarnedBadgeId) {
@@ -88,6 +106,9 @@ export const BadgeCollection = ({
           <div className="badge-stats">
             <span className="badge-count">
               {badges.length} / {BADGE_DEFINITIONS.length} Badges Earned
+            </span>
+            <span className="badge-count" style={{ marginLeft: '1rem', color: '#00D9FF' }}>
+              💡 {totalChallenges} Challenges Completed
             </span>
           </div>
 

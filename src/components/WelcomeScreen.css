@@ -424,3 +424,62 @@
     animation: none;
   }
 }
+
+/* Name Input Modal */
+.name-input-modal {
+  text-align: center;
+}
+
+.name-input-prompt {
+  font-size: 1.125rem;
+  color: #FFFFFF;
+  margin: 0.75rem 0 1rem;
+  font-family: 'Nanum Pen Script', cursive;
+}
+
+.name-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1.125rem;
+  border: 2px solid #00D9FF;
+  border-radius: 8px;
+  background: rgba(0, 217, 255, 0.1);
+  color: #FFFFFF;
+  font-family: 'Nanum Pen Script', cursive;
+  text-align: center;
+  margin-bottom: 1rem;
+  transition: all 0.2s ease;
+}
+
+.name-input:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+  background: rgba(0, 217, 255, 0.15);
+  border-color: #A3FF00;
+}
+
+.name-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.name-input-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+
+.name-input-buttons .close-instructions {
+  flex: 1;
+  max-width: 200px;
+}
+
+.name-input-buttons .close-instructions.secondary {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  color: #FFFFFF;
+}
+
+.name-input-buttons .close-instructions.secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.7);
+}

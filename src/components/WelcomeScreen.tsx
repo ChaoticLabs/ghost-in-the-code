@@ -2,11 +2,13 @@ import { useState } from 'react';
 import './WelcomeScreen.css';
 
 interface WelcomeScreenProps {
-  onStart: () => void;
+  onStart: (playerName: string) => void;
 }
 
 export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
   const [showInstructions, setShowInstructions] = useState(false);
+  const [showNameInput, setShowNameInput] = useState(false);
+  const [playerName, setPlayerName] = useState('');
 
   return (
     <div className="welcome-screen">
@@ -94,7 +96,7 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         {/* Start Button */}
         <button 
           className="start-button"
-          onClick={onStart}
+          onClick={() => setShowNameInput(true)}
           aria-label="Start the game"
         >
           Start Debugging
@@ -110,6 +112,50 @@ export const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
         >
           {showInstructions ? '✕ Hide' : 'ℹ️ How to Play'}
         </button>
+
+        {/* Name Input Modal */}
+        {showNameInput && (
+          <div className="instructions-overlay">
+            <div className="instructions-content name-input-modal">
+              <h2>Welcome, Ghost Debugger!</h2>
+              <p className="name-input-prompt">What should we call you?</p>
+              <input
+                type="text"
+                className="name-input"
+                placeholder="Enter your name"
+                value={playerName}
+                onChange={(e) => setPlayerName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && playerName.trim()) {
+                    onStart(playerName.trim());
+                  }
+                }}
+                autoFocus
+                maxLength={20}
+                aria-label="Enter your name"
+              />
+              <div className="name-input-buttons">
+                <button 
+                  className="close-instructions"
+                  onClick={() => {
+                    const name = playerName.trim() || 'Ghost Debugger';
+                    onStart(name);
+                  }}
+                  aria-label="Start game"
+                >
+                  {playerName.trim() ? "Let's Go!" : 'Skip'}
+                </button>
+                <button 
+                  className="close-instructions secondary"
+                  onClick={() => setShowNameInput(false)}
+                  aria-label="Cancel"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Instructions Overlay */}
         {showInstructions && (

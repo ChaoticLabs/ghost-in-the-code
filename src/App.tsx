@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
+import { gameActions } from './engine/gameActions'
 import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection } from './components'
 import type { LevelType } from './components'
 import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction } from './data'
@@ -24,7 +25,7 @@ function getPlayerName(): string {
 }
 
 function App() {
-  const { state } = useGame();
+  const { state, dispatch } = useGame();
   const [gameStarted, setGameStarted] = useState(false);
   const [showLevelSelection, setShowLevelSelection] = useState(false);
   const [currentLevelName, setCurrentLevelName] = useState<string>('');
@@ -47,6 +48,7 @@ function App() {
   const [levelIntroduction, setLevelIntroduction] = useState<LevelIntroduction | null>(null);
   const [hasSeenLevelIntro, setHasSeenLevelIntro] = useState(false);
   const [showProgressSummary, setShowProgressSummary] = useState(false);
+  const [attemptCount, setAttemptCount] = useState(0);
   
   const { checkAndAwardBadges } = useBadgeSystem(challenges);
 
@@ -66,10 +68,22 @@ function App() {
       // Show pre-challenge walkthrough for every challenge
       setEducationalModalMode('introduction');
       setShowEducationalModal(true);
+      // Reset attempt count for new challenge
+      setAttemptCount(0);
     }
   }, [currentChallenge, gameStarted]);
 
-  const handleStartGame = () => {
+  const handleStartGame = (playerName: string) => {
+    // Save player name to localStorage
+    try {
+      const saved = localStorage.getItem('ghost-in-the-code-save');
+      const data = saved ? JSON.parse(saved) : {};
+      data.playerName = playerName;
+      localStorage.setItem('ghost-in-the-code-save', JSON.stringify(data));
+    } catch (error) {
+      console.error('Failed to save player name:', error);
+    }
+    
     setShowLevelSelection(true);
   };
 
@@ -118,19 +132,33 @@ function App() {
   const handleChallengeSuccess = () => {
     console.log('Challenge completed successfully!');
     
+    if (!currentChallenge) return;
+    
+    // Dispatch the complete challenge action to update game state
+    const hintsUsed = state.hintsUsed.get(currentChallenge.id) || 0;
+    const attempts = attemptCount + 1; // Include the successful attempt
+    
+    console.log(`Challenge ${currentChallenge.id} completed with ${hintsUsed} hints used and ${attempts} attempts`);
+    console.log('Total hints used across all challenges:', state.assessmentMetrics.totalHintsUsed);
+    console.log('Completed challenges:', Array.from(state.completedChallenges));
+    
+    dispatch(gameActions.completeChallenge(currentChallenge.id, hintsUsed, attempts));
+    
     // Trigger all success animations
     setShowSuccessAnimation(true);
     setGhostState('celebrating');
     setGhostMessage("Amazing work! You fixed it! 🎉");
     setShowGhostSpeechBubble(true);
     
-    // Check for newly earned badges
-    const newBadges = checkAndAwardBadges();
-    if (newBadges.length > 0) {
-      // Show the first newly earned badge
-      setNewlyEarnedBadge(newBadges[0]);
-      console.log('New badge earned:', newBadges[0].name);
-    }
+    // Check for newly earned badges (after state update)
+    setTimeout(() => {
+      const newBadges = checkAndAwardBadges();
+      if (newBadges.length > 0) {
+        // Show the first newly earned badge
+        setNewlyEarnedBadge(newBadges[0]);
+        console.log('New badge earned:', newBadges[0].name);
+      }
+    }, 100);
     
     // Show educational completion modal after a brief delay
     setTimeout(() => {
@@ -148,7 +176,11 @@ function App() {
 
   const handleAttempt = (isCorrect: boolean) => {
     console.log('Attempt made:', isCorrect ? 'correct' : 'incorrect');
-    // TODO: Track attempts in game state (will be implemented in later tasks)
+    
+    // Track attempts (only count incorrect attempts, success is counted separately)
+    if (!isCorrect) {
+      setAttemptCount(prev => prev + 1);
+    }
   };
 
   // Show welcome screen if game hasn't started
@@ -241,17 +273,27 @@ function App() {
     if (index >= 0 && index < challenges.length) {
       setCurrentChallengeIndex(index);
       setCurrentChallenge(challenges[index]);
-      // TODO: Update game state with selected challenge (will be implemented in later tasks)
+      setAttemptCount(0); // Reset attempts for the selected challenge
       console.log('Selected challenge:', index);
+      
+      // Close the progress modal after selection
+      setShowProgressModal(false);
     }
   };
 
   const handleNextLevel = () => {
     console.log('Moving to next level...');
-    // TODO: Implement level progression logic in future tasks
-    // For now, just close the modal
+    
+    // Close the level complete modal
     setShowLevelComplete(false);
-    // Could reset to first challenge or load next level's challenges
+    
+    // Return to level selection so player can choose another level
+    setGameStarted(false);
+    setShowLevelSelection(true);
+    setHasSeenLevelIntro(false);
+    
+    // Dispatch next level action to update game state
+    dispatch(gameActions.nextLevel());
   };
 
   const handleCloseLevelComplete = () => {

@@ -12,17 +12,35 @@ import './ProgressSummary.css';
 
 interface ProgressSummaryProps {
   gameState: GameState;
-  playerName: string;
+  playerName?: string;
   onClose: () => void;
+}
+
+/**
+ * Get player name from localStorage
+ */
+function getPlayerName(): string {
+  try {
+    const saved = localStorage.getItem('ghost-in-the-code-save');
+    if (saved) {
+      const data = JSON.parse(saved);
+      return data.playerName || 'Ghost Debugger';
+    }
+  } catch (error) {
+    console.error('Failed to get player name:', error);
+  }
+  return 'Ghost Debugger';
 }
 
 export const ProgressSummary = ({ 
   gameState, 
-  playerName,
   onClose 
 }: ProgressSummaryProps) => {
   const summaryRef = useRef<HTMLDivElement>(null);
   const allChallenges = getAllChallengesFlat();
+  
+  // Always get the latest player name from localStorage
+  const playerName = getPlayerName();
 
   const handlePrint = () => {
     window.print();
