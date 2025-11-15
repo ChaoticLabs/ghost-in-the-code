@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { usePreferences } from '../engine';
 import './GhostCharacter.css';
@@ -23,10 +23,26 @@ export const GhostCharacter = ({
   const [showClickBubble, setShowClickBubble] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const [isSleeping, setIsSleeping] = useState(false);
-  const [inactivityTimer, setInactivityTimer] = useState<number | null>(null);
   const [spinDirection, setSpinDirection] = useState<'left' | 'right'>('right');
+  
+  // Use refs to avoid dependency issues
+  const inactivityTimerRef = useRef<number | null>(null);
+  const isSleepingRef = useRef(false);
+  const stateRef = useRef(state);
+  const isAnimatingRef = useRef(false);
+
+  // Update refs when state changes
+  useEffect(() => {
+    stateRef.current = state;
+    isSleepingRef.current = isSleeping;
+    isAnimatingRef.current = isAnimating;
+  }, [state, isSleeping, isAnimating]);
 
   useEffect(() => {
+    // Wake up if parent state changes from sleeping
+    if (state !== 'sleeping' && isSleeping) {
+      setIsSleeping(false);
+    }
     setCurrentState(state);
   }, [state]);
 
@@ -34,26 +50,25 @@ export const GhostCharacter = ({
   useEffect(() => {
     const startInactivityTimer = () => {
       // Clear existing timer
-      if (inactivityTimer) {
-        clearTimeout(inactivityTimer);
+      if (inactivityTimerRef.current) {
+        clearTimeout(inactivityTimerRef.current);
       }
 
       // Set new timer for 30 seconds
-      const timer = window.setTimeout(() => {
-        if (state === 'idle' && !isAnimating) {
+      inactivityTimerRef.current = window.setTimeout(() => {
+        // Use refs to get current values without causing re-renders
+        if (stateRef.current === 'idle' && !isAnimatingRef.current && !isSleepingRef.current) {
           setIsSleeping(true);
           setCurrentState('sleeping');
         }
       }, 30000); // 30 seconds
-
-      setInactivityTimer(timer);
     };
 
     const handleActivity = () => {
-      // Wake up if sleeping
-      if (isSleeping) {
+      // Wake up if sleeping (using ref to avoid dependency)
+      if (isSleepingRef.current) {
         setIsSleeping(false);
-        setCurrentState(state);
+        setCurrentState(stateRef.current);
       }
       // Reset inactivity timer
       startInactivityTimer();
@@ -71,8 +86,8 @@ export const GhostCharacter = ({
 
     // Cleanup
     return () => {
-      if (inactivityTimer) {
-        window.clearTimeout(inactivityTimer);
+      if (inactivityTimerRef.current) {
+        window.clearTimeout(inactivityTimerRef.current);
       }
       window.removeEventListener('mousemove', handleActivity);
       window.removeEventListener('mousedown', handleActivity);
@@ -80,7 +95,7 @@ export const GhostCharacter = ({
       window.removeEventListener('touchstart', handleActivity);
       window.removeEventListener('scroll', handleActivity);
     };
-  }, [state, isAnimating, isSleeping]);
+  }, []); // Empty dependency array - only run once on mount
 
   const cuteMessages = [
     "Boo! Did I scare you? 👻",
