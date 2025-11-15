@@ -242,20 +242,7 @@
 }
 
 .summary-progress-bar {
-  width: 100%;
-  height: 24px;
-  background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
-  overflow: hidden;
   margin-bottom: 8px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.summary-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--color-purple), var(--color-primary));
-  transition: width 0.5s ease;
-  box-shadow: 0 0 8px rgba(163, 255, 0, 0.5);
 }
 
 .summary-concept-stats {

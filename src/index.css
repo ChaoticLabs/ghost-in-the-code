@@ -368,6 +368,48 @@ p {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Progress Bar Utility Classes - DRY progress bar styling */
+.progress-bar-container {
+  position: relative;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 18px;
+  border: 2px solid var(--color-purple);
+  overflow: hidden;
+}
+
+/* Progress bar height variants */
+.progress-bar--small {
+  height: 8px;
+}
+
+.progress-bar--medium {
+  height: 24px;
+}
+
+.progress-bar--large {
+  height: 36px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-purple) 0%, var(--color-secondary) 50%, var(--color-primary) 100%);
+  border-radius: 16px;
+  transition: width 0.5s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-bar-label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-text-light);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  white-space: nowrap;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

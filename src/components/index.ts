@@ -3,6 +3,7 @@ export { GameBoard } from './GameBoard.tsx';
 export { CodeEditor } from './CodeEditor.tsx';
 export { GhostCharacter } from './GhostCharacter.tsx';
 export { ProgressTracker } from './ProgressTracker.tsx';
+export { ProgressBar } from './ProgressBar.tsx';
 export { LevelCompleteTransition } from './LevelCompleteTransition.tsx';
 export { SettingsPanel } from './SettingsPanel.tsx';
 export { HintPanel } from './HintPanel.tsx';

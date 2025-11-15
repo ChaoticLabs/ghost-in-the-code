@@ -5,6 +5,7 @@
 
 import { motion } from 'framer-motion';
 import { usePreferences } from '../engine';
+import { ProgressBar } from './ProgressBar';
 import './LevelSelection.css';
 
 export type LevelType = 'loop' | 'conditional' | 'logic';
@@ -150,15 +151,11 @@ export const LevelSelection = ({
 
                   {/* Progress */}
                   <div className="level-card-progress">
-                    <div className="progress-bar-container">
-                      <div 
-                        className="progress-bar-fill" 
-                        style={{ 
-                          width: `${completionPercentage}%`,
-                          backgroundColor: level.color
-                        }}
-                      />
-                    </div>
+                    <ProgressBar
+                      percentage={completionPercentage}
+                      color={level.color}
+                      height="small"
+                    />
                     <div className="progress-text">
                       {level.completedCount} / {level.challengeCount} Completed
                     </div>

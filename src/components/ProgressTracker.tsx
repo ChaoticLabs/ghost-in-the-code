@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { Challenge } from '../engine/types';
+import { ProgressBar } from './ProgressBar';
 import './ProgressTracker.css';
 
 interface ProgressTrackerProps {
@@ -109,13 +110,12 @@ export const ProgressTracker = ({
               </span>
             </div>
 
-            <div className="progress-bar-container" role="progressbar" aria-valuenow={progressPercentage} aria-valuemin={0} aria-valuemax={100}>
-              {progressPercentage > 0 && (
-                <div className="progress-bar-fill" style={{ width: `${progressPercentage}%` }}>
-                  <span className="progress-bar-label">{completedChallengeIds.size} / {challenges.length}</span>
-                </div>
-              )}
-            </div>
+            <ProgressBar
+              percentage={progressPercentage}
+              label={`${completedChallengeIds.size} / ${challenges.length}`}
+              showLabel={true}
+              height="large"
+            />
           </div>
 
           <div className="level-map">
