@@ -3,7 +3,7 @@ import { TerminalGlow, ParticleBurst } from '../animations/SuccessAnimations';
 import './GameBoard.css';
 
 interface GameBoardProps {
-  level: number;
+  levelName: string;
   challenge: number;
   totalChallenges: number;
   completedCount: number;
@@ -11,6 +11,7 @@ interface GameBoardProps {
   ghostCharacter: ReactNode;
   hintPanel: ReactNode;
   onProgressClick: () => void;
+  onLevelClick?: () => void;
   onSettingsClick?: () => void;
   onBadgeClick?: () => void;
   onProgressSummaryClick?: () => void;
@@ -19,7 +20,7 @@ interface GameBoardProps {
 }
 
 export const GameBoard = ({
-  level,
+  levelName,
   challenge,
   totalChallenges,
   completedCount,
@@ -27,6 +28,7 @@ export const GameBoard = ({
   ghostCharacter,
   hintPanel,
   onProgressClick,
+  onLevelClick,
   onSettingsClick,
   onBadgeClick,
   onProgressSummaryClick,
@@ -45,7 +47,14 @@ export const GameBoard = ({
       {/* Level/Challenge Display Header */}
       <header className="game-header">
         <div className="level-info">
-          <span className="level-label">Level {level}</span>
+          <button 
+            className="level-button" 
+            onClick={onLevelClick}
+            aria-label="Back to level selection"
+            title="Back to level selection"
+          >
+            {levelName}
+          </button>
           <button 
             className="progress-button" 
             onClick={onProgressClick}

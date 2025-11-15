@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary } from './components'
-import { getAllChallengesFlat, getLevelIntroduction } from './data'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection } from './components'
+import type { LevelType } from './components'
+import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction } from './data'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
 import './App.css'
 
@@ -25,8 +26,11 @@ function getPlayerName(): string {
 function App() {
   const { state } = useGame();
   const [gameStarted, setGameStarted] = useState(false);
+  const [showLevelSelection, setShowLevelSelection] = useState(false);
+  const [currentLevelName, setCurrentLevelName] = useState<string>('');
   const [currentChallenge, setCurrentChallenge] = useState<Challenge | null>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
+  const [allChallenges, setAllChallenges] = useState<Challenge[]>([]);
   const [showProgressModal, setShowProgressModal] = useState(false);
   const [ghostState, setGhostState] = useState<'idle' | 'happy' | 'thinking' | 'celebrating'>('idle');
   const [showSuccessAnimation, setShowSuccessAnimation] = useState(false);
@@ -46,14 +50,11 @@ function App() {
   
   const { checkAndAwardBadges } = useBadgeSystem(challenges);
 
-  // Load challenges on mount
+  // Load all challenges on mount
   useEffect(() => {
     try {
-      const allChallenges = getAllChallengesFlat();
-      setChallenges(allChallenges);
-      if (allChallenges.length > 0) {
-        setCurrentChallenge(allChallenges[0]);
-      }
+      const loadedChallenges = getAllChallengesFlat();
+      setAllChallenges(loadedChallenges);
     } catch (error) {
       console.error('Failed to load challenges:', error);
     }
@@ -69,17 +70,49 @@ function App() {
   }, [currentChallenge, gameStarted]);
 
   const handleStartGame = () => {
+    setShowLevelSelection(true);
+  };
+
+  const getLevelName = (levelType: LevelType): string => {
+    switch (levelType) {
+      case 'loop':
+        return 'Loops 🔄';
+      case 'conditional':
+        return 'Conditionals 🔀';
+      case 'logic':
+        return 'Logic Puzzles 🧩';
+      default:
+        return 'Level';
+    }
+  };
+
+  const handleSelectLevel = (levelType: LevelType) => {
+    const levelChallenges = getChallengesByType(levelType);
+    setChallenges(levelChallenges);
+    setCurrentLevelName(getLevelName(levelType));
+    
+    if (levelChallenges.length > 0) {
+      setCurrentChallenge(levelChallenges[0]);
+      setCurrentChallengeIndex(0);
+    }
+    
+    setShowLevelSelection(false);
     setGameStarted(true);
     
-    // Show level introduction if we have challenges
-    if (challenges.length > 0 && !hasSeenLevelIntro) {
-      const firstChallengeType = challenges[0].type;
-      const intro = getLevelIntroduction(firstChallengeType);
+    // Show level introduction
+    if (!hasSeenLevelIntro) {
+      const intro = getLevelIntroduction(levelType);
       if (intro) {
         setLevelIntroduction(intro);
         setShowLevelIntroduction(true);
       }
     }
+  };
+
+  const handleBackToLevelSelection = () => {
+    setGameStarted(false);
+    setShowLevelSelection(true);
+    setHasSeenLevelIntro(false);
   };
 
   const handleChallengeSuccess = () => {
@@ -119,8 +152,55 @@ function App() {
   };
 
   // Show welcome screen if game hasn't started
-  if (!gameStarted) {
+  if (!gameStarted && !showLevelSelection) {
     return <WelcomeScreen onStart={handleStartGame} />;
+  }
+
+  // Show level selection screen
+  if (showLevelSelection && !gameStarted) {
+    const levelInfo = [
+      {
+        type: 'loop' as LevelType,
+        title: 'Loops',
+        description: 'Learn how to repeat actions and create efficient code with loops!',
+        icon: '🔄',
+        color: '#00D9FF',
+        challengeCount: allChallenges.filter(c => c.type === 'loop').length,
+        completedCount: Array.from(state.completedChallenges).filter(id => 
+          allChallenges.find(c => c.id === id && c.type === 'loop')
+        ).length
+      },
+      {
+        type: 'conditional' as LevelType,
+        title: 'Conditionals',
+        description: 'Master decision-making in code with if statements and conditions!',
+        icon: '🔀',
+        color: '#A3FF00',
+        challengeCount: allChallenges.filter(c => c.type === 'conditional').length,
+        completedCount: Array.from(state.completedChallenges).filter(id => 
+          allChallenges.find(c => c.id === id && c.type === 'conditional')
+        ).length
+      },
+      {
+        type: 'logic' as LevelType,
+        title: 'Logic Puzzles',
+        description: 'Solve tricky problems and think like a programmer!',
+        icon: '🧩',
+        color: '#FF9500',
+        challengeCount: allChallenges.filter(c => c.type === 'logic').length,
+        completedCount: Array.from(state.completedChallenges).filter(id => 
+          allChallenges.find(c => c.id === id && c.type === 'logic')
+        ).length
+      }
+    ];
+
+    return (
+      <LevelSelection
+        levels={levelInfo}
+        onSelectLevel={handleSelectLevel}
+        onBack={() => setShowLevelSelection(false)}
+      />
+    );
   }
 
   // Code editor component
@@ -244,7 +324,7 @@ function App() {
   return (
     <>
       <GameBoard
-        level={state.currentLevel}
+        levelName={currentLevelName}
         challenge={state.currentChallenge + 1}
         totalChallenges={challenges.length}
         completedCount={state.completedChallenges.size}
@@ -252,6 +332,7 @@ function App() {
         ghostCharacter={ghostCharacterComponent}
         hintPanel={hintPanelComponent}
         onProgressClick={handleProgressClick}
+        onLevelClick={handleBackToLevelSelection}
         onSettingsClick={handleSettingsClick}
         onBadgeClick={handleBadgeClick}
         onProgressSummaryClick={handleProgressSummaryClick}
