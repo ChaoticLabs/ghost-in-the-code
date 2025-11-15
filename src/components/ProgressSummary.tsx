@@ -157,7 +157,18 @@ export const ProgressSummary = ({
   };
 
   const getConceptMastery = (concept: string): number => {
-    return gameState.assessmentMetrics.conceptMastery.get(concept) || 0;
+    const mastery = gameState.assessmentMetrics.conceptMastery.get(concept);
+    
+    // If no mastery data exists but challenges are completed, calculate based on completion
+    if (mastery === undefined || mastery === 0) {
+      const stats = conceptStats[concept as keyof typeof conceptStats];
+      if (stats && stats.completed > 0) {
+        // Return completion percentage as a fallback
+        return Math.round((stats.completed / stats.total) * 100);
+      }
+    }
+    
+    return mastery || 0;
   };
 
   return (
@@ -247,10 +258,12 @@ export const ProgressSummary = ({
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🔁 Loops</h4>
                 <div className="summary-progress-bar">
-                  <div 
-                    className="summary-progress-fill" 
-                    style={{ width: `${getConceptMastery('loop')}%` }}
-                  ></div>
+                  {getConceptMastery('loop') > 0 && (
+                    <div 
+                      className="summary-progress-fill" 
+                      style={{ width: `${getConceptMastery('loop')}%` }}
+                    ></div>
+                  )}
                 </div>
                 <div className="summary-concept-stats">
                   <span>{getConceptMastery('loop')}% Mastery</span>
@@ -261,10 +274,12 @@ export const ProgressSummary = ({
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🔀 Conditionals</h4>
                 <div className="summary-progress-bar">
-                  <div 
-                    className="summary-progress-fill" 
-                    style={{ width: `${getConceptMastery('conditional')}%` }}
-                  ></div>
+                  {getConceptMastery('conditional') > 0 && (
+                    <div 
+                      className="summary-progress-fill" 
+                      style={{ width: `${getConceptMastery('conditional')}%` }}
+                    ></div>
+                  )}
                 </div>
                 <div className="summary-concept-stats">
                   <span>{getConceptMastery('conditional')}% Mastery</span>
@@ -275,10 +290,12 @@ export const ProgressSummary = ({
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🧩 Logic</h4>
                 <div className="summary-progress-bar">
-                  <div 
-                    className="summary-progress-fill" 
-                    style={{ width: `${getConceptMastery('logic')}%` }}
-                  ></div>
+                  {getConceptMastery('logic') > 0 && (
+                    <div 
+                      className="summary-progress-fill" 
+                      style={{ width: `${getConceptMastery('logic')}%` }}
+                    ></div>
+                  )}
                 </div>
                 <div className="summary-concept-stats">
                   <span>{getConceptMastery('logic')}% Mastery</span>
