@@ -53,7 +53,7 @@ export const ProgressSummary = ({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `ghost-debugger-progress-${playerName.replace(/\s+/g, '-').toLowerCase()}.html`;
+    link.download = `ghost-in-the-code-progress-${playerName.replace(/\s+/g, '-').toLowerCase()}.html`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

@@ -75,7 +75,7 @@ export const BadgeCollection = ({
       <div className="badge-modal" onClick={(e) => e.stopPropagation()}>
         <div className="badge-collection">
           <div className="badge-header">
-            <h2 className="badge-title">Ghost Debugger Badges</h2>
+            <h2 className="badge-title">Ghost In The Code Badges</h2>
             <button 
               className="badge-modal-close" 
               onClick={onClose}

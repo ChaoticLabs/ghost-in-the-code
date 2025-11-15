@@ -38,7 +38,7 @@ export const BadgeCertificate = ({
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ghost Debugger Certificate - ${playerName}</title>
+  <title>Ghost In The Code Certificate - ${playerName}</title>
   <style>
     ${getCertificateStyles()}
   </style>
@@ -53,7 +53,7 @@ export const BadgeCertificate = ({
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `ghost-debugger-certificate-${playerName.replace(/\s+/g, '-').toLowerCase()}.html`;
+    link.download = `ghost-in-the-code-certificate-${playerName.replace(/\s+/g, '-').toLowerCase()}.html`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -131,8 +131,7 @@ export const BadgeCertificate = ({
             {/* Header */}
             <div className="certificate-header">
               <div className="certificate-ghost-icon">👻</div>
-              <h1 className="certificate-title">Ghost Debugger Certificate</h1>
-              <p className="certificate-subtitle">Ghost in The Code</p>
+              <h1 className="certificate-title">Ghost In The Code Certificate</h1>
             </div>
 
             {/* Main content */}
@@ -146,7 +145,7 @@ export const BadgeCertificate = ({
               
               <div className="certificate-badge-count">
                 <span className="certificate-badge-number">{badges.length}</span>
-                <span className="certificate-badge-label">Ghost Debugger Badge{badges.length !== 1 ? 's' : ''}</span>
+                <span className="certificate-badge-label">Ghost In The Code Badge{badges.length !== 1 ? 's' : ''}</span>
               </div>
 
               {/* Badge sections */}
