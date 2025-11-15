@@ -46,8 +46,6 @@
 }
 
 .badge-title {
-  font-size: 1.65rem;
-  font-weight: bold;
   color: #ffffff;
   margin: 0;
   text-shadow: 0 0 10px rgba(163, 255, 0, 0.5);
@@ -103,7 +101,7 @@
 }
 
 .badge-category-title {
-  font-size: 1.3rem;
+  font-size: 2rem;
   color: #a3ff00;
   margin: 0 0 0.75rem 0;
   font-weight: bold;

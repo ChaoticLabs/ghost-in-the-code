@@ -50,12 +50,8 @@
 
 /* Game Title - Spooky but Cute */
 .game-title {
-  font-size: clamp(2rem, 7vw, 3.5rem);
-  font-weight: 400;
   color: #FFFFFF;
   margin: 0 0 0.5rem 0;
-  line-height: 1.1;
-  letter-spacing: 0.05em;
   position: relative;
   
   /* Spooky glow effect */

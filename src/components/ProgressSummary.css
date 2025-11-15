@@ -17,22 +17,23 @@
 }
 
 .summary-modal {
-  background: white;
+  background: linear-gradient(135deg, var(--color-darker-bg) 0%, var(--color-dark-bg) 100%);
+  border: 3px solid var(--color-purple);
   border-radius: 12px;
   max-width: 900px;
   width: 100%;
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgba(107, 70, 193, 0.4);
 }
 
 .summary-actions {
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--color-dark-bg);
   padding: 16px;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--color-border);
   display: flex;
   gap: 12px;
   justify-content: flex-end;
@@ -41,10 +42,10 @@
 
 .summary-button {
   padding: 10px 20px;
-  border: 2px solid #6B46C1;
+  border: 2px solid var(--color-purple);
   border-radius: 8px;
-  background: white;
-  color: #6B46C1;
+  background: transparent;
+  color: var(--color-text-light);
   font-size: 16px;
   font-weight: 600;
   cursor: pointer;
@@ -55,15 +56,16 @@
 }
 
 .summary-button:hover {
-  background: #6B46C1;
-  color: white;
+  background: var(--color-purple);
+  color: var(--color-text-light);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
 }
 
 .summary-button--print {
-  background: #6B46C1;
-  color: white;
+  background: var(--color-purple);
+  border-color: var(--color-purple);
+  color: var(--color-text-light);
 }
 
 .summary-button--print:hover {
@@ -71,9 +73,9 @@
 }
 
 .summary-button--download {
-  background: #00D9FF;
-  border-color: #00D9FF;
-  color: white;
+  background: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-dark-bg);
 }
 
 .summary-button--download:hover {
@@ -84,19 +86,20 @@
 .summary-button--close {
   background: transparent;
   border: none;
-  color: #666;
+  color: var(--color-text-muted);
   padding: 0.5rem;
 }
 
 .summary-button--close:hover {
   background: transparent;
-  color: #FF9500;
+  color: var(--color-accent);
   transform: none;
   box-shadow: none;
 }
 
 .summary-container {
   padding: 40px;
+  color: var(--color-text-light);
 }
 
 /* Header */
@@ -104,7 +107,7 @@
   text-align: center;
   margin-bottom: 32px;
   padding-bottom: 24px;
-  border-bottom: 3px solid #6B46C1;
+  border-bottom: 3px solid var(--color-purple);
 }
 
 .summary-ghost-icon {
@@ -123,15 +126,13 @@
 }
 
 .summary-title {
-  font-size: 36px;
-  color: #6B46C1;
+  color: var(--color-primary);
   margin-bottom: 8px;
-  font-weight: bold;
 }
 
 .summary-subtitle {
   font-size: 18px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 /* Player Info */
@@ -141,16 +142,15 @@
 }
 
 .summary-player-name {
-  font-size: 28px;
-  color: #1A1F2E;
+  /* Uses h2 styling */
+  color: var(--color-text-light);
   margin-bottom: 8px;
-  font-weight: bold;
 }
 
 .summary-generated-date,
 .summary-last-activity {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
   margin-bottom: 4px;
 }
 
@@ -160,11 +160,10 @@
 }
 
 .summary-section-title {
-  font-size: 24px;
-  color: #6B46C1;
+  /* Uses h2 styling */
+  color: var(--color-secondary);
   margin-bottom: 16px;
-  font-weight: bold;
-  border-bottom: 2px solid #eee;
+  border-bottom: 2px solid var(--color-border);
   padding-bottom: 8px;
 }
 
@@ -177,8 +176,8 @@
 }
 
 .summary-stat-card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  border: 2px solid #6B46C1;
+  background: rgba(107, 70, 193, 0.2);
+  border: 2px solid var(--color-purple);
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -187,7 +186,7 @@
 
 .summary-stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(107, 70, 193, 0.2);
+  box-shadow: 0 8px 16px rgba(107, 70, 193, 0.4);
 }
 
 .summary-stat-icon {
@@ -197,7 +196,7 @@
 
 .summary-stat-value {
   font-size: 36px;
-  color: #6B46C1;
+  color: var(--color-primary);
   font-weight: bold;
   margin-bottom: 4px;
   line-height: 1;
@@ -205,14 +204,14 @@
 
 .summary-stat-label {
   font-size: 14px;
-  color: #1A1F2E;
+  color: var(--color-text-light);
   font-weight: 600;
   margin-bottom: 4px;
 }
 
 .summary-stat-detail {
   font-size: 12px;
-  color: #666;
+  color: var(--color-text-muted);
   min-height: 16px;
 }
 
@@ -224,8 +223,8 @@
 }
 
 .summary-concept-card {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
+  background: rgba(107, 70, 193, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -233,29 +232,28 @@
 
 .summary-concept-card:hover {
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
 }
 
 .summary-concept-name {
-  font-size: 18px;
-  color: #1A1F2E;
+  /* Uses h4 styling */
+  color: var(--color-text-light);
   margin-bottom: 12px;
-  font-weight: 600;
 }
 
 .summary-progress-bar {
   width: 100%;
   height: 24px;
-  background: #e0e0e0;
+  background: rgba(0, 0, 0, 0.4);
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 8px;
-  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .summary-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #6B46C1, #A3FF00);
+  background: linear-gradient(90deg, var(--color-purple), var(--color-primary));
   transition: width 0.5s ease;
   box-shadow: 0 0 8px rgba(163, 255, 0, 0.5);
 }
@@ -264,14 +262,14 @@
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
   font-weight: 500;
 }
 
 /* Learning Stats */
 .summary-learning-stats {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
+  background: rgba(107, 70, 193, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 12px;
   padding: 20px;
 }
@@ -281,7 +279,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px 0;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 .summary-learning-stat:last-child {
@@ -290,13 +288,13 @@
 
 .summary-learning-label {
   font-size: 16px;
-  color: #1A1F2E;
+  color: var(--color-text-light);
   font-weight: 500;
 }
 
 .summary-learning-value {
   font-size: 18px;
-  color: #6B46C1;
+  color: var(--color-secondary);
   font-weight: bold;
 }
 
@@ -306,12 +304,11 @@
 }
 
 .summary-badge-category-title {
-  font-size: 18px;
-  color: #1A1F2E;
+  /* Uses h4 styling */
+  color: var(--color-text-light);
   margin-bottom: 12px;
-  font-weight: 600;
   padding-left: 8px;
-  border-left: 4px solid #6B46C1;
+  border-left: 4px solid var(--color-purple);
 }
 
 .summary-badge-list {
@@ -325,16 +322,16 @@
   align-items: center;
   gap: 12px;
   padding: 12px;
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
+  background: rgba(107, 70, 193, 0.15);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .summary-badge-item:hover {
   transform: translateX(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: #6B46C1;
+  box-shadow: 0 4px 12px rgba(107, 70, 193, 0.3);
+  border-color: var(--color-purple);
 }
 
 .summary-badge-icon {
@@ -351,18 +348,18 @@
 
 .summary-badge-name {
   font-size: 16px;
-  color: #1A1F2E;
+  color: var(--color-text-light);
   font-weight: 600;
 }
 
 .summary-badge-description {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 .summary-badge-date {
   font-size: 14px;
-  color: #666;
+  color: var(--color-secondary);
   flex-shrink: 0;
 }
 
@@ -370,13 +367,13 @@
 .summary-footer {
   margin-top: 48px;
   padding-top: 24px;
-  border-top: 2px solid #eee;
+  border-top: 2px solid var(--color-border);
   text-align: center;
 }
 
 .summary-footer-text {
   font-size: 16px;
-  color: #666;
+  color: var(--color-text-muted);
   margin-bottom: 32px;
   font-style: italic;
 }
@@ -392,13 +389,13 @@
 .summary-signature-line {
   width: 100%;
   height: 2px;
-  background: #1A1F2E;
+  background: var(--color-text-light);
   margin-bottom: 8px;
 }
 
 .summary-signature-label {
   font-size: 14px;
-  color: #666;
+  color: var(--color-text-muted);
 }
 
 /* Print Styles */
@@ -456,9 +453,7 @@
     padding: 20px;
   }
 
-  .summary-title {
-    font-size: 28px;
-  }
+  /* Title uses global h1 responsive sizing */
 
   .summary-stats-grid {
     grid-template-columns: repeat(2, 1fr);

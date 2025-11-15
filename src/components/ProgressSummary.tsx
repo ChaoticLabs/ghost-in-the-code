@@ -384,10 +384,13 @@ function getSummaryStyles(): string {
     }
 
     .summary-title {
-      font-size: 36px;
+      font-family: 'Jolly Lodger', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
       color: #6B46C1;
       margin-bottom: 8px;
-      font-weight: bold;
     }
 
     .summary-subtitle {
@@ -401,10 +404,13 @@ function getSummaryStyles(): string {
     }
 
     .summary-player-name {
-      font-size: 28px;
+      font-family: 'Jolly Lodger', cursive;
+      font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
       color: #1A1F2E;
       margin-bottom: 8px;
-      font-weight: bold;
     }
 
     .summary-generated-date,
@@ -420,10 +426,13 @@ function getSummaryStyles(): string {
     }
 
     .summary-section-title {
-      font-size: 24px;
+      font-family: 'Jolly Lodger', cursive;
+      font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      line-height: 1.2;
       color: #6B46C1;
       margin-bottom: 16px;
-      font-weight: bold;
       border-bottom: 2px solid #eee;
       padding-bottom: 8px;
     }

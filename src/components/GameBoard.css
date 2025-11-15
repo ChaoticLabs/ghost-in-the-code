@@ -67,10 +67,7 @@
 
 /* Level Button - Clickable to return to level selection */
 .level-button {
-  font-size: clamp(1.25rem, 3.5vw, 2rem);
-  font-weight: 700;
   color: #A3FF00;
-  letter-spacing: 0.05em;
   text-shadow: 
     0 0 10px rgba(163, 255, 0, 0.6),
     0 0 20px rgba(163, 255, 0, 0.3);

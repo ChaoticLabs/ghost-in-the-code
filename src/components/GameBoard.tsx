@@ -48,7 +48,7 @@ export const GameBoard = ({
       <header className="game-header">
         <div className="level-info">
           <button 
-            className="level-button" 
+            className="level-button h1-style" 
             onClick={onLevelClick}
             aria-label="Back to level selection"
             title="Back to level selection"
