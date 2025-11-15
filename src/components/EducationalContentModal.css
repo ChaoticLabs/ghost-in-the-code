@@ -28,9 +28,9 @@
 }
 
 .educational-modal {
-  background: linear-gradient(135deg, #2D1B4E 0%, #1A1F2E 100%);
-  border: 3px solid #A3FF00;
-  border-radius: 14px;
+  background: linear-gradient(135deg, var(--color-darker-bg) 0%, var(--color-dark-bg) 100%);
+  border: 3px solid var(--color-primary);
+  border-radius: 12px;
   max-width: 550px;
   width: 100%;
   max-height: 90vh;
@@ -57,11 +57,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.25rem 0.75rem;
-  border-bottom: 2px solid rgba(163, 255, 0, 0.3);
+  border-bottom: 2px solid var(--color-border);
 }
 
 .educational-modal-title {
-  color: #FFFFFF;
+  color: var(--color-text-light);
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
@@ -72,7 +72,7 @@
 .educational-modal-close {
   background: transparent;
   border: none;
-  color: #FFFFFF;
+  color: var(--color-text-light);
   font-size: 1.5rem;
   cursor: pointer;
   padding: 0.5rem;
@@ -88,7 +88,7 @@
 }
 
 .educational-modal-close:hover {
-  color: #FF9500;
+  color: var(--color-accent);
 }
 
 .educational-modal-close:focus {
@@ -102,6 +102,7 @@
   overflow-y: auto;
   flex: 1;
   min-height: 0;
+  color: var(--color-text-light);
 }
 
 .educational-modal-ghost {
@@ -221,9 +222,9 @@
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
-  border-top: 2px solid rgba(163, 255, 0, 0.3);
+  border-top: 2px solid var(--color-border);
   flex-shrink: 0;
-  background: linear-gradient(135deg, #2D1B4E 0%, #1A1F2E 100%);
+  background: linear-gradient(135deg, var(--color-darker-bg) 0%, var(--color-dark-bg) 100%);
 }
 
 .educational-modal-button {
@@ -240,9 +241,9 @@
 }
 
 .educational-modal-button.primary {
-  background: linear-gradient(135deg, #A3FF00 0%, #7ACC00 100%);
-  color: #1A1F2E;
-  border: 2px solid #A3FF00;
+  background: linear-gradient(135deg, var(--color-primary) 0%, #7ACC00 100%);
+  color: var(--color-dark-bg);
+  border: 2px solid var(--color-primary);
 }
 
 .educational-modal-button.primary:hover {
@@ -258,8 +259,8 @@
 
 .educational-modal-button.secondary {
   background: transparent;
-  color: #FFFFFF;
-  border: 2px solid #FFFFFF;
+  color: var(--color-text-light);
+  border: 2px solid var(--color-text-light);
 }
 
 .educational-modal-button.secondary:hover {
