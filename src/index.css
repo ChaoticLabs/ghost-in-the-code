@@ -251,6 +251,63 @@ p {
   outline-offset: 2px;
 }
 
+/* Icon Button Utility Classes - For badges, settings, progress buttons */
+.icon-button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0.4rem;
+  background: rgba(107, 70, 193, 0.3);
+  border: 2px solid var(--color-purple);
+  border-radius: 8px;
+  color: var(--color-text-light);
+  font-size: clamp(1.15rem, 2.5vw, 1.35rem);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.icon-button:hover {
+  background: rgba(107, 70, 193, 0.5);
+  border-color: var(--color-secondary);
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.icon-button:active {
+  transform: translateY(0) rotate(45deg);
+}
+
+.icon-button:focus {
+  outline: 3px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Icon button variants */
+.icon-button--badge:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 20px rgba(163, 255, 0, 0.4);
+}
+
+/* Badge count indicator for icon buttons */
+.icon-button__badge-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--color-primary);
+  color: var(--color-dark-bg);
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 0.125rem 0.375rem;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }

@@ -61,7 +61,7 @@ export const LevelSelection = ({
         <div className="level-selection-actions">
           {onProgressSummaryClick && (
             <button 
-              className="level-selection-action-button"
+              className="icon-button"
               onClick={onProgressSummaryClick}
               aria-label="View progress summary"
               title="Progress Summary"
@@ -71,18 +71,18 @@ export const LevelSelection = ({
           )}
           {onBadgeClick && (
             <button 
-              className="level-selection-action-button level-selection-action-button--badge"
+              className="icon-button icon-button--badge"
               onClick={onBadgeClick}
               aria-label="View badges"
               title="View Badges"
             >
               🏆
-              {badgeCount > 0 && <span className="badge-count">{badgeCount}</span>}
+              {badgeCount > 0 && <span className="icon-button__badge-count">{badgeCount}</span>}
             </button>
           )}
           {onSettingsClick && (
             <button 
-              className="level-selection-action-button"
+              className="icon-button icon-button--settings"
               onClick={onSettingsClick}
               aria-label="Open settings"
               title="Settings"

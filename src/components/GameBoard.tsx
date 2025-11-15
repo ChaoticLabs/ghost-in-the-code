@@ -71,7 +71,7 @@ export const GameBoard = ({
         <div className="header-actions">
           {onProgressSummaryClick && (
             <button 
-              className="progress-summary-button" 
+              className="icon-button" 
               onClick={onProgressSummaryClick}
               aria-label="View progress summary"
               title="View detailed progress summary"
@@ -81,20 +81,20 @@ export const GameBoard = ({
           )}
           {onBadgeClick && (
             <button 
-              className="badge-button" 
+              className="icon-button icon-button--badge" 
               onClick={onBadgeClick}
               aria-label="View badges"
               title="View your badges"
             >
               🏆
               {badgeCount > 0 && (
-                <span className="badge-count-indicator">{badgeCount}</span>
+                <span className="icon-button__badge-count">{badgeCount}</span>
               )}
             </button>
           )}
           {onSettingsClick && (
             <button 
-              className="settings-button" 
+              className="icon-button icon-button--settings" 
               onClick={onSettingsClick}
               aria-label="Open settings"
             >
