@@ -30,6 +30,7 @@ This is a **hackathon project** with the following priorities:
 - Keep architecture simple and straightforward
 - **Always use TypeScript** - All code should be written in TypeScript where possible for type safety
 - Use modern TypeScript patterns with strict mode enabled
+- **Follow DRY (Don't Repeat Yourself)** - Extract common logic, styles, and patterns into reusable components, utilities, and shared modules
 - Leverage existing libraries and frameworks where helpful
 - Focus on the interactive and visual elements that make the game engaging
 - Animations and user feedback are important for the experience
