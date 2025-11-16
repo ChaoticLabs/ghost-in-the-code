@@ -37,7 +37,31 @@ export function useBadgeSystem(challenges: Challenge[]) {
       currentBadges: state.badges
     };
 
+    console.log('Badge check stats:', {
+      completedCount: stats.completedChallenges.size,
+      totalChallenges: stats.totalChallenges,
+      loopChallenges: challengesByType.get('loop')?.length || 0,
+      conditionalChallenges: challengesByType.get('conditional')?.length || 0,
+      logicChallenges: challengesByType.get('logic')?.length || 0,
+      currentBadges: stats.currentBadges.map(b => b.id)
+    });
+
+    // Debug: Check loop badge specifically
+    const loopChallenges = challengesByType.get('loop') || [];
+    const completedLoops = loopChallenges.filter(id => stats.completedChallenges.has(id));
+    console.log('Loop badge check:', {
+      totalLoopChallenges: loopChallenges.length,
+      completedLoopChallenges: completedLoops.length,
+      loopChallengeIds: loopChallenges,
+      completedLoopIds: completedLoops,
+      allCompleted: loopChallenges.every(id => stats.completedChallenges.has(id))
+    });
+
     const newBadges = checkForNewBadges(stats);
+
+    if (newBadges.length > 0) {
+      console.log('New badges earned:', newBadges.map(b => b.name));
+    }
 
     // Dispatch actions to add each new badge
     newBadges.forEach(badge => {

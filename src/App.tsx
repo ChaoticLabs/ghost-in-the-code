@@ -134,6 +134,14 @@ function App() {
       console.error('Failed to load challenges:', error);
     }
   }, []);
+
+  // Check for missing badges on mount (after allChallenges is loaded)
+  useEffect(() => {
+    if (allChallenges.length > 0 && gameStarted) {
+      console.log('Checking for missing badges on mount...');
+      checkAndAwardBadges();
+    }
+  }, [allChallenges.length, gameStarted]);
   
   // Save app state whenever key state changes
   useEffect(() => {
