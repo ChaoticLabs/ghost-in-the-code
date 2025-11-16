@@ -45,26 +45,8 @@ function validateChallenge(challenge: any, index: number): void {
   if (!challenge.codeFragment || typeof challenge.codeFragment !== 'object') {
     errors.push('Missing or invalid codeFragment');
   } else {
-    if (!Array.isArray(challenge.codeFragment.lines)) {
-      errors.push('codeFragment.lines must be an array');
-    } else {
-      challenge.codeFragment.lines.forEach((line: any, lineIndex: number) => {
-        if (typeof line.lineNumber !== 'number') {
-          errors.push(`Line ${lineIndex}: missing or invalid lineNumber`);
-        }
-        if (typeof line.content !== 'string') {
-          errors.push(`Line ${lineIndex}: missing or invalid content`);
-        }
-        if (typeof line.isEditable !== 'boolean') {
-          errors.push(`Line ${lineIndex}: missing or invalid isEditable`);
-        }
-        if (typeof line.isBuggy !== 'boolean') {
-          errors.push(`Line ${lineIndex}: missing or invalid isBuggy`);
-        }
-      });
-    }
-    if (!Array.isArray(challenge.codeFragment.buggyLines)) {
-      errors.push('codeFragment.buggyLines must be an array');
+    if (typeof challenge.codeFragment.initialCode !== 'string') {
+      errors.push('codeFragment.initialCode must be a string');
     }
   }
 
@@ -72,14 +54,14 @@ function validateChallenge(challenge: any, index: number): void {
   if (!challenge.solution || typeof challenge.solution !== 'object') {
     errors.push('Missing or invalid solution');
   } else {
-    if (challenge.solution.type !== 'line-replacement') {
-      errors.push('solution.type must be "line-replacement"');
+    if (challenge.solution.type !== 'output-match') {
+      errors.push('solution.type must be "output-match"');
     }
-    if (typeof challenge.solution.lineNumber !== 'number') {
-      errors.push('solution.lineNumber must be a number');
+    if (typeof challenge.solution.expectedOutput !== 'string') {
+      errors.push('solution.expectedOutput must be a string');
     }
-    if (typeof challenge.solution.correctContent !== 'string') {
-      errors.push('solution.correctContent must be a string');
+    if (challenge.solution.alternativeOutputs && !Array.isArray(challenge.solution.alternativeOutputs)) {
+      errors.push('solution.alternativeOutputs must be an array if provided');
     }
   }
 

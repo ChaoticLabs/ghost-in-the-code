@@ -12,28 +12,31 @@ interface CodeEditorProps {
 }
 
 export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimation = false }: CodeEditorProps) => {
-  const [editedLines, setEditedLines] = useState<Map<number, string>>(new Map());
-  const [feedback, setFeedback] = useState<{ message: string; isCorrect: boolean } | null>(null);
+  const [code, setCode] = useState<string>('');
+  const [feedback, setFeedback] = useState<{ message: string; isCorrect: boolean; output?: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Reset state when challenge changes
   useEffect(() => {
-    setEditedLines(new Map());
+    setCode(challenge.codeFragment.initialCode);
     setFeedback(null);
     setIsSubmitting(false);
   }, [challenge.id]);
 
-  const handleLineEdit = (lineNumber: number, content: string) => {
-    const newEditedLines = new Map(editedLines);
-    newEditedLines.set(lineNumber, content);
-    setEditedLines(newEditedLines);
+  const handleCodeChange = (newCode: string) => {
+    setCode(newCode);
     // Clear feedback when user starts editing
     if (feedback) {
       setFeedback(null);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>, lineNumber: number) => {
+  const handleReset = () => {
+    setCode(challenge.codeFragment.initialCode);
+    setFeedback(null);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
       
@@ -65,7 +68,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
       const newContent = beforeCursor + '\n' + newIndent + afterCursor;
       
       // Update the content
-      handleLineEdit(lineNumber, newContent);
+      handleCodeChange(newContent);
       
       // Set cursor position after the indentation on the next frame
       setTimeout(() => {
@@ -84,7 +87,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
       const afterCursor = currentContent.substring(cursorPosition);
       const newContent = beforeCursor + '  ' + afterCursor;
       
-      handleLineEdit(lineNumber, newContent);
+      handleCodeChange(newContent);
       
       // Set cursor position after the tab
       setTimeout(() => {
@@ -96,25 +99,13 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
   const handleSubmit = () => {
     setIsSubmitting(true);
     
-    // Get the edited content for the buggy line
-    const buggyLineNumber = challenge.solution.lineNumber;
-    const editedContent = editedLines.get(buggyLineNumber);
-    
-    if (!editedContent) {
-      setFeedback({
-        message: "You haven't made any changes yet! Try editing the buggy line.",
-        isCorrect: false
-      });
-      setIsSubmitting(false);
-      return;
-    }
-
-    // Validate the solution
-    const result = validateSolution(editedContent, challenge.solution);
+    // Validate the solution by running the code
+    const result = validateSolution(code, challenge.solution);
     
     setFeedback({
       message: result.detailedFeedback || result.feedback,
-      isCorrect: result.isCorrect
+      isCorrect: result.isCorrect,
+      output: result.output
     });
 
     // Notify parent component
@@ -130,32 +121,6 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
     setIsSubmitting(false);
   };
 
-  const getLineContent = (lineNumber: number, originalContent: string): string => {
-    return editedLines.get(lineNumber) ?? originalContent;
-  };
-
-  // Simple syntax highlighting using regex patterns
-  const highlightSyntax = (code: string) => {
-    // Keywords
-    const keywords = /\b(let|const|var|if|else|for|while|function|return|console|log)\b/g;
-    // Strings
-    const strings = /(['"`])(.*?)\1/g;
-    // Numbers
-    const numbers = /\b(\d+)\b/g;
-    // Comments
-    const comments = /(\/\/.*$|\/\*[\s\S]*?\*\/)/gm;
-    
-    let highlighted = code;
-    
-    // Apply highlighting (order matters)
-    highlighted = highlighted.replace(comments, '<span class="syntax-comment">$1</span>');
-    highlighted = highlighted.replace(strings, '<span class="syntax-string">$1$2$1</span>');
-    highlighted = highlighted.replace(keywords, '<span class="syntax-keyword">$1</span>');
-    highlighted = highlighted.replace(numbers, '<span class="syntax-number">$1</span>');
-    
-    return <span dangerouslySetInnerHTML={{ __html: highlighted }} />;
-  };
-
   return (
     <div className="code-editor">
       <div className="code-editor-header">
@@ -164,56 +129,56 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
       </div>
 
       <div className="code-container" style={{ position: 'relative' }}>
-        {/* Code Heal Animation - just for the fixed line */}
+        {/* Code Heal Animation */}
         <CodeHeal 
-          lineNumber={challenge.solution.lineNumber}
+          lineNumber={1}
           isActive={showSuccessAnimation}
         />
-        {challenge.codeFragment.lines.map((line) => {
-          const isEditable = line.isEditable;
-          const isBuggy = line.isBuggy;
-          const lineContent = getLineContent(line.lineNumber, line.content);
-
-          return (
-            <div
-              key={line.lineNumber}
-              className={`code-line ${isBuggy ? 'buggy-line' : ''} ${isEditable ? 'editable-line' : ''}`}
-            >
-              <span className="line-number">{line.lineNumber}</span>
-              {isEditable ? (
-                <textarea
-                  className="code-input"
-                  value={lineContent}
-                  onChange={(e) => handleLineEdit(line.lineNumber, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(e, line.lineNumber)}
-                  rows={lineContent.split('\n').length}
-                  spellCheck={false}
-                  aria-label={`Edit line ${line.lineNumber}`}
-                />
-              ) : (
-                <pre className="code-content">
-                  <code>{highlightSyntax(line.content)}</code>
-                </pre>
-              )}
-            </div>
-          );
-        })}
+        
+        <textarea
+          className="code-textarea"
+          value={code}
+          onChange={(e) => handleCodeChange(e.target.value)}
+          onKeyDown={handleKeyDown}
+          spellCheck={false}
+          aria-label="Code editor"
+          placeholder="Write your code here..."
+        />
       </div>
 
       {feedback && (
         <div className={`feedback ${feedback.isCorrect ? 'feedback-success' : 'feedback-error'}`} role="alert">
-          {feedback.message}
+          <div className="feedback-message">{feedback.message}</div>
+          {feedback.output && (
+            <div className="feedback-output">
+              <strong>Output:</strong> {feedback.output}
+            </div>
+          )}
         </div>
       )}
 
-      <button
-        className="submit-button"
-        onClick={handleSubmit}
-        disabled={isSubmitting || (feedback?.isCorrect ?? false)}
-        aria-label="Submit solution"
-      >
-        {isSubmitting ? 'Checking...' : feedback?.isCorrect ? 'Fixed! ✓' : 'Submit Solution'}
-      </button>
+      <div className="code-editor-actions">
+        <button
+          className="reset-button"
+          onClick={handleReset}
+          disabled={isSubmitting}
+          aria-label="Reset code"
+        >
+          Reset
+        </button>
+        <button
+          className="submit-button"
+          onClick={handleSubmit}
+          disabled={isSubmitting || (feedback?.isCorrect ?? false)}
+          aria-label="Run code"
+        >
+          {isSubmitting ? 'Running...' : feedback?.isCorrect ? 'Fixed! ✓' : 'Run Code'}
+        </button>
+      </div>
+      
+      <div className="code-safety-info">
+        🛡️ Code runs in a safe sandbox with protection against infinite loops
+      </div>
     </div>
   );
 };

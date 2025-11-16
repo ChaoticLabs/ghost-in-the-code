@@ -24,27 +24,19 @@
       "id": "logic-basic-1",
       "type": "logic",
       "title": "The Swapped Variables",
-      "description": "The ghost wants to swap two treasure chests, but the code loses one of them! Help fix the swap.",
+      "description": "The ghost wants to swap two treasure chests so chest1 has 'silver' and chest2 has 'gold'. Fix the code so it outputs: silver gold",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let chest1 = 'gold';", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "let chest2 = 'silver';", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "chest1 = chest2;", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "chest2 = chest1;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "console.log(chest1, chest2);", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "let chest1 = 'gold';\nlet chest2 = 'silver';\nchest1 = chest2;\nchest2 = chest1;\nconsole.log(chest1, chest2);"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "let temp = chest1;\nchest1 = chest2;",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "silver gold",
+        "alternativeOutputs": []
       },
       "hints": [
-        "When you put chest2 into chest1, the old value of chest1 is lost!",
-        "You need to save chest1's value somewhere before changing it.",
-        "Create a temporary variable to hold chest1, then do the swap!"
+        "When chest1 = chest2 runs, the 'gold' value is lost forever!",
+        "You need to save the 'gold' value somewhere safe before overwriting chest1.",
+        "Try: save chest1 to a temp variable, then assign chest2 to chest1, then assign temp to chest2."
       ],
       "educationalContent": "To swap two variables, we need a temporary variable to hold one value while we move things around. It's like swapping drinks between two cups - you need a third cup to hold one drink temporarily!"
     },
@@ -52,23 +44,18 @@
       "id": "logic-basic-2",
       "type": "logic",
       "title": "The Wrong Order",
-      "description": "The ghost is trying to use a variable before it exists! Help fix the order of operations.",
+      "description": "The ghost is trying to use a variable before it exists! Fix the code so it outputs: Total: 15",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "console.log('Total: ' + total);", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 2, "content": "let total = 10 + 5;", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [1]
+        "initialCode": "console.log('Total: ' + total);\nlet total = 10 + 5;"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 1,
-        "correctContent": "let total = 10 + 5;\nconsole.log('Total: ' + total);",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Total: 15",
+        "alternativeOutputs": []
       },
       "hints": [
         "You can't use a variable before you create it!",
-        "The variable 'total' is used on line 1 but created on line 2.",
+        "The variable 'total' is used before it's created.",
         "Move the 'let total' line before the console.log!"
       ],
       "educationalContent": "Variables must be declared (created) before you can use them. The computer reads code from top to bottom, so make sure you create variables before trying to use them!"
@@ -77,21 +64,14 @@
       "id": "logic-basic-3",
       "type": "logic",
       "title": "The Calculation Error",
-      "description": "The ghost is calculating the area of a rectangle, but the formula is wrong!",
+      "description": "The ghost is calculating the area of a rectangle, but the formula is wrong! Fix it so it outputs: Area: 15",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let width = 5;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "let height = 3;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "let area = width + height;", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "console.log('Area: ' + area);", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "let width = 5;\nlet height = 3;\nlet area = width + height;\nconsole.log('Area: ' + area);"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "let area = width * height;",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Area: 15",
+        "alternativeOutputs": []
       },
       "hints": [
         "Area of a rectangle is width times height, not width plus height!",
@@ -104,21 +84,14 @@
       "id": "logic-intermediate-1",
       "type": "logic",
       "title": "The String Number Confusion",
-      "description": "The ghost is trying to add numbers, but they're being treated as text! Help fix the addition.",
+      "description": "The ghost is trying to add numbers, but they're being treated as text! Fix it so it outputs: Total: 30",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let score1 = '10';", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "let score2 = '20';", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "let total = score1 + score2;", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "console.log('Total: ' + total);", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "let score1 = '10';\nlet score2 = '20';\nlet total = score1 + score2;\nconsole.log('Total: ' + total);"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "let total = Number(score1) + Number(score2);",
-        "alternativeCorrectContent": ["let total = parseInt(score1) + parseInt(score2);"]
+        "type": "output-match",
+        "expectedOutput": "Total: 30",
+        "alternativeOutputs": []
       },
       "hints": [
         "When you add strings with '+', they stick together instead of adding mathematically!",
@@ -131,20 +104,14 @@
       "id": "logic-intermediate-2",
       "type": "logic",
       "title": "The Array Index Mystery",
-      "description": "The ghost wants to get the first ghost from the list, but the index is wrong!",
+      "description": "The ghost wants to get the first ghost from the list. Fix it so it outputs: First ghost: Casper",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let ghosts = ['Casper', 'Boo', 'Spooky'];", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "let firstGhost = ghosts[1];", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "console.log('First ghost: ' + firstGhost);", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let ghosts = ['Casper', 'Boo', 'Spooky'];\nlet firstGhost = ghosts[1];\nconsole.log('First ghost: ' + firstGhost);"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "let firstGhost = ghosts[0];",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "First ghost: Casper",
+        "alternativeOutputs": []
       },
       "hints": [
         "Arrays in programming start counting at 0, not 1!",

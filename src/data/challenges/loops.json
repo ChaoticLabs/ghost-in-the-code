@@ -24,26 +24,19 @@
       "id": "loop-basic-1",
       "type": "loop",
       "title": "The Infinite Haunting",
-      "description": "Oh no! This loop never stops haunting! The ghost is stuck saying 'Boo!' forever. Can you help fix the loop so it stops after 5 times?",
+      "description": "Oh no! This loop never stops! Fix it so it prints 'Boo!' exactly 5 times.",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let count = 0;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "while (count < 5) {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "  console.log('Boo!');", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "let count = 0;\nwhile (count < 5) {\n  console.log('Boo!');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "  console.log('Boo!');\n  count++;",
-        "alternativeCorrectContent": ["  console.log('Boo!');\n  count = count + 1;"]
+        "type": "output-match",
+        "expectedOutput": "Boo!\nBoo!\nBoo!\nBoo!\nBoo!",
+        "alternativeOutputs": []
       },
       "hints": [
         "The loop needs to change something to eventually stop...",
         "What variable controls when the loop ends? It's 'count'!",
-        "Try adding 'count++' after the console.log to make count go up each time!"
+        "Try adding 'count++' inside the loop to make count go up each time!"
       ],
       "educationalContent": "Loops need a way to eventually stop. We use a counter variable and increment it (make it bigger) each time through the loop. Without incrementing, the loop runs forever!"
     },
@@ -51,20 +44,14 @@
       "id": "loop-basic-2",
       "type": "loop",
       "title": "The Wrong Direction Ghost",
-      "description": "This ghost is counting backwards when it should count forwards! Help fix the loop so it counts from 1 to 3.",
+      "description": "This ghost is counting backwards! Fix it so it outputs: Ghost 1, Ghost 2, Ghost 3",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "for (let i = 3; i >= 1; i--) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 2, "content": "  console.log('Ghost ' + i);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [1]
+        "initialCode": "for (let i = 3; i >= 1; i--) {\n  console.log('Ghost ' + i);\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 1,
-        "correctContent": "for (let i = 1; i <= 3; i++) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Ghost 1\nGhost 2\nGhost 3",
+        "alternativeOutputs": []
       },
       "hints": [
         "Look at where the loop starts and which direction it goes...",
@@ -77,20 +64,14 @@
       "id": "loop-basic-3",
       "type": "loop",
       "title": "The Off-By-One Ghost",
-      "description": "This ghost wants to haunt 10 houses, but the loop only visits 9! Can you fix it?",
+      "description": "This ghost wants to haunt 10 houses, but only visits 9! Fix it to haunt houses 1 through 10.",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "for (let house = 1; house < 10; house++) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 2, "content": "  console.log('Haunting house ' + house);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [1]
+        "initialCode": "for (let house = 1; house < 10; house++) {\n  console.log('Haunting house ' + house);\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 1,
-        "correctContent": "for (let house = 1; house <= 10; house++) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Haunting house 1\nHaunting house 2\nHaunting house 3\nHaunting house 4\nHaunting house 5\nHaunting house 6\nHaunting house 7\nHaunting house 8\nHaunting house 9\nHaunting house 10",
+        "alternativeOutputs": []
       },
       "hints": [
         "Count on your fingers: does 'house < 10' include 10?",
@@ -103,23 +84,14 @@
       "id": "loop-intermediate-1",
       "type": "loop",
       "title": "The Nested Ghost Party",
-      "description": "The ghost wants to invite 3 friends and give each friend 2 treats. But something's wrong with the inner loop!",
+      "description": "The ghost wants to invite 3 friends and give each friend 2 treats. Fix the inner loop!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "for (let friend = 1; friend <= 3; friend++) {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "  console.log('Friend ' + friend + ' arrives');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "  for (let treat = 1; treat < 2; treat++) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "    console.log('  Giving treat ' + treat);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "  }", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "for (let friend = 1; friend <= 3; friend++) {\n  console.log('Friend ' + friend + ' arrives');\n  for (let treat = 1; treat < 2; treat++) {\n    console.log('  Giving treat ' + treat);\n  }\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "  for (let treat = 1; treat <= 2; treat++) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Friend 1 arrives\n  Giving treat 1\n  Giving treat 2\nFriend 2 arrives\n  Giving treat 1\n  Giving treat 2\nFriend 3 arrives\n  Giving treat 1\n  Giving treat 2",
+        "alternativeOutputs": []
       },
       "hints": [
         "Each friend should get 2 treats, but they're only getting 1!",
@@ -132,20 +104,14 @@
       "id": "loop-basic-4",
       "type": "loop",
       "title": "The Skipping Ghost",
-      "description": "This ghost wants to count by 2s (2, 4, 6, 8, 10) but it's only counting by 1s! Fix the loop.",
+      "description": "This ghost wants to count by 2s (2, 4, 6, 8, 10) but it's counting by 1s! Fix it.",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "for (let i = 2; i <= 10; i++) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 2, "content": "  console.log(i);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [1]
+        "initialCode": "for (let i = 2; i <= 10; i++) {\n  console.log(i);\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 1,
-        "correctContent": "for (let i = 2; i <= 10; i += 2) {",
-        "alternativeCorrectContent": ["for (let i = 2; i <= 10; i = i + 2) {"]
+        "type": "output-match",
+        "expectedOutput": "2\n4\n6\n8\n10",
+        "alternativeOutputs": []
       },
       "hints": [
         "The loop needs to jump by 2 each time, not just 1!",
@@ -158,21 +124,14 @@
       "id": "loop-basic-5",
       "type": "loop",
       "title": "The Backwards Counter",
-      "description": "Help the ghost count down from 5 to 1 for a spooky countdown!",
+      "description": "Help the ghost count down from 5 to 1 for a spooky countdown, then BOO!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "for (let i = 5; i >= 1; i++) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 2, "content": "  console.log(i + '...');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "}", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "console.log('BOO!');", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [1]
+        "initialCode": "for (let i = 5; i >= 1; i++) {\n  console.log(i + '...');\n}\nconsole.log('BOO!');"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 1,
-        "correctContent": "for (let i = 5; i >= 1; i--) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "5...\n4...\n3...\n2...\n1...\nBOO!",
+        "alternativeOutputs": []
       },
       "hints": [
         "We want to count DOWN from 5 to 1, not up!",
@@ -185,21 +144,14 @@
       "id": "loop-intermediate-2",
       "type": "loop",
       "title": "The Array Ghost",
-      "description": "The ghost has a list of friends to visit, but the loop goes too far and causes an error!",
+      "description": "The ghost has a list of friends to visit, but the loop goes too far! Fix it to visit all 3 friends.",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let friends = ['Casper', 'Boo', 'Spooky'];", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "for (let i = 0; i <= friends.length; i++) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  console.log('Visiting ' + friends[i]);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let friends = ['Casper', 'Boo', 'Spooky'];\nfor (let i = 0; i <= friends.length; i++) {\n  console.log('Visiting ' + friends[i]);\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "for (let i = 0; i < friends.length; i++) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Visiting Casper\nVisiting Boo\nVisiting Spooky",
+        "alternativeOutputs": []
       },
       "hints": [
         "Arrays start counting at 0! If there are 3 items, they're at positions 0, 1, and 2.",
@@ -212,29 +164,21 @@
       "id": "loop-intermediate-3",
       "type": "loop",
       "title": "The While Loop Mystery",
-      "description": "This while loop should print numbers 1 through 5, but the condition is wrong!",
+      "description": "This while loop should print numbers 1 through 5. Fix it!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let num = 0;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "while (num < 5) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  num++;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "  console.log(num);", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let num = 0;\nwhile (num <= 5) {\n  num++;\n  console.log(num);\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "while (num < 5) {",
-        "alternativeCorrectContent": ["while (num <= 4) {"]
+        "type": "output-match",
+        "expectedOutput": "1\n2\n3\n4\n5",
+        "alternativeOutputs": []
       },
       "hints": [
-        "We start at 0, add 1, then print. So we get: 1, 2, 3, 4, 5",
-        "When num is 4, we add 1 to get 5, print it, then check: is 5 < 5? No! Loop stops.",
-        "The condition num < 5 actually works correctly for printing 1-5!"
+        "We start at 0, add 1, then print. What numbers do we get?",
+        "When num is 5, we add 1 to get 6, print it, then check: is 6 <= 5? No!",
+        "Change the condition to num < 5 so we stop before printing 6!"
       ],
-      "educationalContent": "While loops check the condition BEFORE each loop. Since we increment BEFORE printing, starting at 0 with condition num < 5 correctly prints 1, 2, 3, 4, 5!"
+      "educationalContent": "While loops check the condition BEFORE each loop. Since we increment BEFORE printing, we need to be careful about when the loop stops!"
     }
   ]
 }

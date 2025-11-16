@@ -2,23 +2,14 @@
  * Core type definitions for Ghost in The Code game engine
  */
 
-export interface CodeLine {
-  lineNumber: number;
-  content: string;
-  isEditable: boolean;
-  isBuggy: boolean;
-}
-
 export interface CodeFragment {
-  lines: CodeLine[];
-  buggyLines: number[];
+  initialCode: string;
 }
 
 export interface Solution {
-  type: 'line-replacement';
-  lineNumber: number;
-  correctContent: string;
-  alternativeCorrectContent?: string[];
+  type: 'output-match';
+  expectedOutput: string;
+  alternativeOutputs?: string[];
 }
 
 export interface LevelConcept {

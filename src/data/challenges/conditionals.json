@@ -24,27 +24,18 @@
       "id": "conditional-basic-1",
       "type": "conditional",
       "title": "The Backwards Door",
-      "description": "The ghost can't get through the door! The condition is checking the wrong thing. Help fix it so the door opens when the key is true.",
+      "description": "The ghost can't get through the door! Fix it so it outputs: Door opens!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let hasKey = true;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (hasKey === false) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  console.log('Door opens!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "  console.log('Door stays locked');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let hasKey = true;\nif (hasKey === false) {\n  console.log('Door opens!');\n} else {\n  console.log('Door stays locked');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "if (hasKey === true) {",
-        "alternativeCorrectContent": ["if (hasKey) {"]
+        "type": "output-match",
+        "expectedOutput": "Door opens!",
+        "alternativeOutputs": []
       },
       "hints": [
         "The door should open when hasKey is true, but the condition checks for false!",
-        "Look at line 2 - it says 'if hasKey === false', but we want it to be true!",
+        "Look at the if statement - it says 'if hasKey === false', but we want it to be true!",
         "Change 'false' to 'true', or just write 'if (hasKey)' which means the same thing!"
       ],
       "educationalContent": "Conditionals let us make decisions in code. 'if (condition)' means 'do this when the condition is true'. We can check if something equals true, or just write the variable name if it's already true or false!"
@@ -53,23 +44,14 @@
       "id": "conditional-basic-2",
       "type": "conditional",
       "title": "The Wrong Comparison",
-      "description": "The ghost needs to check if it has enough energy (at least 50) to haunt. But the comparison is wrong!",
+      "description": "The ghost needs at least 50 energy to haunt. Fix it so it outputs: Ready to haunt!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let energy = 75;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (energy > 50) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  console.log('Ready to haunt!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "  console.log('Need more energy');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let energy = 75;\nif (energy > 50) {\n  console.log('Ready to haunt!');\n} else {\n  console.log('Need more energy');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "if (energy >= 50) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Ready to haunt!",
+        "alternativeOutputs": []
       },
       "hints": [
         "The ghost needs AT LEAST 50 energy, which means 50 or more!",
@@ -82,21 +64,14 @@
       "id": "conditional-basic-3",
       "type": "conditional",
       "title": "The Missing Else",
-      "description": "The ghost wants to say 'Too cold!' when temperature is below 60, but nothing happens! The else is in the wrong place.",
+      "description": "The ghost wants to say 'Too cold!' when temperature is below 60. Fix it so it outputs: Too cold!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let temperature = 45;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (temperature >= 60) {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "  console.log('Perfect haunting weather!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "}", "isEditable": true, "isBuggy": true }
-        ],
-        "buggyLines": [4]
+        "initialCode": "let temperature = 45;\nif (temperature >= 60) {\n  console.log('Perfect haunting weather!');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 4,
-        "correctContent": "} else {\n  console.log('Too cold!');\n}",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Too cold!",
+        "alternativeOutputs": []
       },
       "hints": [
         "When temperature is less than 60, nothing happens! We need an 'else' part.",
@@ -109,24 +84,14 @@
       "id": "conditional-intermediate-1",
       "type": "conditional",
       "title": "The Confused Logic",
-      "description": "The ghost wants to haunt only when it's nighttime AND the moon is full. But the logic operator is wrong!",
+      "description": "The ghost wants to haunt only when it's nighttime AND the moon is full. Fix it so it outputs: Perfect time to haunt!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let isNighttime = true;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "let isFullMoon = true;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "if (isNighttime || isFullMoon) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 4, "content": "  console.log('Perfect time to haunt!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "  console.log('Not the right time');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 7, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [3]
+        "initialCode": "let isNighttime = true;\nlet isFullMoon = true;\nif (isNighttime || isFullMoon) {\n  console.log('Perfect time to haunt!');\n} else {\n  console.log('Not the right time');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 3,
-        "correctContent": "if (isNighttime && isFullMoon) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Perfect time to haunt!",
+        "alternativeOutputs": []
       },
       "hints": [
         "The ghost needs BOTH nighttime AND full moon, not just one or the other!",
@@ -139,23 +104,14 @@
       "id": "conditional-intermediate-2",
       "type": "conditional",
       "title": "The Inverted Check",
-      "description": "The ghost wants to haunt when the door is NOT locked, but the logic is backwards!",
+      "description": "The ghost wants to haunt when the door is NOT locked. Fix it so it outputs: Ghost enters the room!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let isDoorLocked = false;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (isDoorLocked) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  console.log('Ghost enters the room!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "  console.log('Door is locked, cannot enter');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let isDoorLocked = false;\nif (isDoorLocked) {\n  console.log('Ghost enters the room!');\n} else {\n  console.log('Door is locked, cannot enter');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "if (!isDoorLocked) {",
-        "alternativeCorrectContent": ["if (isDoorLocked === false) {"]
+        "type": "output-match",
+        "expectedOutput": "Ghost enters the room!",
+        "alternativeOutputs": []
       },
       "hints": [
         "The ghost should enter when the door is NOT locked!",
@@ -168,23 +124,14 @@
       "id": "conditional-basic-4",
       "type": "conditional",
       "title": "The Age Check",
-      "description": "The ghost needs to check if someone is old enough (13 or older) to enter the haunted house!",
+      "description": "The ghost needs to check if someone is old enough (13 or older) to enter. Fix it so it outputs: Welcome to the haunted house!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let age = 15;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (age > 13) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 3, "content": "  console.log('Welcome to the haunted house!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 5, "content": "  console.log('Sorry, too young!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [2]
+        "initialCode": "let age = 15;\nif (age > 13) {\n  console.log('Welcome to the haunted house!');\n} else {\n  console.log('Sorry, too young!');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 2,
-        "correctContent": "if (age >= 13) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Welcome to the haunted house!",
+        "alternativeOutputs": []
       },
       "hints": [
         "Someone who is exactly 13 should be allowed in!",
@@ -197,25 +144,14 @@
       "id": "conditional-intermediate-3",
       "type": "conditional",
       "title": "The Else If Chain",
-      "description": "The ghost wants different messages for different scare levels, but the conditions are wrong!",
+      "description": "The ghost wants different messages for different scare levels. Fix it so it outputs: Pretty spooky!",
       "codeFragment": {
-        "lines": [
-          { "lineNumber": 1, "content": "let scareLevel = 75;", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 2, "content": "if (scareLevel > 80) {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 3, "content": "  console.log('Super scary!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 4, "content": "} else if (scareLevel > 50) {", "isEditable": true, "isBuggy": true },
-          { "lineNumber": 5, "content": "  console.log('Pretty spooky!');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 6, "content": "} else {", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 7, "content": "  console.log('Not very scary');", "isEditable": false, "isBuggy": false },
-          { "lineNumber": 8, "content": "}", "isEditable": false, "isBuggy": false }
-        ],
-        "buggyLines": [4]
+        "initialCode": "let scareLevel = 75;\nif (scareLevel > 80) {\n  console.log('Super scary!');\n} else if (scareLevel > 50) {\n  console.log('Pretty spooky!');\n} else {\n  console.log('Not very scary');\n}"
       },
       "solution": {
-        "type": "line-replacement",
-        "lineNumber": 4,
-        "correctContent": "} else if (scareLevel >= 50) {",
-        "alternativeCorrectContent": []
+        "type": "output-match",
+        "expectedOutput": "Pretty spooky!",
+        "alternativeOutputs": []
       },
       "hints": [
         "A scare level of exactly 50 should be 'Pretty spooky!'",
