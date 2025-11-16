@@ -163,12 +163,9 @@
 
 /* High contrast mode support */
 @media (prefers-contrast: high) {
-  .hint-panel {
-    border-width: 3px;
-  }
-
-  .hint-button:focus-visible {
-    outline-width: 4px;
+  .hint-limit-message {
+    font-weight: 700;
+    color: var(--color-accent);
   }
 }
 

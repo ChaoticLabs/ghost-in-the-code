@@ -35,6 +35,7 @@ This is a **hackathon project** with the following priorities:
 - Focus on the interactive and visual elements that make the game engaging
 - Animations and user feedback are important for the experience
 - **No Docker** - Avoid Docker dependencies; use local bundling and native tooling instead
+- **Self-Documenting Code** - Code should be self-explanatory through clear naming and structure. Only add comments for complex logic that isn't immediately obvious. Avoid redundant comments that simply restate what the code does
 
 ## TypeScript Guidelines
 - Use TypeScript for all new code (frontend, backend, Lambda functions, CDK infrastructure)

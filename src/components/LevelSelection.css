@@ -316,3 +316,28 @@
     transform: none;
   }
 }
+
+@media (prefers-contrast: high) {
+  .level-card:hover:not(.level-card--locked) {
+    border-color: #BB99FF;
+    transform: translateY(-4px);
+  }
+
+  .level-card--completed:hover {
+    border-color: #DDFF66;
+  }
+
+  .level-card--locked {
+    background: rgba(51, 51, 51, 0.95);
+    border-color: var(--hc-border-disabled);
+  }
+
+  .level-card--locked .level-card-title,
+  .level-card--locked .level-card-progress {
+    color: #999999;
+  }
+
+  .level-card-emoji {
+    text-shadow: none;
+  }
+}

@@ -1,5 +1,3 @@
-/* GameBoard - Main game layout with responsive grid */
-
 .game-board {
   width: 100vw;
   height: 100vh;
@@ -14,7 +12,6 @@
   padding: 0;
 }
 
-/* Animated background stars - consistent with WelcomeScreen */
 .game-board::before {
   content: '';
   position: absolute;
@@ -41,7 +38,6 @@
   50% { opacity: 0.2; }
 }
 
-/* Header - Level and Challenge Display */
 .game-header {
   position: relative;
   z-index: 10;
@@ -65,7 +61,6 @@
   flex: 1;
 }
 
-/* Level Button - Clickable to return to level selection */
 .level-button {
   color: #A3FF00;
   text-shadow: 
@@ -98,7 +93,6 @@
   outline-offset: 2px;
 }
 
-/* Progress Button - Clickable challenge counter */
 .progress-button {
   display: flex;
   align-items: center;
@@ -128,7 +122,6 @@
   transform: translateY(0);
 }
 
-/* Header Actions Container */
 .header-actions {
   display: flex;
   gap: 0.75rem;
@@ -151,7 +144,6 @@
   font-size: 1.125em;
 }
 
-/* Main Game Grid */
 .game-grid {
   position: relative;
   z-index: 1;
@@ -166,7 +158,6 @@
   overflow: hidden;
 }
 
-/* Code Editor Section */
 .code-section {
   grid-area: code;
   background: rgba(26, 31, 46, 0.9);
@@ -180,7 +171,6 @@
   backdrop-filter: blur(10px);
 }
 
-/* Sidebar - Ghost and Hints */
 .sidebar {
   grid-area: sidebar;
   display: flex;
@@ -221,7 +211,6 @@
   overflow: hidden;
 }
 
-/* Custom Scrollbar Styling */
 .code-section::-webkit-scrollbar,
 .sidebar::-webkit-scrollbar {
   width: 10px;
@@ -244,7 +233,6 @@
   background: rgba(0, 217, 255, 0.7);
 }
 
-/* Responsive Design - Large Screens (1440px+) */
 @media (min-width: 1440px) {
   .game-grid {
     grid-template-columns: 1fr 380px;
@@ -263,7 +251,6 @@
   }
 }
 
-/* Responsive Design - Tablet (768px - 1024px) */
 @media (max-width: 1024px) {
   .game-grid {
     grid-template-columns: 1fr 300px;
@@ -286,7 +273,6 @@
   }
 }
 
-/* Responsive Design - Mobile/Small Tablet (768px and below) */
 @media (max-width: 768px) {
   .game-board {
     overflow-y: auto;
@@ -358,7 +344,6 @@
   }
 }
 
-/* Extra Small Screens - Stack everything vertically */
 @media (max-width: 480px) {
   .game-grid {
     grid-template-rows: minmax(200px, auto) minmax(160px, auto) minmax(140px, auto);
@@ -425,7 +410,6 @@
   }
 }
 
-/* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .game-board::before {
     animation: none;
@@ -439,26 +423,30 @@
   }
 }
 
-/* High Contrast Mode Support */
 @media (prefers-contrast: high) {
-  .game-header,
-  .code-section,
-  .ghost-section,
-  .hint-section {
-    border-width: 3px;
+  .level-button {
+    background: rgba(204, 255, 51, 0.1);
+    border: 2px solid var(--color-primary);
+    text-shadow: none;
   }
 
-  .level-label {
+  .level-button:hover {
+    background: rgba(204, 255, 51, 0.2);
     text-shadow: none;
-    font-weight: 900;
+    border-color: var(--color-primary);
   }
 
   .progress-button {
-    border-width: 3px;
+    background: rgba(153, 102, 255, 0.3);
+    border-color: var(--color-purple);
+  }
+
+  .progress-button:hover {
+    background: rgba(153, 102, 255, 0.5);
+    border-color: #BB99FF;
   }
 }
 
-/* Focus Indicators for Accessibility */
 .code-section:focus-within,
 .hint-section:focus-within {
   outline: 3px solid #FFD700;

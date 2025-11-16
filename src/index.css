@@ -1,8 +1,6 @@
-/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
 
 :root {
-  /* Color System */
   --color-primary: #A3FF00;
   --color-secondary: #00D9FF;
   --color-accent: #FF9500;
@@ -13,7 +11,6 @@
   --color-text-muted: rgba(255, 255, 255, 0.7);
   --color-border: rgba(107, 70, 193, 0.3);
   
-  /* Typography */
   font-family: Avenir, 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -28,28 +25,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Global font styles */
 body {
   font-family: Avenir, 'Avenir Next', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Font Size Adjustments - Applied to html element */
-/* Base font size - medium (default) */
 html.font-size-medium {
   font-size: 16px;
 }
 
-/* Large font size - 12.5% increase */
 html.font-size-large {
   font-size: 18px;
 }
 
-/* Extra large font size - 25% increase */
 html.font-size-xlarge {
   font-size: 20px;
 }
 
-/* Scale all text content with font size preference */
 html.font-size-large body,
 html.font-size-large .code-line,
 html.font-size-large .hint-text,
@@ -74,7 +65,6 @@ html.font-size-xlarge label {
   font-size: 1.25em;
 }
 
-/* Ensure headings scale proportionally - multiply their base sizes */
 html.font-size-large h1 {
   font-size: clamp(3.375rem, 6.75vw, 3.9375rem);
 }
@@ -123,7 +113,6 @@ html.font-size-xlarge h6 {
   font-size: clamp(1.25rem, 2.5vw, 1.375rem);
 }
 
-/* Headers use Jolly Lodger with consistent sizing */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Jolly Lodger', cursive;
   font-weight: 400;
@@ -177,12 +166,10 @@ body {
   min-width: 320px;
 }
 
-/* Ensure all text elements inherit proper fonts */
 p, span, div, button, input, textarea, select {
   font-family: inherit;
 }
 
-/* Paragraph and text defaults */
 p {
   margin: 0 0 1rem 0;
   line-height: 1.6;
@@ -224,7 +211,6 @@ p {
   font-size: 1.125rem;
 }
 
-/* Line Height Utility Classes */
 .leading-normal {
   line-height: 1.4;
 }
@@ -237,7 +223,6 @@ p {
   line-height: 1.6;
 }
 
-/* Utility classes for applying heading styles to non-heading elements */
 .h1-style {
   font-family: 'Jolly Lodger', cursive;
   font-size: clamp(2rem, 6vw, 3.5rem);
@@ -265,7 +250,6 @@ p {
   margin: 0;
 }
 
-/* Modal Utility Classes - DRY modal styling */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -390,7 +374,6 @@ p {
   outline-offset: 2px;
 }
 
-/* Icon Button Utility Classes - For badges, settings, progress buttons */
 .icon-button {
   min-width: 40px;
   min-height: 40px;
@@ -425,13 +408,11 @@ p {
   outline-offset: 2px;
 }
 
-/* Icon button variants */
 .icon-button--badge:hover {
   border-color: var(--color-primary);
   box-shadow: 0 0 20px rgba(163, 255, 0, 0.4);
 }
 
-/* Badge count indicator for icon buttons */
 .icon-button__badge-count {
   position: absolute;
   top: -4px;
@@ -447,7 +428,6 @@ p {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Progress Bar Utility Classes - DRY progress bar styling */
 .progress-bar-container {
   position: relative;
   width: 100%;
@@ -457,7 +437,6 @@ p {
   overflow: hidden;
 }
 
-/* Progress bar height variants */
 .progress-bar--small {
   height: 8px;
 }
@@ -522,6 +501,288 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-contrast: high) {
+  :root {
+    /* Increase color contrast for high contrast mode */
+    --color-primary: #CCFF33;
+    --color-secondary: #00FFFF;
+    --color-accent: #FFAA00;
+    --color-purple: #9966FF;
+    --color-text-light: #FFFFFF;
+    --color-border: rgba(153, 102, 255, 0.6);
+    --hc-bg-solid: #000000;
+    --hc-bg-panel: rgba(0, 0, 0, 0.95);
+    --hc-bg-disabled: #666666;
+    --hc-text-disabled: #CCCCCC;
+    --hc-border-disabled: #999999;
+    --hc-focus-color: #FFFF00;
+  }
+
+  /* Remove decorative backgrounds for clarity */
+  .game-board::before,
+  .welcome-screen::before,
+  .level-selection::before {
+    display: none;
+  }
+
+  .game-board,
+  .welcome-screen,
+  .level-selection {
+    background: var(--hc-bg-solid);
+  }
+
+  /* Remove text shadows and increase weight for readability */
+  h1, h2, h3, h4, h5, h6,
+  .h1-style, .h2-style, .h3-style {
+    text-shadow: none;
+    font-weight: 900;
+  }
+
+  /* Panel/Container styling - DRY */
+  .modal-container,
+  .game-header,
+  .code-section,
+  .ghost-section,
+  .hint-section,
+  .hint-panel,
+  .instructions-panel,
+  .level-card {
+    background: var(--hc-bg-panel);
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  /* Border widths - DRY */
+  .modal-container,
+  .modal-header,
+  .modal-footer,
+  .game-header,
+  .code-section,
+  .ghost-section,
+  .hint-section,
+  .hint-panel,
+  .instructions-panel,
+  .level-card,
+  .code-container,
+  .feedback {
+    border-width: 4px;
+  }
+
+  /* Button styling - DRY */
+  .modal-button,
+  button,
+  .reset-button,
+  .submit-button,
+  .hint-button,
+  .start-button,
+  .instructions-toggle,
+  .close-instructions,
+  .progress-button,
+  .level-button,
+  .back-button {
+    border-width: 3px;
+    font-weight: 700;
+  }
+
+  /* Primary action buttons - DRY */
+  .modal-button-primary,
+  .start-button,
+  .hint-button:not(:disabled) {
+    background: var(--color-primary);
+    color: var(--hc-bg-solid);
+    border-color: var(--color-primary);
+  }
+
+  .modal-button-primary:hover,
+  .start-button:hover:not(:disabled),
+  .hint-button:hover:not(:disabled) {
+    background: #DDFF66;
+    border-color: #DDFF66;
+  }
+
+  /* Secondary buttons - DRY */
+  .modal-button-secondary,
+  .instructions-toggle,
+  .name-input-buttons .close-instructions.secondary {
+    border-color: #FFFFFF;
+    background: rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+  }
+
+  .modal-button-secondary:hover,
+  .instructions-toggle:hover,
+  .name-input-buttons .close-instructions.secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: #FFFFFF;
+  }
+
+  /* Purple/accent buttons - DRY */
+  .submit-button,
+  .close-instructions:not(.secondary),
+  .reset-button,
+  .back-button {
+    background: var(--color-purple);
+    border-color: #BB99FF;
+  }
+
+  .submit-button:hover:not(:disabled),
+  .close-instructions:hover:not(.secondary),
+  .reset-button:hover:not(:disabled),
+  .back-button:hover {
+    background: #BB99FF;
+    border-color: #DDCCFF;
+  }
+
+  /* Disabled state - DRY */
+  .submit-button:disabled,
+  .reset-button:disabled,
+  .hint-button:disabled,
+  .start-button:disabled,
+  button:disabled {
+    background: var(--hc-bg-disabled);
+    color: var(--hc-text-disabled);
+    border-color: var(--hc-border-disabled);
+  }
+
+  /* Icon buttons */
+  .icon-button {
+    border-width: 3px;
+    background: rgba(153, 102, 255, 0.4);
+    border-color: var(--color-purple);
+  }
+
+  .icon-button:hover {
+    background: rgba(153, 102, 255, 0.6);
+    border-color: #BB99FF;
+  }
+
+  .icon-button--badge:hover {
+    border-color: var(--color-primary);
+  }
+
+  .icon-button__badge-count {
+    background: var(--color-primary);
+    color: var(--hc-bg-solid);
+    font-weight: 900;
+  }
+
+  /* Text weight increases - DRY */
+  .tagline,
+  .level-selection-subtitle,
+  .challenge-description,
+  .tip-text,
+  .hint-text,
+  .level-card-description,
+  .name-input-prompt,
+  .instructions-content li {
+    font-weight: 600;
+  }
+
+  .tip-label,
+  .progress-button,
+  .level-card-progress,
+  .name-input {
+    font-weight: 700;
+  }
+
+  /* Title colors - DRY */
+  .game-title,
+  .level-selection-title,
+  .level-button,
+  .progress-button-percentage,
+  .level-card-progress,
+  .level-card--completed {
+    color: var(--color-primary);
+  }
+
+  .challenge-title,
+  .tip-label,
+  .instructions-content h2,
+  .level-card-title {
+    color: var(--color-secondary);
+  }
+
+  /* Border colors - DRY */
+  .game-header {
+    border-bottom-color: var(--color-secondary);
+  }
+
+  .code-section {
+    border-color: var(--color-secondary);
+  }
+
+  .ghost-section,
+  .level-card--completed {
+    border-color: var(--color-primary);
+  }
+
+  .hint-section {
+    border-color: var(--color-accent);
+  }
+
+  .instructions-panel,
+  .level-card:not(.level-card--locked):not(.level-card--completed) {
+    border-color: var(--color-purple);
+  }
+
+  /* Input fields - DRY */
+  .code-textarea,
+  .name-input {
+    background: rgba(0, 255, 255, 0.15);
+    border: 3px solid var(--color-secondary);
+    font-weight: 600;
+  }
+
+  .code-textarea:focus,
+  .name-input:focus {
+    background: rgba(0, 255, 255, 0.2);
+    border-color: var(--color-secondary);
+  }
+
+  /* Focus indicators - DRY */
+  .level-button:focus,
+  .progress-button:focus,
+  .icon-button:focus,
+  .modal-button:focus,
+  .start-button:focus,
+  .instructions-toggle:focus,
+  .close-instructions:focus,
+  .level-card:focus,
+  .back-button:focus,
+  .submit-button:focus,
+  .reset-button:focus,
+  .hint-button:focus-visible,
+  .code-section:focus-within,
+  .hint-section:focus-within,
+  .code-textarea:focus,
+  .name-input:focus {
+    outline-width: 4px;
+    outline-color: var(--hc-focus-color);
+  }
+
+  /* Progress bars */
+  .progress-bar-container {
+    border-width: 3px;
+  }
+
+  /* Remove backdrop blur for better performance and clarity */
+  .modal-overlay {
+    backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  /* Scrollbar - DRY */
+  .code-section::-webkit-scrollbar-thumb,
+  .sidebar::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+  }
+
+  .code-section::-webkit-scrollbar-track,
+  .sidebar::-webkit-scrollbar-track {
+    background: #333333;
+  }
 }
 
 @media (prefers-color-scheme: light) {
