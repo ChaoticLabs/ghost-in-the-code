@@ -39,10 +39,14 @@ export const ProgressTracker = ({
     });
   }, [challenges, completedChallengeIds, currentChallengeIndex]);
 
+  const completedInCurrentLevel = useMemo(() => {
+    return challenges.filter(challenge => completedChallengeIds.has(challenge.id)).length;
+  }, [challenges, completedChallengeIds]);
+
   const progressPercentage = useMemo(() => {
     if (challenges.length === 0) return 0;
-    return Math.round((completedChallengeIds.size / challenges.length) * 100);
-  }, [challenges.length, completedChallengeIds.size]);
+    return Math.round((completedInCurrentLevel / challenges.length) * 100);
+  }, [challenges.length, completedInCurrentLevel]);
 
   const challengesByType = useMemo(() => {
     const groups: Record<string, ChallengeStatus[]> = {
@@ -112,7 +116,7 @@ export const ProgressTracker = ({
 
             <ProgressBar
               percentage={progressPercentage}
-              label={`${completedChallengeIds.size} / ${challenges.length}`}
+              label={`${completedInCurrentLevel} / ${challenges.length}`}
               showLabel={true}
               height="large"
             />

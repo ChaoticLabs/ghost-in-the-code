@@ -123,19 +123,10 @@ export const ProgressSummary = ({
     }
   };
 
-  const getConceptMastery = (concept: string): number => {
-    const mastery = gameState.assessmentMetrics.conceptMastery.get(concept);
-    
-    // If no mastery data exists but challenges are completed, calculate based on completion
-    if (mastery === undefined || mastery === 0) {
-      const stats = conceptStats[concept as keyof typeof conceptStats];
-      if (stats && stats.completed > 0) {
-        // Return completion percentage as a fallback
-        return Math.round((stats.completed / stats.total) * 100);
-      }
-    }
-    
-    return mastery || 0;
+  const getConceptCompletion = (concept: string): number => {
+    const stats = conceptStats[concept as keyof typeof conceptStats];
+    if (!stats || stats.total === 0) return 0;
+    return Math.round((stats.completed / stats.total) * 100);
   };
 
   return (
@@ -204,46 +195,46 @@ export const ProgressSummary = ({
             </div>
           </div>
 
-          {/* Concept Mastery */}
+          {/* Concept Progress */}
           <div className="summary-section">
-            <h3 className="summary-section-title">Concept Mastery</h3>
+            <h3 className="summary-section-title">Concept Progress</h3>
             <div className="summary-concepts">
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🔁 Loops</h4>
                 <ProgressBar
-                  percentage={getConceptMastery('loop')}
+                  percentage={getConceptCompletion('loop')}
                   height="medium"
                   className="summary-progress-bar"
                 />
                 <div className="summary-concept-stats">
-                  <span>{getConceptMastery('loop')}% Mastery</span>
-                  <span>{conceptStats.loop.completed}/{conceptStats.loop.total} Completed</span>
+                  <span>{getConceptCompletion('loop')}% Complete</span>
+                  <span>{conceptStats.loop.completed}/{conceptStats.loop.total} Challenges</span>
                 </div>
               </div>
 
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🔀 Conditionals</h4>
                 <ProgressBar
-                  percentage={getConceptMastery('conditional')}
+                  percentage={getConceptCompletion('conditional')}
                   height="medium"
                   className="summary-progress-bar"
                 />
                 <div className="summary-concept-stats">
-                  <span>{getConceptMastery('conditional')}% Mastery</span>
-                  <span>{conceptStats.conditional.completed}/{conceptStats.conditional.total} Completed</span>
+                  <span>{getConceptCompletion('conditional')}% Complete</span>
+                  <span>{conceptStats.conditional.completed}/{conceptStats.conditional.total} Challenges</span>
                 </div>
               </div>
 
               <div className="summary-concept-card">
                 <h4 className="summary-concept-name">🧩 Logic</h4>
                 <ProgressBar
-                  percentage={getConceptMastery('logic')}
+                  percentage={getConceptCompletion('logic')}
                   height="medium"
                   className="summary-progress-bar"
                 />
                 <div className="summary-concept-stats">
-                  <span>{getConceptMastery('logic')}% Mastery</span>
-                  <span>{conceptStats.logic.completed}/{conceptStats.logic.total} Completed</span>
+                  <span>{getConceptCompletion('logic')}% Complete</span>
+                  <span>{conceptStats.logic.completed}/{conceptStats.logic.total} Challenges</span>
                 </div>
               </div>
             </div>
