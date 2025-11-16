@@ -74,23 +74,53 @@ html.font-size-xlarge label {
   font-size: 1.25em;
 }
 
-/* Ensure headings scale proportionally */
-html.font-size-large h1,
-html.font-size-large h2,
-html.font-size-large h3,
-html.font-size-large h4,
-html.font-size-large h5,
-html.font-size-large h6 {
-  font-size: 1.125em;
+/* Ensure headings scale proportionally - multiply their base sizes */
+html.font-size-large h1 {
+  font-size: clamp(3.375rem, 6.75vw, 3.9375rem);
 }
 
-html.font-size-xlarge h1,
-html.font-size-xlarge h2,
-html.font-size-xlarge h3,
-html.font-size-xlarge h4,
-html.font-size-xlarge h5,
+html.font-size-large h2 {
+  font-size: clamp(2.25rem, 5.0625vw, 2.8125rem);
+}
+
+html.font-size-large h3 {
+  font-size: clamp(1.6875rem, 3.9375vw, 2.25rem);
+}
+
+html.font-size-large h4 {
+  font-size: clamp(1.40625rem, 3.375vw, 1.6875rem);
+}
+
+html.font-size-large h5 {
+  font-size: clamp(1.2375rem, 2.8125vw, 1.40625rem);
+}
+
+html.font-size-large h6 {
+  font-size: clamp(1.125rem, 2.25vw, 1.2375rem);
+}
+
+html.font-size-xlarge h1 {
+  font-size: clamp(3.75rem, 7.5vw, 4.375rem);
+}
+
+html.font-size-xlarge h2 {
+  font-size: clamp(2.5rem, 5.625vw, 3.125rem);
+}
+
+html.font-size-xlarge h3 {
+  font-size: clamp(1.875rem, 4.375vw, 2.5rem);
+}
+
+html.font-size-xlarge h4 {
+  font-size: clamp(1.5625rem, 3.75vw, 1.875rem);
+}
+
+html.font-size-xlarge h5 {
+  font-size: clamp(1.375rem, 3.125vw, 1.5625rem);
+}
+
 html.font-size-xlarge h6 {
-  font-size: 1.25em;
+  font-size: clamp(1.25rem, 2.5vw, 1.375rem);
 }
 
 /* Headers use Jolly Lodger with consistent sizing */
