@@ -141,6 +141,12 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
           onChange={(e) => handleCodeChange(e.target.value)}
           onKeyDown={handleKeyDown}
           spellCheck={false}
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          data-gramm="false"
+          data-gramm_editor="false"
+          data-enable-grammarly="false"
           aria-label="Code editor"
           placeholder="Write your code here..."
         />
