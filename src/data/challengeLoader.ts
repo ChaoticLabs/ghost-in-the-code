@@ -40,6 +40,9 @@ function validateChallenge(challenge: any, index: number): void {
   if (!challenge.description || typeof challenge.description !== 'string') {
     errors.push('Missing or invalid description');
   }
+  if (!challenge.tip || typeof challenge.tip !== 'string') {
+    errors.push('Missing or invalid tip');
+  }
 
   // Validate codeFragment
   if (!challenge.codeFragment || typeof challenge.codeFragment !== 'object') {

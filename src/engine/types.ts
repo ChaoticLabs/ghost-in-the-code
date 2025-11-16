@@ -29,6 +29,7 @@ export interface Challenge {
   type: 'loop' | 'conditional' | 'logic';
   title: string;
   description: string;
+  tip: string;
   codeFragment: CodeFragment;
   solution: Solution;
   hints: string[];

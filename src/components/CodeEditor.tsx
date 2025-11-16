@@ -126,6 +126,11 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
       <div className="code-editor-header">
         <h2 className="challenge-title">{challenge.title}</h2>
         <p className="challenge-description">{challenge.description}</p>
+        <div className="challenge-tip">
+          <span className="tip-icon">💡</span>
+          <span className="tip-label">Tip:</span>
+          <span className="tip-text">{challenge.tip}</span>
+        </div>
       </div>
 
       <div className="code-container" style={{ position: 'relative' }}>

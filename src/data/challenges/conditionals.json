@@ -25,6 +25,7 @@
       "type": "conditional",
       "title": "The Backwards Door",
       "description": "The ghost can't get through the door! Fix it so it outputs: Door opens!",
+      "tip": "Check if the condition matches what you want to happen. Does the door open when hasKey is true or false?",
       "codeFragment": {
         "initialCode": "let hasKey = true;\nif (hasKey === false) {\n  console.log('Door opens!');\n} else {\n  console.log('Door stays locked');\n}"
       },
@@ -45,6 +46,7 @@
       "type": "conditional",
       "title": "The Wrong Comparison",
       "description": "The ghost needs at least 50 energy to haunt. Fix it so it outputs: Ready to haunt!",
+      "tip": "'At least 50' means 50 or more. Use >= to include the number itself!",
       "codeFragment": {
         "initialCode": "let energy = 75;\nif (energy > 50) {\n  console.log('Ready to haunt!');\n} else {\n  console.log('Need more energy');\n}"
       },
@@ -65,6 +67,7 @@
       "type": "conditional",
       "title": "The Missing Else",
       "description": "The ghost wants to say 'Too cold!' when temperature is below 60. Fix it so it outputs: Too cold!",
+      "tip": "Use 'else' to handle what happens when the 'if' condition is false!",
       "codeFragment": {
         "initialCode": "let temperature = 45;\nif (temperature >= 60) {\n  console.log('Perfect haunting weather!');\n}"
       },
@@ -85,6 +88,7 @@
       "type": "conditional",
       "title": "The Confused Logic",
       "description": "The ghost wants to haunt only when it's nighttime AND the moon is full. Fix it so it outputs: Perfect time to haunt!",
+      "tip": "Use && for AND (both must be true) and || for OR (at least one must be true)!",
       "codeFragment": {
         "initialCode": "let isNighttime = true;\nlet isFullMoon = true;\nif (isNighttime || isFullMoon) {\n  console.log('Perfect time to haunt!');\n} else {\n  console.log('Not the right time');\n}"
       },
@@ -105,6 +109,7 @@
       "type": "conditional",
       "title": "The Inverted Check",
       "description": "The ghost wants to haunt when the door is NOT locked. Fix it so it outputs: Ghost enters the room!",
+      "tip": "Use ! to flip a condition. !isDoorLocked means 'the door is NOT locked'!",
       "codeFragment": {
         "initialCode": "let isDoorLocked = false;\nif (isDoorLocked) {\n  console.log('Ghost enters the room!');\n} else {\n  console.log('Door is locked, cannot enter');\n}"
       },
@@ -125,6 +130,7 @@
       "type": "conditional",
       "title": "The Age Check",
       "description": "The ghost needs to check if someone is old enough (13 or older) to enter. Fix it so it outputs: Welcome to the haunted house!",
+      "tip": "'13 or older' means we need to include 13. Use >= instead of >!",
       "codeFragment": {
         "initialCode": "let age = 15;\nif (age > 13) {\n  console.log('Welcome to the haunted house!');\n} else {\n  console.log('Sorry, too young!');\n}"
       },
@@ -145,6 +151,7 @@
       "type": "conditional",
       "title": "The Else If Chain",
       "description": "The ghost wants different messages for different scare levels. Fix it so it outputs: Pretty spooky!",
+      "tip": "In else if chains, make sure your ranges don't have gaps! Check if boundary numbers are included.",
       "codeFragment": {
         "initialCode": "let scareLevel = 75;\nif (scareLevel > 80) {\n  console.log('Super scary!');\n} else if (scareLevel > 50) {\n  console.log('Pretty spooky!');\n} else {\n  console.log('Not very scary');\n}"
       },

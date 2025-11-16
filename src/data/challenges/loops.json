@@ -25,6 +25,7 @@
       "type": "loop",
       "title": "The Infinite Haunting",
       "description": "Oh no! This loop never stops! Fix it so it prints 'Boo!' exactly 5 times.",
+      "tip": "Loops need a counter that changes each time, or they'll run forever!",
       "codeFragment": {
         "initialCode": "let count = 0;\nwhile (count < 5) {\n  console.log('Boo!');\n}"
       },
@@ -45,6 +46,7 @@
       "type": "loop",
       "title": "The Wrong Direction Ghost",
       "description": "This ghost is counting backwards! Fix it so it outputs: Ghost 1, Ghost 2, Ghost 3",
+      "tip": "Check the starting number, ending condition, and whether you're counting up (++) or down (--)!",
       "codeFragment": {
         "initialCode": "for (let i = 3; i >= 1; i--) {\n  console.log('Ghost ' + i);\n}"
       },
@@ -65,6 +67,7 @@
       "type": "loop",
       "title": "The Off-By-One Ghost",
       "description": "This ghost wants to haunt 10 houses, but only visits 9! Fix it to haunt houses 1 through 10.",
+      "tip": "Remember: < means 'less than' (stops before), while <= means 'less than or equal to' (includes the number)!",
       "codeFragment": {
         "initialCode": "for (let house = 1; house < 10; house++) {\n  console.log('Haunting house ' + house);\n}"
       },
@@ -85,6 +88,7 @@
       "type": "loop",
       "title": "The Nested Ghost Party",
       "description": "The ghost wants to invite 3 friends and give each friend 2 treats. Fix the inner loop!",
+      "tip": "In nested loops, the inner loop runs completely for each time the outer loop runs!",
       "codeFragment": {
         "initialCode": "for (let friend = 1; friend <= 3; friend++) {\n  console.log('Friend ' + friend + ' arrives');\n  for (let treat = 1; treat < 2; treat++) {\n    console.log('  Giving treat ' + treat);\n  }\n}"
       },
@@ -105,6 +109,7 @@
       "type": "loop",
       "title": "The Skipping Ghost",
       "description": "This ghost wants to count by 2s (2, 4, 6, 8, 10) but it's counting by 1s! Fix it.",
+      "tip": "You can count by any number! Use += to add more than 1 each time.",
       "codeFragment": {
         "initialCode": "for (let i = 2; i <= 10; i++) {\n  console.log(i);\n}"
       },
@@ -125,6 +130,7 @@
       "type": "loop",
       "title": "The Backwards Counter",
       "description": "Help the ghost count down from 5 to 1 for a spooky countdown, then BOO!",
+      "tip": "To count backwards, use i-- to subtract 1 each time!",
       "codeFragment": {
         "initialCode": "for (let i = 5; i >= 1; i++) {\n  console.log(i + '...');\n}\nconsole.log('BOO!');"
       },
@@ -145,6 +151,7 @@
       "type": "loop",
       "title": "The Array Ghost",
       "description": "The ghost has a list of friends to visit, but the loop goes too far! Fix it to visit all 3 friends.",
+      "tip": "Arrays start at 0! If there are 3 items, they're at positions 0, 1, and 2. Use i < array.length!",
       "codeFragment": {
         "initialCode": "let friends = ['Casper', 'Boo', 'Spooky'];\nfor (let i = 0; i <= friends.length; i++) {\n  console.log('Visiting ' + friends[i]);\n}"
       },
@@ -165,6 +172,7 @@
       "type": "loop",
       "title": "The While Loop Mystery",
       "description": "This while loop should print numbers 1 through 5. Fix it!",
+      "tip": "While loops check the condition BEFORE each loop. Watch when you increment!",
       "codeFragment": {
         "initialCode": "let num = 0;\nwhile (num <= 5) {\n  num++;\n  console.log(num);\n}"
       },

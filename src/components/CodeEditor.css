@@ -26,6 +26,35 @@
   margin: 0;
 }
 
+.challenge-tip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 217, 255, 0.1);
+  border-left: 3px solid #00D9FF;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-top: 0.5rem;
+}
+
+.tip-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.tip-label {
+  color: #00D9FF;
+  font-weight: 600;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.tip-text {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
 /* Code Container */
 .code-container {
   background: #0D1117;

@@ -25,6 +25,7 @@
       "type": "logic",
       "title": "The Swapped Variables",
       "description": "The ghost wants to swap two treasure chests so chest1 has 'silver' and chest2 has 'gold'. Fix the code so it outputs: silver gold",
+      "tip": "To swap two variables, you need a temporary variable to hold one value while you move things around!",
       "codeFragment": {
         "initialCode": "let chest1 = 'gold';\nlet chest2 = 'silver';\nchest1 = chest2;\nchest2 = chest1;\nconsole.log(chest1, chest2);"
       },
@@ -45,6 +46,7 @@
       "type": "logic",
       "title": "The Wrong Order",
       "description": "The ghost is trying to use a variable before it exists! Fix the code so it outputs: Total: 15",
+      "tip": "Variables must be declared (created) before you can use them. Code runs from top to bottom!",
       "codeFragment": {
         "initialCode": "console.log('Total: ' + total);\nlet total = 10 + 5;"
       },
@@ -65,6 +67,7 @@
       "type": "logic",
       "title": "The Calculation Error",
       "description": "The ghost is calculating the area of a rectangle, but the formula is wrong! Fix it so it outputs: Area: 15",
+      "tip": "Area of a rectangle is width × height. Use * to multiply in code!",
       "codeFragment": {
         "initialCode": "let width = 5;\nlet height = 3;\nlet area = width + height;\nconsole.log('Area: ' + area);"
       },
@@ -85,6 +88,7 @@
       "type": "logic",
       "title": "The String Number Confusion",
       "description": "The ghost is trying to add numbers, but they're being treated as text! Fix it so it outputs: Total: 30",
+      "tip": "Numbers in quotes are text! Convert strings to numbers using Number() or parseInt() to do math.",
       "codeFragment": {
         "initialCode": "let score1 = '10';\nlet score2 = '20';\nlet total = score1 + score2;\nconsole.log('Total: ' + total);"
       },
@@ -105,6 +109,7 @@
       "type": "logic",
       "title": "The Array Index Mystery",
       "description": "The ghost wants to get the first ghost from the list. Fix it so it outputs: First ghost: Casper",
+      "tip": "Arrays start counting at 0! The first item is at index 0, not 1.",
       "codeFragment": {
         "initialCode": "let ghosts = ['Casper', 'Boo', 'Spooky'];\nlet firstGhost = ghosts[1];\nconsole.log('First ghost: ' + firstGhost);"
       },

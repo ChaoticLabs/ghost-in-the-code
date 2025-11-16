@@ -143,8 +143,7 @@ export function EducationalContentModal({
 
           {mode === 'introduction' && (
             <div className="educational-modal-tip">
-              <strong>💡 Tip:</strong> Take your time and read the code carefully. 
-              I'm here to help if you need hints!
+              <strong>💡 Tip:</strong> {challenge.tip}
             </div>
           )}
         </div>
