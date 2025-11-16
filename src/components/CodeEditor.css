@@ -19,12 +19,10 @@
 }
 
 .challenge-description {
-  color: #FFFFFF;
-  font-size: 0.95rem;
-  line-height: 1.4;
   margin: 0;
 }
 
+/* Info box styling - reusable pattern */
 .challenge-tip {
   display: flex;
   align-items: center;
@@ -49,7 +47,6 @@
 }
 
 .tip-text {
-  color: #FFFFFF;
   font-size: 0.9rem;
   line-height: 1.4;
 }

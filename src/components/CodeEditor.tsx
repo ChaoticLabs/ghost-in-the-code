@@ -125,11 +125,11 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
     <div className="code-editor">
       <div className="code-editor-header">
         <h2 className="challenge-title">{challenge.title}</h2>
-        <p className="challenge-description">{challenge.description}</p>
+        <p className="challenge-description text-white text-base leading-normal text-left">{challenge.description}</p>
         <div className="challenge-tip">
           <span className="tip-icon">💡</span>
           <span className="tip-label">Tip:</span>
-          <span className="tip-text">{challenge.tip}</span>
+          <span className="tip-text text-white">{challenge.tip}</span>
         </div>
       </div>
 
