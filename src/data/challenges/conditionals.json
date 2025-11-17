@@ -132,7 +132,7 @@
       "description": "The ghost needs to check if someone is old enough (13 or older) to enter. Fix it so it outputs: Welcome to the haunted house!",
       "tip": "'13 or older' means we need to include 13. Use >= instead of >!",
       "codeFragment": {
-        "initialCode": "let age = 15;\nif (age > 13) {\n  console.log('Welcome to the haunted house!');\n} else {\n  console.log('Sorry, too young!');\n}"
+        "initialCode": "let age = 13;\nif (age > 13) {\n  console.log('Welcome to the haunted house!');\n} else {\n  console.log('Sorry, too young!');\n}"
       },
       "solution": {
         "type": "output-match",
@@ -153,7 +153,7 @@
       "description": "The ghost wants different messages for different scare levels. Fix it so it outputs: Pretty spooky!",
       "tip": "In else if chains, make sure your ranges don't have gaps! Check if boundary numbers are included.",
       "codeFragment": {
-        "initialCode": "let scareLevel = 75;\nif (scareLevel > 80) {\n  console.log('Super scary!');\n} else if (scareLevel > 50) {\n  console.log('Pretty spooky!');\n} else {\n  console.log('Not very scary');\n}"
+        "initialCode": "let scareLevel = 50;\nif (scareLevel > 80) {\n  console.log('Super scary!');\n} else if (scareLevel > 50) {\n  console.log('Pretty spooky!');\n} else {\n  console.log('Not very scary');\n}"
       },
       "solution": {
         "type": "output-match",

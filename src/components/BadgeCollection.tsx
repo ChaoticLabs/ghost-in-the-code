@@ -5,7 +5,6 @@
 import { useState, useEffect } from 'react';
 import type { Badge } from '../engine/types';
 import { BADGE_DEFINITIONS } from '../data/badges';
-import { BadgeCertificate } from './BadgeCertificate';
 import './BadgeCollection.css';
 
 interface BadgeCollectionProps {
@@ -16,22 +15,6 @@ interface BadgeCollectionProps {
   totalChallenges: number;
 }
 
-/**
- * Get player name from localStorage
- */
-function getPlayerName(): string {
-  try {
-    const saved = localStorage.getItem('ghost-in-the-code-save');
-    if (saved) {
-      const data = JSON.parse(saved);
-      return data.playerName || 'Ghost Debugger';
-    }
-  } catch (error) {
-    console.error('Failed to get player name:', error);
-  }
-  return 'Ghost Debugger';
-}
-
 export const BadgeCollection = ({ 
   badges, 
   onClose, 
@@ -39,10 +22,6 @@ export const BadgeCollection = ({
   totalChallenges 
 }: BadgeCollectionProps) => {
   const [animatingBadgeId, setAnimatingBadgeId] = useState<string | undefined>(newlyEarnedBadgeId);
-  const [showCertificate, setShowCertificate] = useState(false);
-  
-  // Always get the latest player name from localStorage
-  const playerName = getPlayerName();
 
   useEffect(() => {
     if (newlyEarnedBadgeId) {
@@ -159,30 +138,11 @@ export const BadgeCollection = ({
         </div>
 
         <div className="badge-actions">
-          {badges.length > 0 && (
-            <>
-              <button 
-                className="badge-action-button badge-action-button--primary" 
-                onClick={() => setShowCertificate(true)}
-              >
-                📜 View Certificate
-              </button>
-            </>
-          )}
           <button className="badge-action-button" onClick={onClose}>
             Close
           </button>
         </div>
       </div>
-
-      {showCertificate && (
-        <BadgeCertificate
-          playerName={playerName}
-          badges={badges}
-          totalChallenges={totalChallenges}
-          onClose={() => setShowCertificate(false)}
-        />
-      )}
     </div>
   );
 };

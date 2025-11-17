@@ -9,7 +9,6 @@ export { SettingsPanel } from './SettingsPanel.tsx';
 export { HintPanel } from './HintPanel.tsx';
 export { EducationalContentModal } from './EducationalContentModal.tsx';
 export { BadgeCollection } from './BadgeCollection.tsx';
-export { BadgeCertificate } from './BadgeCertificate.tsx';
 export { LevelIntroductionModal } from './LevelIntroductionModal.tsx';
 export { ProgressSummary } from './ProgressSummary.tsx';
 export { LevelSelection } from './LevelSelection.tsx';
