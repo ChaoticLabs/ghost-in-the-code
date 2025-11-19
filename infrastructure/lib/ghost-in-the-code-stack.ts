@@ -69,30 +69,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
       ],
     });
 
-    // Lambda function for Bedrock AI hints
-    const bedrockFunction = new NodejsFunction(this, 'BedrockFunction', {
-      entry: 'lambda/bedrock/index.ts',
-      handler: 'handler',
-      runtime: Runtime.NODEJS_20_X,
-      timeout: cdk.Duration.seconds(30),
-      memorySize: 512,
-      environment: {
-        MODEL_ID: 'anthropic.claude-3-haiku-20240307-v1:0',
-      },
-      bundling: {
-        minify: true,
-        sourceMap: true,
-        target: 'es2020',
-      },
-    });
 
-    // Grant Bedrock permissions to Lambda
-    bedrockFunction.addToRolePolicy(
-      new iam.PolicyStatement({
-        actions: ['bedrock:InvokeModel'],
-        resources: ['*'],
-      })
-    );
 
     // Lambda function for Polly voice synthesis
     const pollyFunction = new NodejsFunction(this, 'PollyFunction', {
@@ -134,9 +111,6 @@ export class GhostInTheCodeStack extends cdk.Stack {
     });
 
     // API endpoints
-    const hints = api.root.addResource('hints');
-    hints.addMethod('POST', new apigateway.LambdaIntegration(bedrockFunction));
-
     const voice = api.root.addResource('voice');
     voice.addMethod('POST', new apigateway.LambdaIntegration(pollyFunction));
 

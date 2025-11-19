@@ -2,36 +2,6 @@
 
 This directory contains the Lambda functions for the Ghost in The Code game's AI and voice services. All functions are written in TypeScript for type safety and better developer experience.
 
-## Bedrock Function
-
-Located in `bedrock/` - Generates dynamic, child-friendly hints using Amazon Bedrock (Claude).
-
-### API Endpoint
-`POST /hints`
-
-### Request Body
-```json
-{
-  "challengeId": "loop-basic-1",
-  "challengeDescription": "This loop never stops! Help the ghost fix it.",
-  "playerAttempt": "while (count < 10) { console.log('Boo!'); }",
-  "hintLevel": 1
-}
-```
-
-### Response
-```json
-{
-  "hint": "The loop needs to change something to eventually stop...",
-  "challengeId": "loop-basic-1",
-  "hintLevel": 1,
-  "source": "ai"
-}
-```
-
-### Environment Variables
-- `MODEL_ID`: Bedrock model ID (default: `anthropic.claude-3-haiku-20240307-v1:0`)
-
 ## Polly Function
 
 Located in `polly/` - Synthesizes speech using Amazon Polly and caches audio files in S3.
