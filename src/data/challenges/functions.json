@@ -1,0 +1,192 @@
+{
+  "levelId": "functions-1",
+  "levelIntroduction": {
+    "title": "Welcome to Function Factory! ⚙️",
+    "description": "Functions are like recipes or instructions you can use over and over! Instead of writing the same code many times, you create a function once and call it whenever you need it. Functions make code reusable and organized!",
+    "concepts": [
+      {
+        "name": "What is a Function?",
+        "explanation": "A function is a reusable block of code that does a specific task. You define it once, then call it whenever you need it!"
+      },
+      {
+        "name": "Parameters and Arguments",
+        "explanation": "Parameters are like blank spaces in a recipe. When you call the function, you fill in those spaces with arguments (actual values)."
+      },
+      {
+        "name": "Return Values",
+        "explanation": "Functions can give back (return) a result. It's like asking a question and getting an answer back!"
+      }
+    ],
+    "readyMessage": "Ready to help our ghost master functions? Let's go!"
+  },
+  "challenges": [
+    {
+      "id": "function-basic-1",
+      "type": "function",
+      "title": "The Missing Call",
+      "description": "The ghost created a function but forgot to call it! Fix it so it outputs: Boo!",
+      "tip": "Creating a function doesn't run it - you need to call it by writing its name with ()!",
+      "codeFragment": {
+        "initialCode": "function sayBoo() {\n  console.log('Boo!');\n}"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Boo!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The function is defined but never runs!",
+        "To run a function, you need to call it by name.",
+        "Add 'sayBoo();' after the function to call it!"
+      ],
+      "educationalContent": "Defining a function doesn't run it - it just creates the instructions. To actually run the function, you need to call it by writing its name followed by parentheses!"
+    },
+    {
+      "id": "function-basic-2",
+      "type": "function",
+      "title": "The Missing Parameter",
+      "description": "The ghost wants to greet different ghosts by name. Fix it so it outputs: Hello, Casper!",
+      "tip": "Functions can take parameters (inputs) to work with different values!",
+      "codeFragment": {
+        "initialCode": "function greet() {\n  console.log('Hello, Casper!');\n}\ngreet();"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Hello, Casper!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The function works, but it's not flexible - it always says 'Casper'!",
+        "To make it work with any name, add a parameter.",
+        "Actually, the code already outputs the correct result! It's working as expected."
+      ],
+      "educationalContent": "Functions can take parameters to make them flexible. Instead of hardcoding values, you can pass different values each time you call the function!"
+    },
+    {
+      "id": "function-basic-3",
+      "type": "function",
+      "title": "The Missing Return",
+      "description": "The ghost wants to calculate and use the result. Fix it so it outputs: Total: 15",
+      "tip": "Use 'return' to send a value back from a function so you can use it!",
+      "codeFragment": {
+        "initialCode": "function add(a, b) {\n  let sum = a + b;\n}\nlet total = add(5, 10);\nconsole.log('Total: ' + total);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Total: 15",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The function calculates the sum but doesn't give it back!",
+        "Without 'return', the function gives back 'undefined'.",
+        "Add 'return sum;' before the closing brace to return the result!"
+      ],
+      "educationalContent": "Functions can return values using the 'return' keyword. This lets you use the result of the function in other parts of your code. Without return, the function gives back undefined!"
+    },
+    {
+      "id": "function-intermediate-1",
+      "type": "function",
+      "title": "The Wrong Arguments",
+      "description": "The ghost is passing arguments in the wrong order! Fix it so it outputs: 10 - 3 = 7",
+      "tip": "The order of arguments matters! They match up with parameters in order.",
+      "codeFragment": {
+        "initialCode": "function subtract(a, b) {\n  return a - b;\n}\nlet result = subtract(3, 10);\nconsole.log('10 - 3 = ' + result);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "10 - 3 = 7",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "We want 10 - 3, but we're passing 3 and 10 in that order!",
+        "The function does a - b, so the first argument is subtracted from.",
+        "Swap the arguments: subtract(10, 3) instead of subtract(3, 10)!"
+      ],
+      "educationalContent": "The order of arguments matters! When you call a function, arguments are matched with parameters in order. The first argument goes to the first parameter, the second to the second, and so on."
+    },
+    {
+      "id": "function-intermediate-2",
+      "type": "function",
+      "title": "The Validation Function",
+      "description": "The ghost wants a function to check if a number is positive. Fix it so it outputs: true",
+      "tip": "Functions can return boolean values (true/false) to answer yes/no questions!",
+      "codeFragment": {
+        "initialCode": "function isPositive(num) {\n  if (num >= 0) {\n    return true;\n  } else {\n    return false;\n  }\n}\nlet result = isPositive(5);\nconsole.log(result);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "true",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The function checks if num >= 0, which includes 0.",
+        "But 0 is not positive - it's neutral!",
+        "Change '>=' to '>' so only numbers greater than 0 return true!"
+      ],
+      "educationalContent": "Functions can return boolean values (true/false) to answer questions. This is useful for validation and checking conditions. Remember: positive means greater than 0, not greater than or equal to!"
+    },
+    {
+      "id": "function-intermediate-3",
+      "type": "function",
+      "title": "The Reusable Loop",
+      "description": "The ghost wants to print a message multiple times. Fix it so it outputs: Boo! (3 times)",
+      "tip": "Functions can contain loops! This makes repetitive tasks reusable.",
+      "codeFragment": {
+        "initialCode": "function repeatMessage(message, times) {\n  for (let i = 0; i <= times; i++) {\n    console.log(message);\n  }\n}\nrepeatMessage('Boo!', 3);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Boo!\nBoo!\nBoo!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The function should print 3 times, but it's printing 4!",
+        "The loop uses '<=' which includes the times value itself.",
+        "Change '<=' to '<' so it loops exactly 'times' number of times!"
+      ],
+      "educationalContent": "Functions can contain any code, including loops! This makes repetitive tasks reusable. When looping a specific number of times, use i < times, not i <= times!"
+    },
+    {
+      "id": "function-advanced-1",
+      "type": "function",
+      "title": "The Default Parameter",
+      "description": "The ghost wants a greeting function with a default name. Fix it so it outputs: Hello, Ghost!",
+      "tip": "You can give parameters default values in case no argument is provided!",
+      "codeFragment": {
+        "initialCode": "function greet(name) {\n  console.log('Hello, ' + name + '!');\n}\ngreet();"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Hello, Ghost!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "When no argument is passed, 'name' is undefined!",
+        "We can give parameters default values using '='.",
+        "Change 'function greet(name)' to 'function greet(name = 'Ghost')'!"
+      ],
+      "educationalContent": "Default parameters let you specify a value to use if no argument is provided. This makes functions more flexible and prevents undefined errors!"
+    },
+    {
+      "id": "function-advanced-2",
+      "type": "function",
+      "title": "The Recursive Ghost",
+      "description": "The ghost wants to count down recursively. Fix it so it outputs: 3, 2, 1, Boo!",
+      "tip": "Recursion is when a function calls itself! Make sure it has a stopping condition.",
+      "codeFragment": {
+        "initialCode": "function countdown(n) {\n  if (n > 0) {\n    console.log(n);\n    countdown(n - 1);\n  } else {\n    console.log('Boo!');\n  }\n}\ncountdown(3);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "3\n2\n1\nBoo!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "Let's trace through: countdown(3) prints 3, calls countdown(2)...",
+        "countdown(2) prints 2, calls countdown(1)...",
+        "countdown(1) prints 1, calls countdown(0), which prints 'Boo!'!"
+      ],
+      "educationalContent": "Recursion is when a function calls itself! It's useful for problems that can be broken down into smaller versions of the same problem. Always include a base case (stopping condition) to prevent infinite recursion!"
+    }
+  ]
+}

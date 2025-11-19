@@ -7,6 +7,9 @@ import type { Challenge, LevelIntroduction } from '../engine/types';
 import loopsData from './challenges/loops.json';
 import conditionalsData from './challenges/conditionals.json';
 import logicData from './challenges/logic.json';
+import arraysData from './challenges/arrays.json';
+import functionsData from './challenges/functions.json';
+import cybersecurityData from './challenges/cybersecurity.json';
 
 /**
  * Validation error class for challenge data issues
@@ -31,8 +34,8 @@ function validateChallenge(challenge: any, index: number): void {
   if (!challenge.id || typeof challenge.id !== 'string') {
     errors.push('Missing or invalid id');
   }
-  if (!challenge.type || !['loop', 'conditional', 'logic'].includes(challenge.type)) {
-    errors.push('Missing or invalid type (must be loop, conditional, or logic)');
+  if (!challenge.type || !['loop', 'conditional', 'logic', 'array', 'function', 'cybersecurity'].includes(challenge.type)) {
+    errors.push('Missing or invalid type (must be loop, conditional, logic, array, function, or cybersecurity)');
   }
   if (!challenge.title || typeof challenge.title !== 'string') {
     errors.push('Missing or invalid title');
@@ -134,10 +137,25 @@ export function loadAllChallenges(): Map<string, Challenge[]> {
     validateChallengeLevel(logicData, 'logic');
     challengeMap.set('logic', logicData.challenges as Challenge[]);
 
+    // Validate and load arrays
+    validateChallengeLevel(arraysData, 'arrays');
+    challengeMap.set('arrays', arraysData.challenges as Challenge[]);
+
+    // Validate and load functions
+    validateChallengeLevel(functionsData, 'functions');
+    challengeMap.set('functions', functionsData.challenges as Challenge[]);
+
+    // Validate and load cybersecurity
+    validateChallengeLevel(cybersecurityData, 'cybersecurity');
+    challengeMap.set('cybersecurity', cybersecurityData.challenges as Challenge[]);
+
     console.log('✓ All challenges loaded and validated successfully');
     console.log(`  - Loops: ${loopsData.challenges.length} challenges`);
     console.log(`  - Conditionals: ${conditionalsData.challenges.length} challenges`);
     console.log(`  - Logic: ${logicData.challenges.length} challenges`);
+    console.log(`  - Arrays: ${arraysData.challenges.length} challenges`);
+    console.log(`  - Functions: ${functionsData.challenges.length} challenges`);
+    console.log(`  - Cybersecurity: ${cybersecurityData.challenges.length} challenges`);
 
     return challengeMap;
   } catch (error) {
@@ -152,11 +170,14 @@ export function loadAllChallenges(): Map<string, Challenge[]> {
 /**
  * Gets challenges by type
  */
-export function getChallengesByType(type: 'loop' | 'conditional' | 'logic'): Challenge[] {
+export function getChallengesByType(type: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity'): Challenge[] {
   const typeMap: Record<string, string> = {
     loop: 'loops',
     conditional: 'conditionals',
-    logic: 'logic'
+    logic: 'logic',
+    array: 'arrays',
+    function: 'functions',
+    cybersecurity: 'cybersecurity'
   };
 
   const challenges = loadAllChallenges();
@@ -196,13 +217,16 @@ export function getAllChallengesFlat(): Challenge[] {
 /**
  * Gets challenge count by type
  */
-export function getChallengeCount(): { loops: number; conditionals: number; logic: number; total: number } {
+export function getChallengeCount(): { loops: number; conditionals: number; logic: number; arrays: number; functions: number; cybersecurity: number; total: number } {
   const allChallenges = loadAllChallenges();
   
   return {
     loops: allChallenges.get('loops')?.length || 0,
     conditionals: allChallenges.get('conditionals')?.length || 0,
     logic: allChallenges.get('logic')?.length || 0,
+    arrays: allChallenges.get('arrays')?.length || 0,
+    functions: allChallenges.get('functions')?.length || 0,
+    cybersecurity: allChallenges.get('cybersecurity')?.length || 0,
     total: getAllChallengesFlat().length
   };
 }
@@ -210,11 +234,14 @@ export function getChallengeCount(): { loops: number; conditionals: number; logi
 /**
  * Gets level introduction by type
  */
-export function getLevelIntroduction(type: 'loop' | 'conditional' | 'logic'): LevelIntroduction | null {
+export function getLevelIntroduction(type: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity'): LevelIntroduction | null {
   const dataMap: Record<string, any> = {
     loop: loopsData,
     conditional: conditionalsData,
-    logic: logicData
+    logic: logicData,
+    array: arraysData,
+    function: functionsData,
+    cybersecurity: cybersecurityData
   };
 
   const data = dataMap[type];

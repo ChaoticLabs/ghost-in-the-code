@@ -20,4 +20,11 @@ export {
   getBadgesByCategory
 } from './badges';
 
+export {
+  getLevelName,
+  getAllLevelConfigs,
+  getLevelInfo
+} from './levelLoader';
+
 export type { BadgeDefinition, BadgeEarnStats } from './badges';
+export type { LevelType, LevelConfig, LevelInfo } from './levelLoader';

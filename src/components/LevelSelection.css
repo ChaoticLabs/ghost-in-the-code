@@ -12,7 +12,8 @@
   align-items: flex-start;
   justify-content: center;
   overflow-y: auto;
-  padding: clamp(1.5rem, 3vh, 3rem) clamp(0.75rem, 2vw, 2rem) clamp(0.75rem, 2vw, 2rem);
+  overflow-x: hidden;
+  padding: clamp(2rem, 4vh, 3rem) clamp(1.5rem, 3vw, 3rem) clamp(3rem, 6vh, 5rem);
 }
 
 .level-selection-background {
@@ -54,12 +55,13 @@
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
+  min-height: min-content;
 }
 
 /* Header */
 .level-selection-header {
   text-align: center;
-  margin-bottom: clamp(1rem, 2vh, 1.5rem);
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
 }
 
 .level-selection-ghost {
@@ -97,25 +99,30 @@
 /* Level Cards Grid */
 .level-cards-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
-  gap: clamp(0.75rem, 1.5vw, 1rem);
-  margin-bottom: clamp(0.5rem, 1vh, 1rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem 1.5rem;
+  margin-bottom: 3rem;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
+  width: 100%;
 }
 
 .level-card {
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1;
 }
 
 .level-card-inner {
   background: rgba(26, 31, 46, 0.95);
   border: 2px solid;
   border-radius: 12px;
-  padding: clamp(1rem, 2vw, 1.25rem);
+  padding: 1rem 1.25rem 1.25rem;
   height: 100%;
+  min-height: 240px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,6 +131,10 @@
   backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
+}
+
+.level-card:hover {
+  z-index: 2;
 }
 
 .level-card:hover .level-card-inner {
@@ -136,30 +147,30 @@
 
 /* Icon */
 .level-card-icon {
-  font-size: clamp(2rem, 4.5vw, 2.75rem);
-  margin-bottom: clamp(0.35rem, 0.7vh, 0.5rem);
+  font-size: 2.25rem;
+  margin-bottom: 0.4rem;
   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
 /* Title */
 .level-card-title {
-  /* Uses global h3 font-size */
-  color: #FFFFFF;
-  margin: 0 0 clamp(0.35rem, 0.7vh, 0.5rem) 0;
+  font-size: 1.4rem;
+  color: var(--color-text-light);
+  margin: 0 0 0.4rem 0;
 }
 
 /* Description */
 .level-card-description {
-  font-size: clamp(0.8rem, 1.4vw, 0.9rem);
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0 0 clamp(0.5rem, 1vh, 0.75rem) 0;
-  line-height: 1.3;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0 0 0.6rem 0;
+  line-height: 1.35;
   flex: 1;
 }
 
 .level-card-progress {
   width: 100%;
-  margin-bottom: clamp(0.5rem, 1vh, 0.75rem);
+  margin-bottom: 0.6rem;
 }
 
 .level-card-progress .progress-bar-container {
@@ -167,19 +178,19 @@
 }
 
 .progress-text {
-  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
   font-weight: 600;
 }
 
 /* Status Badge */
 .level-card-badge {
   position: absolute;
-  top: clamp(0.5rem, 1vw, 0.75rem);
-  right: clamp(0.5rem, 1vw, 0.75rem);
-  padding: clamp(0.35rem, 0.8vw, 0.5rem) clamp(0.65rem, 1.5vw, 0.85rem);
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.4rem 0.75rem;
   border-radius: 16px;
-  font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+  font-size: 0.75rem;
   font-weight: bold;
 }
 
@@ -191,16 +202,16 @@
 /* Start Button */
 .level-card-button {
   width: 100%;
-  padding: clamp(0.5rem, 1.2vh, 0.65rem) clamp(0.85rem, 1.8vw, 1.25rem);
+  padding: 0.6rem 1rem;
   border: none;
   border-radius: 8px;
-  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  font-size: 0.9rem;
   font-weight: bold;
   color: #FFFFFF;
   cursor: pointer;
   transition: all 0.2s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  min-height: 40px;
+  min-height: 38px;
 }
 
 .level-card-button:hover {
@@ -228,6 +239,14 @@
   outline-offset: 2px;
 }
 
+/* Responsive - Large Desktop */
+@media (min-width: 1441px) {
+  .level-cards-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5rem 2rem;
+  }
+}
+
 /* Responsive - Chromebook/Small Laptop (1366x768 typical) */
 @media (max-width: 1440px) and (min-width: 1024px) {
   .level-selection-content {
@@ -236,7 +255,7 @@
 
   .level-cards-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.25rem;
+    gap: 3rem 1.5rem;
   }
 }
 
@@ -244,25 +263,31 @@
 @media (max-width: 1023px) and (min-width: 769px) {
   .level-cards-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 1.25rem;
+    gap: 3rem 1.5rem;
   }
 }
 
 /* Responsive - Mobile/Small Tablet */
 @media (max-width: 768px) {
   .level-selection-container {
-    padding: 1rem;
+    padding: 1rem 1rem 2.5rem;
   }
 
   .level-cards-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 2rem;
+    margin-bottom: 2rem;
   }
 
   .level-selection-header {
     margin-bottom: 1.5rem;
     padding-top: 3rem;
   }
+  
+  .level-card-inner {
+    min-height: 220px;
+  }
+}
 
   .level-selection-actions {
     top: 0.75rem;
@@ -276,15 +301,15 @@
     padding: 0.4rem;
     font-size: 1.25rem;
   }
-}
 
 @media (max-width: 480px) {
   .level-selection-container {
-    padding: 0.75rem;
+    padding: 0.75rem 0.75rem 2rem;
   }
 
   .level-cards-grid {
-    gap: 0.75rem;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
   .level-selection-header {

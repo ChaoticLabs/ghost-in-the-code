@@ -1,0 +1,44 @@
+[
+  {
+    "type": "loop",
+    "title": "Loops",
+    "description": "Learn how to repeat actions and create efficient code with loops!",
+    "icon": "🔄",
+    "color": "#00D9FF"
+  },
+  {
+    "type": "conditional",
+    "title": "Conditionals",
+    "description": "Master decision-making in code with if statements and conditions!",
+    "icon": "🔀",
+    "color": "#A3FF00"
+  },
+  {
+    "type": "logic",
+    "title": "Logic Puzzles",
+    "description": "Solve tricky problems and think like a programmer!",
+    "icon": "🧩",
+    "color": "#FF9500"
+  },
+  {
+    "type": "array",
+    "title": "Arrays",
+    "description": "Master working with lists and collections of data!",
+    "icon": "📚",
+    "color": "#FF006E"
+  },
+  {
+    "type": "function",
+    "title": "Functions",
+    "description": "Create reusable code blocks and organize your programs!",
+    "icon": "⚙️",
+    "color": "#8338EC"
+  },
+  {
+    "type": "cybersecurity",
+    "title": "Cybersecurity",
+    "description": "Learn to protect code and data from digital threats!",
+    "icon": "🔐",
+    "color": "#FB5607"
+  }
+]

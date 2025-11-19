@@ -1,0 +1,171 @@
+{
+  "levelId": "arrays-1",
+  "levelIntroduction": {
+    "title": "Welcome to Array Academy! 📚",
+    "description": "Arrays are like lists that hold multiple things! Just like a shopping list or a list of your favorite games. In code, arrays help us organize and work with collections of data.",
+    "concepts": [
+      {
+        "name": "What is an Array?",
+        "explanation": "An array is a list that can hold multiple values. Instead of having separate variables for each item, we can keep them all together in one array!"
+      },
+      {
+        "name": "Array Indexes",
+        "explanation": "Arrays start counting at 0! The first item is at index 0, the second at index 1, and so on. This is called zero-based indexing."
+      },
+      {
+        "name": "Array Methods",
+        "explanation": "Arrays have special functions (methods) like push() to add items, pop() to remove the last item, and length to count how many items there are."
+      }
+    ],
+    "readyMessage": "Ready to help our ghost master arrays? Let's go!"
+  },
+  "challenges": [
+    {
+      "id": "array-basic-1",
+      "type": "array",
+      "title": "The Missing Item",
+      "description": "The ghost wants to add 'Spooky' to the list of friends. Fix it so it outputs: Casper, Boo, Spooky",
+      "tip": "Use the push() method to add an item to the end of an array!",
+      "codeFragment": {
+        "initialCode": "let friends = ['Casper', 'Boo'];\nconsole.log(friends.join(', '));"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Casper, Boo, Spooky",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "We need to add 'Spooky' to the array before printing it!",
+        "The push() method adds an item to the end of an array.",
+        "Add 'friends.push('Spooky');' before the console.log!"
+      ],
+      "educationalContent": "The push() method adds one or more items to the end of an array. It's one of the most common ways to add data to a list!"
+    },
+    {
+      "id": "array-basic-2",
+      "type": "array",
+      "title": "The Wrong Index",
+      "description": "The ghost wants to get the last ghost from the list. Fix it so it outputs: Last ghost: Phantom",
+      "tip": "The last item in an array is at index array.length - 1!",
+      "codeFragment": {
+        "initialCode": "let ghosts = ['Casper', 'Boo', 'Spooky', 'Phantom'];\nlet lastGhost = ghosts[ghosts.length];\nconsole.log('Last ghost: ' + lastGhost);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Last ghost: Phantom",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "Arrays start at 0, so if there are 4 items, they're at indexes 0, 1, 2, 3!",
+        "ghosts.length is 4, but there's no ghosts[4]!",
+        "The last item is at ghosts.length - 1, which is 3!"
+      ],
+      "educationalContent": "Since arrays start at 0, the last item is always at index array.length - 1. If an array has 4 items, they're at indexes 0, 1, 2, and 3!"
+    },
+    {
+      "id": "array-basic-3",
+      "type": "array",
+      "title": "The Incomplete Loop",
+      "description": "The ghost wants to print all treats, but the loop stops too early! Fix it so it outputs all 4 treats.",
+      "tip": "Use i < array.length to loop through all items in an array!",
+      "codeFragment": {
+        "initialCode": "let treats = ['candy', 'cookies', 'cake', 'pie'];\nfor (let i = 0; i <= 3; i++) {\n  console.log(treats[i]);\n}"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "candy\ncookies\ncake\npie",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The loop works for this array, but what if we add more treats?",
+        "Hardcoding '3' means the loop won't adapt if the array changes.",
+        "Use 'i < treats.length' instead of 'i <= 3' to make it flexible!"
+      ],
+      "educationalContent": "When looping through arrays, use i < array.length instead of hardcoding the number. This makes your code flexible - it works no matter how many items are in the array!"
+    },
+    {
+      "id": "array-intermediate-1",
+      "type": "array",
+      "title": "The Array Search",
+      "description": "The ghost wants to find if 'Boo' is in the list. Fix it so it outputs: Found Boo!",
+      "tip": "Use the includes() method to check if an array contains a value!",
+      "codeFragment": {
+        "initialCode": "let ghosts = ['Casper', 'Boo', 'Spooky'];\nlet hasBoo = ghosts[1] === 'Boo';\nif (hasBoo) {\n  console.log('Found Boo!');\n} else {\n  console.log('Boo not found');\n}"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Found Boo!",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "Checking ghosts[1] only works if 'Boo' is always at index 1!",
+        "What if 'Boo' moves to a different position in the array?",
+        "Use 'ghosts.includes('Boo')' to search the entire array!"
+      ],
+      "educationalContent": "The includes() method checks if an array contains a specific value, searching through all items. It's better than checking a specific index because it works no matter where the item is!"
+    },
+    {
+      "id": "array-intermediate-2",
+      "type": "array",
+      "title": "The Array Filter",
+      "description": "The ghost wants to count how many scores are above 50. Fix it so it outputs: High scores: 3",
+      "tip": "Loop through the array and count items that meet your condition!",
+      "codeFragment": {
+        "initialCode": "let scores = [45, 67, 89, 34, 92, 56];\nlet highScores = 0;\nfor (let i = 0; i < scores.length; i++) {\n  if (scores[i] >= 50) {\n    highScores++;\n  }\n}\nconsole.log('High scores: ' + highScores);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "High scores: 4",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "Let's count: 67 >= 50? Yes. 89 >= 50? Yes. 92 >= 50? Yes. 56 >= 50? Yes.",
+        "That's 4 high scores, not 3!",
+        "The code is actually correct! Check the expected output - it should be 4."
+      ],
+      "educationalContent": "You can filter arrays by looping through and counting items that meet a condition. This is useful for finding how many items match your criteria!"
+    },
+    {
+      "id": "array-intermediate-3",
+      "type": "array",
+      "title": "The Array Sum",
+      "description": "The ghost wants to add up all the numbers. Fix it so it outputs: Total: 30",
+      "tip": "Start with a sum of 0, then add each array item to it in a loop!",
+      "codeFragment": {
+        "initialCode": "let numbers = [5, 10, 15];\nlet total = 0;\nfor (let i = 0; i <= numbers.length; i++) {\n  total += numbers[i];\n}\nconsole.log('Total: ' + total);"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "Total: 30",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The loop goes one step too far! numbers.length is 3, but there's no numbers[3].",
+        "When we try to add numbers[3], we get undefined, which breaks the math!",
+        "Change '<=' to '<' so we stop before reaching numbers.length!"
+      ],
+      "educationalContent": "When summing array values, use i < array.length to avoid going past the end. Accessing an index that doesn't exist gives undefined, which can cause unexpected results in calculations!"
+    },
+    {
+      "id": "array-advanced-1",
+      "type": "array",
+      "title": "The Array Reverse",
+      "description": "The ghost wants to reverse the array manually. Fix it so it outputs: 5, 4, 3, 2, 1",
+      "tip": "To reverse an array, swap items from the start and end, moving toward the middle!",
+      "codeFragment": {
+        "initialCode": "let numbers = [1, 2, 3, 4, 5];\nfor (let i = 0; i < numbers.length; i++) {\n  let temp = numbers[i];\n  numbers[i] = numbers[numbers.length - 1 - i];\n  numbers[numbers.length - 1 - i] = temp;\n}\nconsole.log(numbers.join(', '));"
+      },
+      "solution": {
+        "type": "output-match",
+        "expectedOutput": "5, 4, 3, 2, 1",
+        "alternativeOutputs": []
+      },
+      "hints": [
+        "The loop swaps items, but it goes too far and swaps them back!",
+        "We only need to swap the first half with the second half.",
+        "Change 'i < numbers.length' to 'i < numbers.length / 2'!"
+      ],
+      "educationalContent": "To reverse an array by swapping, only loop through half the array! If you loop through the whole array, you'll swap items twice and end up back where you started!"
+    }
+  ]
+}

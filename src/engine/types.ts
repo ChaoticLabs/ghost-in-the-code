@@ -26,7 +26,7 @@ export interface LevelIntroduction {
 
 export interface Challenge {
   id: string;
-  type: 'loop' | 'conditional' | 'logic';
+  type: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity';
   title: string;
   description: string;
   tip: string;
@@ -39,7 +39,7 @@ export interface Challenge {
 export interface Badge {
   id: string;
   name: string;
-  concept: 'loop' | 'conditional' | 'logic';
+  concept: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity';
   earnedDate: string;
   description: string;
   iconUrl: string;

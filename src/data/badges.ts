@@ -10,7 +10,7 @@ export interface BadgeDefinition {
   description: string;
   iconUrl: string;
   category: 'concept' | 'achievement' | 'special';
-  concept?: 'loop' | 'conditional' | 'logic';
+  concept?: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity';
   earnCondition: (stats: BadgeEarnStats) => boolean;
 }
 
@@ -64,6 +64,45 @@ export const BADGE_DEFINITIONS: BadgeDefinition[] = [
       const logicChallenges = stats.challengesByType.get('logic') || [];
       if (logicChallenges.length === 0) return false;
       return logicChallenges.every(id => stats.completedChallenges.has(id));
+    }
+  },
+  {
+    id: 'array-ace',
+    name: 'Array Ace',
+    description: 'Complete all array challenges',
+    iconUrl: '/badges/array-ace.svg',
+    category: 'concept',
+    concept: 'array',
+    earnCondition: (stats) => {
+      const arrayChallenges = stats.challengesByType.get('array') || [];
+      if (arrayChallenges.length === 0) return false;
+      return arrayChallenges.every(id => stats.completedChallenges.has(id));
+    }
+  },
+  {
+    id: 'function-wizard',
+    name: 'Function Wizard',
+    description: 'Complete all function challenges',
+    iconUrl: '/badges/function-wizard.svg',
+    category: 'concept',
+    concept: 'function',
+    earnCondition: (stats) => {
+      const functionChallenges = stats.challengesByType.get('function') || [];
+      if (functionChallenges.length === 0) return false;
+      return functionChallenges.every(id => stats.completedChallenges.has(id));
+    }
+  },
+  {
+    id: 'security-guardian',
+    name: 'Security Guardian',
+    description: 'Complete all cybersecurity challenges',
+    iconUrl: '/badges/security-guardian.svg',
+    category: 'concept',
+    concept: 'cybersecurity',
+    earnCondition: (stats) => {
+      const cyberChallenges = stats.challengesByType.get('cybersecurity') || [];
+      if (cyberChallenges.length === 0) return false;
+      return cyberChallenges.every(id => stats.completedChallenges.has(id));
     }
   },
 

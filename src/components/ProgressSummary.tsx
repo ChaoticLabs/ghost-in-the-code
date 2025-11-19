@@ -75,7 +75,10 @@ export const ProgressSummary = ({
   const conceptStats = {
     loop: { completed: 0, total: 0 },
     conditional: { completed: 0, total: 0 },
-    logic: { completed: 0, total: 0 }
+    logic: { completed: 0, total: 0 },
+    array: { completed: 0, total: 0 },
+    function: { completed: 0, total: 0 },
+    cybersecurity: { completed: 0, total: 0 }
   };
 
   allChallenges.forEach(challenge => {
@@ -200,7 +203,7 @@ export const ProgressSummary = ({
             <h3 className="summary-section-title">Concept Progress</h3>
             <div className="summary-concepts">
               <div className="summary-concept-card">
-                <h4 className="summary-concept-name">🔁 Loops</h4>
+                <h4 className="summary-concept-name">� Looops</h4>
                 <ProgressBar
                   percentage={getConceptCompletion('loop')}
                   height="medium"
@@ -235,6 +238,45 @@ export const ProgressSummary = ({
                 <div className="summary-concept-stats">
                   <span>{getConceptCompletion('logic')}% Complete</span>
                   <span>{conceptStats.logic.completed}/{conceptStats.logic.total} Challenges</span>
+                </div>
+              </div>
+
+              <div className="summary-concept-card">
+                <h4 className="summary-concept-name">📚 Arrays</h4>
+                <ProgressBar
+                  percentage={getConceptCompletion('array')}
+                  height="medium"
+                  className="summary-progress-bar"
+                />
+                <div className="summary-concept-stats">
+                  <span>{getConceptCompletion('array')}% Complete</span>
+                  <span>{conceptStats.array.completed}/{conceptStats.array.total} Challenges</span>
+                </div>
+              </div>
+
+              <div className="summary-concept-card">
+                <h4 className="summary-concept-name">⚙️ Functions</h4>
+                <ProgressBar
+                  percentage={getConceptCompletion('function')}
+                  height="medium"
+                  className="summary-progress-bar"
+                />
+                <div className="summary-concept-stats">
+                  <span>{getConceptCompletion('function')}% Complete</span>
+                  <span>{conceptStats.function.completed}/{conceptStats.function.total} Challenges</span>
+                </div>
+              </div>
+
+              <div className="summary-concept-card">
+                <h4 className="summary-concept-name">🔐 Cybersecurity</h4>
+                <ProgressBar
+                  percentage={getConceptCompletion('cybersecurity')}
+                  height="medium"
+                  className="summary-progress-bar"
+                />
+                <div className="summary-concept-stats">
+                  <span>{getConceptCompletion('cybersecurity')}% Complete</span>
+                  <span>{conceptStats.cybersecurity.completed}/{conceptStats.cybersecurity.total} Challenges</span>
                 </div>
               </div>
             </div>

@@ -6,9 +6,8 @@
 import { motion } from 'framer-motion';
 import { usePreferences } from '../engine';
 import { ProgressBar } from './ProgressBar';
+import type { LevelType } from '../data';
 import './LevelSelection.css';
-
-export type LevelType = 'loop' | 'conditional' | 'logic';
 
 interface LevelInfo {
   type: LevelType;

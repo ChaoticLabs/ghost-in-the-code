@@ -3,9 +3,9 @@ import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
 import { gameActions } from './engine/gameActions'
 import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection, Footer } from './components'
-import type { LevelType } from './components'
-import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction } from './data'
+import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction, getLevelName, getLevelInfo } from './data'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
+import type { LevelType } from './data'
 import './App.css'
 
 /**
@@ -61,19 +61,7 @@ function loadAppState(): AppState | null {
   return null;
 }
 
-// Helper function to get level name
-const getLevelName = (levelType: LevelType): string => {
-  switch (levelType) {
-    case 'loop':
-      return 'Loops 🔄';
-    case 'conditional':
-      return 'Conditionals 🔀';
-    case 'logic':
-      return 'Logic Puzzles 🧩';
-    default:
-      return 'Level';
-  }
-};
+
 
 function App() {
   const { state, dispatch } = useGame();
@@ -350,41 +338,7 @@ function App() {
 
   // Show level selection screen
   if (showLevelSelection && !gameStarted) {
-    const levelInfo = [
-      {
-        type: 'loop' as LevelType,
-        title: 'Loops',
-        description: 'Learn how to repeat actions and create efficient code with loops!',
-        icon: '🔄',
-        color: '#00D9FF',
-        challengeCount: allChallenges.filter(c => c.type === 'loop').length,
-        completedCount: Array.from(state.completedChallenges).filter(id => 
-          allChallenges.find(c => c.id === id && c.type === 'loop')
-        ).length
-      },
-      {
-        type: 'conditional' as LevelType,
-        title: 'Conditionals',
-        description: 'Master decision-making in code with if statements and conditions!',
-        icon: '🔀',
-        color: '#A3FF00',
-        challengeCount: allChallenges.filter(c => c.type === 'conditional').length,
-        completedCount: Array.from(state.completedChallenges).filter(id => 
-          allChallenges.find(c => c.id === id && c.type === 'conditional')
-        ).length
-      },
-      {
-        type: 'logic' as LevelType,
-        title: 'Logic Puzzles',
-        description: 'Solve tricky problems and think like a programmer!',
-        icon: '🧩',
-        color: '#FF9500',
-        challengeCount: allChallenges.filter(c => c.type === 'logic').length,
-        completedCount: Array.from(state.completedChallenges).filter(id => 
-          allChallenges.find(c => c.id === id && c.type === 'logic')
-        ).length
-      }
-    ];
+    const levelInfo = getLevelInfo(allChallenges, state.completedChallenges);
 
     return (
       <>
