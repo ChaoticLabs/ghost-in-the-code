@@ -15,7 +15,7 @@ export const Footer = () => {
           alt="Chaotic Labs" 
           className="footer-logo"
         />
-        <span className="footer-text">A Chaotic Labs Original</span>
+        <span className="footer-text">Chaotic Labs</span>
       </a>
     </footer>
   );
