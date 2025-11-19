@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useGame } from './engine'
 import { useBadgeSystem } from './engine/useBadgeSystem'
 import { gameActions } from './engine/gameActions'
-import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection } from './components'
+import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection, Footer } from './components'
 import type { LevelType } from './components'
 import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction } from './data'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
@@ -340,7 +340,12 @@ function App() {
 
   // Show welcome screen if game hasn't started
   if (!gameStarted && !showLevelSelection) {
-    return <WelcomeScreen onStart={handleStartGame} />;
+    return (
+      <>
+        <WelcomeScreen onStart={handleStartGame} />
+        <Footer />
+      </>
+    );
   }
 
   // Show level selection screen
@@ -415,6 +420,7 @@ function App() {
           onClose={handleCloseSettings}
           onResetGame={handleResetGame}
         />
+        <Footer />
       </>
     );
   }
@@ -601,6 +607,8 @@ function App() {
           onClose={handleCloseProgressSummary}
         />
       )}
+
+      <Footer />
     </>
   )
 }
