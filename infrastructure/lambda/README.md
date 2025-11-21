@@ -40,10 +40,6 @@ Located in `polly/` - Synthesizes speech using Amazon Polly and caches audio fil
 ### Installing Dependencies
 
 ```bash
-# Bedrock function
-cd lambda/bedrock
-npm install
-
 # Polly function
 cd lambda/polly
 npm install

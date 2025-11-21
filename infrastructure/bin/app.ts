@@ -5,7 +5,6 @@ import { GhostInTheCodeStack } from '../lib/ghost-in-the-code-stack';
 
 const app = new cdk.App();
 
-// Get environment configuration from context or environment variables
 const env = {
   account: process.env.CDK_DEFAULT_ACCOUNT,
   region: process.env.CDK_DEFAULT_REGION || 'us-east-1',
