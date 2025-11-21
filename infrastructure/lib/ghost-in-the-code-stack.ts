@@ -102,7 +102,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
     // API Gateway with CORS
     const api = new apigateway.RestApi(this, 'GameApi', {
       restApiName: 'Ghost in the Code API',
-      description: 'API for AI hints and voice synthesis',
+      description: 'API for voice synthesis',
       defaultCorsPreflightOptions: {
         allowOrigins: apigateway.Cors.ALL_ORIGINS,
         allowMethods: apigateway.Cors.ALL_METHODS,

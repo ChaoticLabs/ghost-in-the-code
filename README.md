@@ -8,7 +8,7 @@ An interactive web game where kids help a friendly ghost "debug" haunted code to
 **Technology Stack:**
 - **Frontend:** Vite + React + TypeScript
 - **Infrastructure:** AWS CDK (S3, CloudFront, API Gateway, Lambda)
-- **AI Services:** Amazon Bedrock (Claude) for hints, Amazon Polly for voice
+- **AI Services:** Amazon Polly for voice
 - **Animation:** Framer Motion
 
 **Development Philosophy:** This is a hackathon project focused on core functionality and user experience. Code is clean and understandable but doesn't need to be production-grade.
@@ -67,7 +67,6 @@ ghost-in-the-code/
 │   └── App.tsx             # Main app component
 ├── infrastructure/          # AWS CDK deployment
 │   ├── lambda/             # Lambda functions
-│   │   ├── bedrock/        # AI hints (TypeScript)
 │   │   └── polly/          # Text-to-speech (TypeScript)
 │   └── lib/                # CDK stack definitions
 ├── public/                 # Static assets
@@ -193,9 +192,8 @@ chmod +x deploy.sh
 **Infrastructure includes:**
 - S3 bucket for static hosting
 - CloudFront CDN for global delivery
-- API Gateway for AI/voice services
+- API Gateway for voice services
 - Lambda functions (TypeScript, auto-compiled):
-  - Bedrock function for AI hints
   - Polly function for text-to-speech
 - S3 bucket for audio caching
 
@@ -203,12 +201,7 @@ chmod +x deploy.sh
 
 ### Lambda Functions
 
-Both Lambda functions are written in TypeScript and automatically compiled during deployment:
-
-#### Bedrock Function (AI Hints)
-- **Endpoint:** `POST /hints`
-- Generates child-friendly hints using Claude
-- Caching strategy for cost optimization
+The Lambda function is written in TypeScript and automatically compiled during deployment:
 
 #### Polly Function (Text-to-Speech)
 - **Endpoint:** `POST /voice`
@@ -313,7 +306,6 @@ Built with:
 - React + TypeScript + Vite
 - Framer Motion for animations
 - AWS CDK for infrastructure
-- Amazon Bedrock (Claude) for AI
 - Amazon Polly for voice synthesis
 
 ---
