@@ -164,7 +164,7 @@ describe('Badge System', () => {
       
       conceptBadges.forEach(def => {
         expect(def.concept).toBeDefined();
-        expect(['loop', 'conditional', 'logic']).toContain(def.concept);
+        expect(['loop', 'conditional', 'logic', 'array', 'function', 'cybersecurity']).toContain(def.concept);
       });
     });
   });

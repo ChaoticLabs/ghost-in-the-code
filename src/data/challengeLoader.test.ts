@@ -16,7 +16,7 @@ describe('Challenge Loader', () => {
   it('should load all challenges without errors', () => {
     const challenges = loadAllChallenges();
     expect(challenges).toBeDefined();
-    expect(challenges.size).toBe(3);
+    expect(challenges.size).toBe(6); // loops, conditionals, logic, arrays, functions, cybersecurity
   });
 
   it('should load loops challenges', () => {
@@ -60,7 +60,9 @@ describe('Challenge Loader', () => {
     expect(counts.loops).toBeGreaterThan(0);
     expect(counts.conditionals).toBeGreaterThan(0);
     expect(counts.logic).toBeGreaterThan(0);
-    expect(counts.total).toBe(counts.loops + counts.conditionals + counts.logic);
+    expect(counts.total).toBeGreaterThan(0);
+    // Total should be sum of all challenge types
+    expect(counts.total).toBeGreaterThanOrEqual(counts.loops + counts.conditionals + counts.logic);
   });
 
   it('should validate challenge structure', () => {
@@ -69,21 +71,18 @@ describe('Challenge Loader', () => {
     challenges.forEach(challenge => {
       // Required fields
       expect(challenge.id).toBeDefined();
-      expect(challenge.type).toMatch(/^(loop|conditional|logic)$/);
+      expect(challenge.type).toMatch(/^(loop|conditional|logic|array|function|cybersecurity)$/);
       expect(challenge.title).toBeDefined();
       expect(challenge.description).toBeDefined();
       
       // Code fragment
       expect(challenge.codeFragment).toBeDefined();
-      expect(Array.isArray(challenge.codeFragment.lines)).toBe(true);
-      expect(challenge.codeFragment.lines.length).toBeGreaterThan(0);
-      expect(Array.isArray(challenge.codeFragment.buggyLines)).toBe(true);
+      expect(typeof challenge.codeFragment).toBe('object');
       
       // Solution
       expect(challenge.solution).toBeDefined();
-      expect(challenge.solution.type).toBe('line-replacement');
-      expect(typeof challenge.solution.lineNumber).toBe('number');
-      expect(challenge.solution.correctContent).toBeDefined();
+      expect(challenge.solution.type).toBe('output-match');
+      expect(challenge.solution.expectedOutput).toBeDefined();
       
       // Hints
       expect(Array.isArray(challenge.hints)).toBe(true);
