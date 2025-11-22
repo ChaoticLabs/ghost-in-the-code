@@ -165,6 +165,75 @@ Test coverage includes:
 - State management
 - Data loading
 
+## 🎤 Voice Integration (AWS Polly)
+
+The ghost speaks! AWS Polly provides text-to-speech with emotion support.
+
+### Quick Setup
+
+1. **Deploy infrastructure:**
+   ```bash
+   cd infrastructure
+   npm run deploy:full
+   ```
+
+2. **Configure environment:**
+   ```bash
+   cp .env.example .env
+   # Edit .env and add your API endpoint from deployment output
+   ```
+
+3. **Run the app:**
+   ```bash
+   npm run dev
+   ```
+
+### Features
+- ✅ Ghost speaks automatically when messages appear
+- ✅ Ghost speaks when clicked with random messages
+- ✅ Three emotion modes: neutral, excited, encouraging
+- ✅ Audio cached in S3 for performance
+- ✅ Volume control (0-100%) in settings
+- ✅ Enable/disable voice in settings
+
+### Voice Settings
+- **Ghost Voice Toggle:** Enable/disable all voice narration
+- **Volume Slider:** Adjust playback volume (default: 80%)
+- Settings persist across sessions in localStorage
+
+### Customization
+
+**Change voice** in `infrastructure/lib/ghost-in-the-code-stack.ts`:
+```typescript
+environment: {
+  VOICE_ID: 'Matthew', // Joanna, Matthew, Salli, Kendra, Joey, Justin, etc.
+}
+```
+
+**Adjust emotions** in `infrastructure/lambda/polly/index.ts`:
+- Excited: Fast rate + 10% higher pitch
+- Encouraging: 5% higher pitch
+- Neutral: Normal speech
+
+### Troubleshooting
+
+**"API endpoint not configured"**
+- Ensure `.env` file exists in project root
+- Restart dev server after creating `.env`
+
+**No sound**
+- Check browser console for errors
+- Verify API endpoint URL ends with `/`
+- Check browser autoplay policies
+
+### Cost Considerations
+- **Polly:** ~$4 per 1 million characters
+- **S3 Storage:** Minimal (audio files cached)
+- **API Gateway:** ~$3.50 per million requests
+- **Lambda:** Minimal (fast execution)
+
+Audio caching significantly reduces costs.
+
 ## 🚢 Deployment
 
 ### AWS Infrastructure
@@ -194,19 +263,45 @@ chmod +x deploy.sh
 - CloudFront CDN for global delivery
 - API Gateway for voice services
 - Lambda functions (TypeScript, auto-compiled):
-  - Polly function for text-to-speech
-- S3 bucket for audio caching
+  - Polly function for text-to-speech with SSML support
+- S3 bucket for audio caching with public read access
 
 **No Docker required** - uses local bundling and esbuild for Lambda functions.
 
-### Lambda Functions
+### AWS OIDC Setup for GitHub Actions
 
-The Lambda function is written in TypeScript and automatically compiled during deployment:
+For automated deployments via GitHub Actions:
+
+1. **Create OIDC Identity Provider in AWS:**
+   - Go to IAM → Identity providers → Add provider
+   - Provider URL: `https://token.actions.githubusercontent.com`
+   - Audience: `sts.amazonaws.com`
+
+2. **Create IAM Role:**
+   - Select "Web identity"
+   - Add condition for your repo: `repo:YOUR_USERNAME/ghost-in-the-code:*`
+   - Attach `PowerUserAccess` policy
+   - Name: `GitHubActionsRole`
+
+3. **Add GitHub Secrets:**
+   - `AWS_ROLE_ARN`: Your role ARN
+   - `AWS_ACCOUNT_ID`: Your AWS account ID
+
+4. **Local Development:**
+   ```bash
+   aws configure
+   # Or set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in .env
+   ```
+
+### Lambda Functions
 
 #### Polly Function (Text-to-Speech)
 - **Endpoint:** `POST /voice`
-- Synthesizes speech with emotion support
+- **Request:** `{ text: string, emotion?: 'neutral' | 'excited' | 'encouraging' }`
+- **Response:** `{ audioUrl: string, cached: boolean, text: string }`
+- Uses SSML for prosody control (rate, pitch)
 - Caches audio files in S3 (1-year TTL)
+- Standard engine for SSML support
 
 ## 📊 Game Statistics
 
