@@ -17,10 +17,9 @@ export class GhostInTheCodeStack extends cdk.Stack {
     // S3 bucket for website hosting
     const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
       bucketName: `ghost-in-the-code-${this.account}-${this.region}`.replace(/\s+/g, ''),
-      websiteIndexDocument: 'index.html',
-      websiteErrorDocument: 'index.html',
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
     });
 
     // S3 bucket for audio cache with CORS configuration and public read access
@@ -57,7 +56,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
     // CloudFront distribution for the website
     const distribution = new cloudfront.Distribution(this, 'WebsiteDistribution', {
       defaultBehavior: {
-        origin: new origins.S3StaticWebsiteOrigin(websiteBucket),
+        origin: origins.S3BucketOrigin.withOriginAccessControl(websiteBucket),
         viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
         cachePolicy: cloudfront.CachePolicy.CACHING_OPTIMIZED,
       },
