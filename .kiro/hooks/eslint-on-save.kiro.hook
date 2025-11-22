@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "ESLint on Save",
+  "description": "Automatically runs ESLint on TypeScript and JavaScript files when they are saved to maintain code quality and catch potential issues early in development.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/*.js",
+      "**/*.jsx"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npx eslint {{filePath}}"
+  }
+}
