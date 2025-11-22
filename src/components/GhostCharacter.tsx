@@ -21,7 +21,7 @@ export const GhostCharacter = ({
 }: GhostCharacterProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
-  const { speak, isEnabled: voiceEnabled } = usePolly();
+  const { speak } = usePolly();
   const [currentState, setCurrentState] = useState<GhostState>(state);
   const [clickMessage, setClickMessage] = useState<string>('');
   const [showClickBubble, setShowClickBubble] = useState(false);
@@ -190,7 +190,7 @@ export const GhostCharacter = ({
 
   // Auto-speak when message changes
   useEffect(() => {
-    if (showSpeechBubble && message && !showClickBubble && !isSleeping && voiceEnabled) {
+    if (showSpeechBubble && message && !showClickBubble && !isSleeping) {
       // Prevent speaking the same message twice in a row
       if (lastSpokenMessageRef.current === message) {
         return;
@@ -208,7 +208,7 @@ export const GhostCharacter = ({
       // Reset when speech bubble is hidden so message can be spoken again later
       lastSpokenMessageRef.current = '';
     }
-  }, [message, showSpeechBubble, showClickBubble, isSleeping, state, voiceEnabled, speak]);
+  }, [message, showSpeechBubble, showClickBubble, isSleeping, state, speak]);
 
   // Animation variants for celebrating state
   const celebrateVariants = {
