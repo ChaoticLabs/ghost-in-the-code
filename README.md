@@ -2,6 +2,8 @@
 
 An interactive web game where kids help a friendly ghost "debug" haunted code to save the digital world. Each bug represents a coding concept (loops, conditions, logic puzzles) with spooky animations as rewards.
 
+This is a submission for Kiroween Hackathon https://kiroween.devpost.com/
+
 ## 🎮 Project Overview
 
 **Target Audience:** Kids learning coding concepts  
