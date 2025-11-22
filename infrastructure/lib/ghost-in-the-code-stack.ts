@@ -16,7 +16,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
 
     // S3 bucket for website hosting
     const websiteBucket = new s3.Bucket(this, 'WebsiteBucket', {
-      bucketName: `ghost-in-the-code-${this.account}-${this.region}`,
+      bucketName: `ghost-in-the-code-${this.account}-${this.region}`.replace(/\s+/g, ''),
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
       publicReadAccess: true,
@@ -32,7 +32,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
 
     // S3 bucket for audio cache with CORS configuration
     const audioCacheBucket = new s3.Bucket(this, 'AudioCacheBucket', {
-      bucketName: `ghost-audio-cache-${this.account}-${this.region}`,
+      bucketName: `ghost-audio-cache-${this.account}-${this.region}`.replace(/\s+/g, ''),
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
       cors: [
