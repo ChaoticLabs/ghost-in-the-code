@@ -119,7 +119,9 @@ export class GhostInTheCodeStack extends cdk.Stack {
 
     // API endpoints
     const voice = api.root.addResource('voice');
-    voice.addMethod('POST', new apigateway.LambdaIntegration(pollyFunction));
+    voice.addMethod('POST', new apigateway.LambdaIntegration(pollyFunction, {
+      proxy: true,
+    }));
 
     // Deploy Vite app to S3 (expects pre-built dist folder)
     // Run 'npm run build' in project root before deploying
