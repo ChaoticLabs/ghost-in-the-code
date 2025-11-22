@@ -22,7 +22,7 @@ interface LevelCompleteTransitionProps {
 /**
  * Get appropriate emoji for each badge
  */
-const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logic'): string => {
+const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logic' | 'function' | 'array' | 'cybersecurity'): string => {
   // Specific badge emojis
   const badgeEmojis: Record<string, string> = {
     'first-bug-fixed': '🐛',
@@ -39,7 +39,10 @@ const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logi
   return badgeEmojis[badgeId] || (
     concept === 'loop' ? '🔄' : 
     concept === 'conditional' ? '🔀' : 
-    concept === 'logic' ? '🧩' : '🏆'
+    concept === 'logic' ? '🧩' :
+    concept === 'function' ? '⚡' :
+    concept === 'array' ? '📚' :
+    concept === 'cybersecurity' ? '🔒' : '🏆'
   );
 };
 

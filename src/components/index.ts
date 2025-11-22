@@ -14,4 +14,4 @@ export { ProgressSummary } from './ProgressSummary.tsx';
 export { LevelSelection } from './LevelSelection.tsx';
 export { Footer } from './Footer.tsx';
 export type { GhostState } from './GhostCharacter.tsx';
-export type { LevelType } from './LevelSelection.tsx';
+export type { LevelType } from '../data';
