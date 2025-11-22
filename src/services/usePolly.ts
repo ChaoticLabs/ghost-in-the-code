@@ -1,14 +1,17 @@
 import { useState, useCallback } from 'react';
 import { pollyService } from './polly';
+import { usePreferences } from '../engine';
 
 interface UsePollyReturn {
   speak: (text: string, emotion?: 'neutral' | 'excited' | 'encouraging') => Promise<void>;
   isLoading: boolean;
   error: string | null;
   clearError: () => void;
+  isEnabled: boolean;
 }
 
 export function usePolly(): UsePollyReturn {
+  const { preferences } = usePreferences();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -16,11 +19,16 @@ export function usePolly(): UsePollyReturn {
     text: string,
     emotion: 'neutral' | 'excited' | 'encouraging' = 'neutral'
   ) => {
+    if (!preferences.voiceEnabled) {
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
     try {
-      await pollyService.speak(text, emotion);
+      const volume = preferences.volume / 100;
+      await pollyService.speak(text, emotion, volume);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to speak';
       setError(errorMessage);
@@ -28,7 +36,7 @@ export function usePolly(): UsePollyReturn {
     } finally {
       setIsLoading(false);
     }
-  }, []);
+  }, [preferences.voiceEnabled, preferences.volume]);
 
   const clearError = useCallback(() => {
     setError(null);
@@ -39,5 +47,6 @@ export function usePolly(): UsePollyReturn {
     isLoading,
     error,
     clearError,
+    isEnabled: preferences.voiceEnabled,
   };
 }

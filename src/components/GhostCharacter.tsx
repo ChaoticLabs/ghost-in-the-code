@@ -10,16 +10,18 @@ interface GhostCharacterProps {
   state?: GhostState;
   message?: string;
   showSpeechBubble?: boolean;
+  onGhostClick?: () => void;
 }
 
 export const GhostCharacter = ({ 
   state = 'idle', 
   message = '',
-  showSpeechBubble = false 
+  showSpeechBubble = false,
+  onGhostClick
 }: GhostCharacterProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
-  const { speak, isLoading: isSpeaking } = usePolly();
+  const { speak, isEnabled: voiceEnabled } = usePolly();
   const [currentState, setCurrentState] = useState<GhostState>(state);
   const [clickMessage, setClickMessage] = useState<string>('');
   const [showClickBubble, setShowClickBubble] = useState(false);
@@ -32,6 +34,7 @@ export const GhostCharacter = ({
   const isSleepingRef = useRef(false);
   const stateRef = useRef(state);
   const isAnimatingRef = useRef(false);
+  const lastSpokenMessageRef = useRef<string>('');
 
   // Update refs when state changes
   useEffect(() => {
@@ -47,6 +50,51 @@ export const GhostCharacter = ({
     }
     setCurrentState(state);
   }, [state]);
+
+  const cuteMessages = [
+    "Boo! Did I scare you?",
+    "Hehe, that tickles!",
+    "I'm here to help!",
+    "You're doing great!",
+    "Keep debugging!",
+    "Ghosts love coding too!",
+    "Want a hint? Just ask!",
+    "You've got this!",
+    "Debugging is fun!",
+    "Let's fix some bugs!",
+    "I believe in you!",
+    "High five!",
+    "You're awesome!",
+    "Coding is cool!",
+    "Boo-tiful work!",
+    "Spook-tacular!"
+  ];
+
+  const wakeUpMessages = [
+    "Yawn... I'm awake!",
+    "Oh! You're back!",
+    "Zzz... Huh? Let's code!",
+    "I was just resting my eyes!",
+    "Ready to debug again!"
+  ];
+
+  const showWakeUpMessage = () => {
+    const wakeUpMessage = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
+    setClickMessage(wakeUpMessage);
+    setShowClickBubble(true);
+    setCurrentState('happy');
+
+    // Speak the wake-up message
+    speak(wakeUpMessage, 'excited').catch(err => {
+      console.warn('Failed to speak:', err);
+    });
+
+    // Hide wake-up message after 3 seconds
+    setTimeout(() => {
+      setShowClickBubble(false);
+      setCurrentState('idle');
+    }, 3000);
+  };
 
   // Inactivity detection - fall asleep after 30 seconds of no activity
   useEffect(() => {
@@ -71,6 +119,8 @@ export const GhostCharacter = ({
       if (isSleepingRef.current) {
         setIsSleeping(false);
         setCurrentState(stateRef.current);
+        // Show wake-up message
+        showWakeUpMessage();
       }
       // Reset inactivity timer
       startInactivityTimer();
@@ -99,33 +149,6 @@ export const GhostCharacter = ({
     };
   }, []); // Empty dependency array - only run once on mount
 
-  const cuteMessages = [
-    "Boo! Did I scare you? 👻",
-    "Hehe, that tickles!",
-    "I'm here to help! 💚",
-    "You're doing great!",
-    "Keep debugging! ✨",
-    "Ghosts love coding too!",
-    "Want a hint? Just ask!",
-    "You've got this! 💪",
-    "Debugging is fun!",
-    "Let's fix some bugs! 🐛",
-    "I believe in you!",
-    "High five! ✋",
-    "You're awesome! ⭐",
-    "Coding is cool! 😎",
-    "Boo-tiful work!",
-    "Spook-tacular! 🎉"
-  ];
-
-  const wakeUpMessages = [
-    "Yawn... I'm awake! 😴",
-    "Oh! You're back! 👻",
-    "Zzz... Huh? Let's code!",
-    "I was just resting my eyes!",
-    "Ready to debug again! ✨"
-  ];
-
   const handleGhostClick = () => {
     if (isAnimating) return;
     
@@ -137,9 +160,9 @@ export const GhostCharacter = ({
     // If sleeping, wake up with special message
     let messageToSpeak: string;
     if (isSleeping) {
-      messageToSpeak = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
-      setClickMessage(messageToSpeak);
       setIsSleeping(false);
+      showWakeUpMessage();
+      return; // Exit early, showWakeUpMessage handles the rest
     } else {
       messageToSpeak = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
       setClickMessage(messageToSpeak);
@@ -153,6 +176,11 @@ export const GhostCharacter = ({
       console.warn('Failed to speak:', err);
     });
 
+    // Notify parent (to clear hint message)
+    if (onGhostClick) {
+      onGhostClick();
+    }
+
     // Reset after animation
     setTimeout(() => {
       setShowClickBubble(false);
@@ -161,16 +189,27 @@ export const GhostCharacter = ({
     }, 3000);
   };
 
-  const handleSpeakMessage = () => {
-    if (!message || isSpeaking) return;
-    
-    const emotion = state === 'celebrating' ? 'excited' : 
-                   state === 'thinking' ? 'neutral' : 'encouraging';
-    
-    speak(message, emotion).catch(err => {
-      console.warn('Failed to speak message:', err);
-    });
-  };
+  // Auto-speak when message changes
+  useEffect(() => {
+    if (showSpeechBubble && message && !showClickBubble && !isSleeping && voiceEnabled) {
+      // Prevent speaking the same message twice in a row
+      if (lastSpokenMessageRef.current === message) {
+        return;
+      }
+      
+      lastSpokenMessageRef.current = message;
+      
+      const emotion = state === 'celebrating' ? 'excited' : 
+                     state === 'thinking' ? 'neutral' : 'encouraging';
+      
+      speak(message, emotion).catch(err => {
+        console.warn('Failed to speak message:', err);
+      });
+    } else if (!showSpeechBubble) {
+      // Reset when speech bubble is hidden so message can be spoken again later
+      lastSpokenMessageRef.current = '';
+    }
+  }, [message, showSpeechBubble, showClickBubble, isSleeping, state, voiceEnabled, speak]);
 
   // Animation variants for celebrating state
   const celebrateVariants = {
@@ -204,16 +243,6 @@ export const GhostCharacter = ({
           <div className="speech-bubble-content">
             {message}
           </div>
-          <br/>
-          <button 
-            className="speech-bubble-speaker"
-            onClick={handleSpeakMessage}
-            disabled={isSpeaking}
-            aria-label="Listen to message"
-            title="Click to hear the ghost speak"
-          >
-            {isSpeaking ? '🔊' : '🔈'}
-          </button>
           <div className="speech-bubble-tail" />
         </div>
       )}

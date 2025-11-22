@@ -270,8 +270,8 @@ function App() {
     setTimeout(() => {
       setShowSuccessAnimation(false);
       setGhostState('idle');
-      setGhostMessage("Hi! I'm here to help you debug code!");
-    }, 4500);
+      setShowGhostSpeechBubble(false);
+    }, 5000);
   };
 
   const handleAttempt = (isCorrect: boolean) => {
@@ -398,12 +398,12 @@ function App() {
     setGhostState('thinking');
     setGhostMessage(hint);
     setShowGhostSpeechBubble(true);
+  };
 
-    // Return to idle after a few seconds
-    setTimeout(() => {
-      setGhostState('idle');
-      setGhostMessage("Hi! I'm here to help you debug code!");
-    }, 5000);
+  const handleGhostClick = () => {
+    // Hide speech bubble when ghost is clicked
+    setShowGhostSpeechBubble(false);
+    setGhostState('idle');
   };
 
   const ghostCharacterComponent = (
@@ -411,6 +411,7 @@ function App() {
       state={ghostState}
       message={ghostMessage}
       showSpeechBubble={showGhostSpeechBubble}
+      onGhostClick={handleGhostClick}
     />
   );
 
