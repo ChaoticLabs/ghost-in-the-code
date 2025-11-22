@@ -1,0 +1,17 @@
+{
+  "enabled": true,
+  "name": "Auto-run Tests on Save",
+  "description": "Automatically runs relevant tests when a TypeScript file is saved to catch issues immediately",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm test -- --run"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "name": "Build Validation Check",
+  "description": "Triggers a quick build check after changes to components or core files to ensure nothing breaks",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "src/components/**/*",
+      "src/engine/**/*",
+      "src/App.tsx",
+      "src/main.tsx",
+      "vite.config.ts",
+      "tsconfig*.json"
+    ]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run build"
+  }
+}

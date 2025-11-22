@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "name": "CDK Synth Validation",
+  "description": "Automatically validates CDK synthesis when infrastructure code is modified to catch infrastructure issues before deployment",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "infrastructure/lib/**/*.ts",
+      "infrastructure/bin/**/*.ts",
+      "infrastructure/cdk.json",
+      "infrastructure/lambda/**/*.ts"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Infrastructure code has been modified. Please validate the CDK synthesis by running `cd infrastructure && npm run synth` (or `cdk synth`). Review the output for any errors, warnings, or issues. Check for:\n1. Synthesis errors or failures\n2. CloudFormation template validation issues\n3. Resource configuration problems\n4. IAM policy or permission issues\n5. Logical ID conflicts or breaking changes\n\nIf there are any issues, explain them clearly and suggest fixes. If synthesis succeeds, confirm that the infrastructure changes are valid and ready for deployment."
+  }
+}
