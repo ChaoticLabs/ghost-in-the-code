@@ -52,22 +52,22 @@ export const GhostCharacter = ({
   }, [state]);
 
   const cuteMessages = [
-    "Boo! Did I scare you?",
-    "Hehe, that tickles!",
-    "I'm here to help!",
-    "You're doing great!",
-    "Keep debugging!",
-    "Ghosts love coding too!",
-    "Want a hint? Just ask!",
-    "You've got this!",
-    "Debugging is fun!",
-    "Let's fix some bugs!",
-    "I believe in you!",
-    "High five!",
-    "You're awesome!",
-    "Coding is cool!",
-    "Boo-tiful work!",
-    "Spook-tacular!"
+    { text: "Boo! Did I scare you?", emotion: 'excited' as const },
+    { text: "Hehe, that tickles!", emotion: 'excited' as const },
+    { text: "I'm here to help!", emotion: 'encouraging' as const },
+    { text: "You're doing great!", emotion: 'encouraging' as const },
+    { text: "Keep debugging!", emotion: 'encouraging' as const },
+    { text: "Ghosts love coding too!", emotion: 'neutral' as const },
+    { text: "Want a hint? Just ask!", emotion: 'encouraging' as const },
+    { text: "You've got this!", emotion: 'encouraging' as const },
+    { text: "Debugging is fun!", emotion: 'excited' as const },
+    { text: "Let's fix some bugs!", emotion: 'excited' as const },
+    { text: "I believe in you!", emotion: 'encouraging' as const },
+    { text: "High five!", emotion: 'excited' as const },
+    { text: "You're awesome!", emotion: 'encouraging' as const },
+    { text: "Coding is cool!", emotion: 'neutral' as const },
+    { text: "Boo-tiful work!", emotion: 'encouraging' as const },
+    { text: "Spook-tacular!", emotion: 'excited' as const }
   ];
 
   const wakeUpMessages = [
@@ -158,21 +158,20 @@ export const GhostCharacter = ({
     setSpinDirection(Math.random() > 0.5 ? 'right' : 'left');
     
     // If sleeping, wake up with special message
-    let messageToSpeak: string;
     if (isSleeping) {
       setIsSleeping(false);
       showWakeUpMessage();
       return; // Exit early, showWakeUpMessage handles the rest
-    } else {
-      messageToSpeak = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
-      setClickMessage(messageToSpeak);
     }
+    
+    const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+    setClickMessage(randomMessage.text);
     
     setShowClickBubble(true);
     setCurrentState('happy');
 
-    // Speak the message
-    speak(messageToSpeak, 'excited').catch(err => {
+    // Speak the message with appropriate emotion
+    speak(randomMessage.text, randomMessage.emotion).catch(err => {
       console.warn('Failed to speak:', err);
     });
 

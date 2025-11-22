@@ -101,25 +101,28 @@ export const handler = async (
       // Audio doesn't exist, generate it
     }
 
-    // Adjust speech parameters based on emotion
-    let rate = 'medium';
-    let pitch = 'medium';
-
+    // Adjust speech parameters based on emotion using SSML
+    let ssmlText = text;
+    
     if (emotion === 'excited') {
-      rate = 'fast';
-      pitch = '+10%';
+      // Faster rate and higher pitch for excitement
+      ssmlText = `<speak><prosody rate="fast" pitch="+10%">${text}</prosody></speak>`;
     } else if (emotion === 'encouraging') {
-      rate = 'medium';
-      pitch = '+5%';
+      // Slightly higher pitch for encouragement
+      ssmlText = `<speak><prosody pitch="+5%">${text}</prosody></speak>`;
+    } else {
+      // Neutral - wrap in speak tags for consistency
+      ssmlText = `<speak>${text}</speak>`;
     }
 
-    // Synthesize speech with Polly
+    // Synthesize speech with Polly using SSML
+    // Note: Standard engine supports prosody tags, neural engine does not
     const pollyCommand = new SynthesizeSpeechCommand({
-      Text: text,
+      Text: ssmlText,
       OutputFormat: 'mp3',
       VoiceId: VOICE_ID,
-      Engine: 'neural',
-      TextType: 'text',
+      Engine: 'standard',
+      TextType: 'ssml',
     });
 
     const pollyResponse = await pollyClient.send(pollyCommand);
