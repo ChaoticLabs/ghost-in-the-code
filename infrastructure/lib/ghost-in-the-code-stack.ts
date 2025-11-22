@@ -19,22 +19,21 @@ export class GhostInTheCodeStack extends cdk.Stack {
       bucketName: `ghost-in-the-code-${this.account}-${this.region}`.replace(/\s+/g, ''),
       websiteIndexDocument: 'index.html',
       websiteErrorDocument: 'index.html',
-      publicReadAccess: true,
-      blockPublicAccess: new s3.BlockPublicAccess({
-        blockPublicAcls: false,
-        blockPublicPolicy: false,
-        ignorePublicAcls: false,
-        restrictPublicBuckets: false,
-      }),
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
     });
 
-    // S3 bucket for audio cache with CORS configuration
+    // S3 bucket for audio cache with CORS configuration and public read access
     const audioCacheBucket = new s3.Bucket(this, 'AudioCacheBucket', {
       bucketName: `ghost-audio-cache-${this.account}-${this.region}`.replace(/\s+/g, ''),
       removalPolicy: cdk.RemovalPolicy.DESTROY,
       autoDeleteObjects: true,
+      blockPublicAccess: new s3.BlockPublicAccess({
+        blockPublicAcls: true,
+        blockPublicPolicy: false,
+        ignorePublicAcls: true,
+        restrictPublicBuckets: false,
+      }),
       cors: [
         {
           allowedOrigins: ['*'],
@@ -44,6 +43,16 @@ export class GhostInTheCodeStack extends cdk.Stack {
         },
       ],
     });
+
+    // Add bucket policy for public read access
+    audioCacheBucket.addToResourcePolicy(
+      new iam.PolicyStatement({
+        effect: iam.Effect.ALLOW,
+        principals: [new iam.AnyPrincipal()],
+        actions: ['s3:GetObject'],
+        resources: [`${audioCacheBucket.bucketArn}/*`],
+      })
+    );
 
     // CloudFront distribution for the website
     const distribution = new cloudfront.Distribution(this, 'WebsiteDistribution', {
@@ -80,7 +89,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
       memorySize: 256,
       environment: {
         AUDIO_BUCKET: audioCacheBucket.bucketName,
-        VOICE_ID: 'Joanna',
+        VOICE_ID: 'Justin',
       },
       bundling: {
         minify: true,
@@ -96,8 +105,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
         resources: ['*'],
       })
     );
-    audioCacheBucket.grantWrite(pollyFunction);
-    audioCacheBucket.grantPublicAccess();
+    audioCacheBucket.grantReadWrite(pollyFunction);
 
     // API Gateway with CORS
     const api = new apigateway.RestApi(this, 'GameApi', {

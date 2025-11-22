@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test AWS Polly Integration</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1f2e;
+            color: #fff;
+        }
+        h1 { color: #a3ff00; }
+        .test-section {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #6b46c1;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover { background: #8b66e1; }
+        button:disabled {
+            background: #444;
+            cursor: not-allowed;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success { background: rgba(163, 255, 0, 0.2); }
+        .error { background: rgba(255, 0, 0, 0.2); }
+        .loading { background: rgba(0, 217, 255, 0.2); }
+    </style>
+</head>
+<body>
+    <h1>🎃 AWS Polly Integration Test</h1>
+    
+    <div class="test-section">
+        <h2>API Configuration</h2>
+        <p><strong>Endpoint:</strong> <span id="endpoint"></span></p>
+        <button onclick="testConnection()">Test Connection</button>
+        <div id="connection-status" class="status"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Voice Tests</h2>
+        <button onclick="testVoice('Hello! Welcome to Ghost in The Code!', 'excited')">
+            Test Excited Voice
+        </button>
+        <button onclick="testVoice('Let me think about that...', 'neutral')">
+            Test Neutral Voice
+        </button>
+        <button onclick="testVoice('Great job! You are doing amazing!', 'encouraging')">
+            Test Encouraging Voice
+        </button>
+        <div id="voice-status" class="status"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Cache Test</h2>
+        <p>Click twice to test caching (second call should be instant)</p>
+        <button onclick="testCache()">Test Cache</button>
+        <div id="cache-status" class="status"></div>
+    </div>
+
+    <script>
+        const API_ENDPOINT = 'https://239kmhgpj1.execute-api.us-east-1.amazonaws.com/prod/';
+        
+        document.getElementById('endpoint').textContent = API_ENDPOINT;
+
+        async function testConnection() {
+            const status = document.getElementById('connection-status');
+            status.className = 'status loading';
+            status.textContent = '⏳ Testing connection...';
+
+            try {
+                const response = await fetch(API_ENDPOINT + 'voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: 'Test', emotion: 'neutral' })
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    status.className = 'status success';
+                    status.textContent = `✅ Connection successful! Audio URL: ${data.audioUrl}`;
+                } else {
+                    const error = await response.json();
+                    status.className = 'status error';
+                    status.textContent = `❌ Error: ${error.error || response.statusText}`;
+                }
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Connection failed: ${error.message}`;
+            }
+        }
+
+        async function testVoice(text, emotion) {
+            const status = document.getElementById('voice-status');
+            status.className = 'status loading';
+            status.textContent = `⏳ Synthesizing speech...`;
+
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch(API_ENDPOINT + 'voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text, emotion })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                const synthesisTime = Date.now() - startTime;
+
+                status.className = 'status success';
+                status.textContent = `✅ Speech synthesized in ${synthesisTime}ms (cached: ${data.cached}). Playing...`;
+
+                // Play audio
+                const audio = new Audio(data.audioUrl);
+                audio.onended = () => {
+                    status.textContent = `✅ Playback complete! (synthesis: ${synthesisTime}ms, cached: ${data.cached})`;
+                };
+                audio.onerror = () => {
+                    status.className = 'status error';
+                    status.textContent = `❌ Audio playback failed`;
+                };
+                await audio.play();
+
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Error: ${error.message}`;
+            }
+        }
+
+        let cacheTestCount = 0;
+        async function testCache() {
+            cacheTestCount++;
+            const status = document.getElementById('cache-status');
+            status.className = 'status loading';
+            status.textContent = `⏳ Test ${cacheTestCount}: Requesting audio...`;
+
+            const testText = 'This is a cache test message';
+
+            try {
+                const startTime = Date.now();
+                
+                const response = await fetch(API_ENDPOINT + 'voice', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: testText, emotion: 'neutral' })
+                });
+
+                const data = await response.json();
+                const requestTime = Date.now() - startTime;
+
+                status.className = 'status success';
+                if (data.cached) {
+                    status.textContent = `✅ Test ${cacheTestCount}: CACHED! (${requestTime}ms) - Audio served from S3 cache`;
+                } else {
+                    status.textContent = `✅ Test ${cacheTestCount}: Generated fresh (${requestTime}ms) - Try again to test cache`;
+                }
+
+            } catch (error) {
+                status.className = 'status error';
+                status.textContent = `❌ Test ${cacheTestCount} failed: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

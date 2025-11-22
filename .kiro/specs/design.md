@@ -138,7 +138,7 @@ const speakText = async (text: string, emotion: 'neutral' | 'excited' | 'encoura
   // Adjust speech parameters based on emotion
   const params = {
     text,
-    voiceId: 'Joanna', // Kid-friendly voice
+    voiceId: 'Justin',
     engine: 'neural',
     rate: emotion === 'excited' ? 'fast' : 'medium'
   };
@@ -607,7 +607,7 @@ class GhostInTheCodeStack extends Stack {
       timeout: Duration.seconds(10),
       environment: {
         AUDIO_BUCKET: audioCacheBucket.bucketName,
-        VOICE_ID: 'Joanna'
+        VOICE_ID: 'Justin'
       }
     });
 

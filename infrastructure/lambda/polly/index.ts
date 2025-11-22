@@ -20,7 +20,7 @@ const s3Client = new S3Client({
 });
 
 const AUDIO_BUCKET = process.env.AUDIO_BUCKET || '';
-const VOICE_ID = (process.env.VOICE_ID || 'Joanna') as VoiceId;
+const VOICE_ID = (process.env.VOICE_ID || 'Justin') as VoiceId;
 
 interface VoiceRequest {
   text: string;
@@ -71,9 +71,9 @@ export const handler = async (
       };
     }
 
-    // Generate cache key based on text and emotion
+    // Generate cache key based on text and emotion and voiceid
     const cacheKey = createHash('md5')
-      .update(`${text}-${emotion}`)
+      .update(`${text}-${emotion}-${VOICE_ID}`)
       .digest('hex');
     const s3Key = `audio/${cacheKey}.mp3`;
 
@@ -127,7 +127,7 @@ export const handler = async (
     // Convert audio stream to buffer
     const audioBuffer = await streamToBuffer(pollyResponse.AudioStream);
 
-    // Save to S3
+    // Save to S3 (public read via bucket policy)
     await s3Client.send(
       new PutObjectCommand({
         Bucket: AUDIO_BUCKET,

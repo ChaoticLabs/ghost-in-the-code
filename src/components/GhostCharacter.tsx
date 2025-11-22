@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { usePreferences } from '../engine';
+import { usePolly } from '../services';
 import './GhostCharacter.css';
 
 export type GhostState = 'idle' | 'happy' | 'thinking' | 'celebrating' | 'sleeping';
@@ -18,6 +19,7 @@ export const GhostCharacter = ({
 }: GhostCharacterProps) => {
   const { preferences } = usePreferences();
   const reducedMotion = preferences.reducedMotion;
+  const { speak, isLoading: isSpeaking } = usePolly();
   const [currentState, setCurrentState] = useState<GhostState>(state);
   const [clickMessage, setClickMessage] = useState<string>('');
   const [showClickBubble, setShowClickBubble] = useState(false);
@@ -133,17 +135,23 @@ export const GhostCharacter = ({
     setSpinDirection(Math.random() > 0.5 ? 'right' : 'left');
     
     // If sleeping, wake up with special message
+    let messageToSpeak: string;
     if (isSleeping) {
-      const wakeUpMessage = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
-      setClickMessage(wakeUpMessage);
+      messageToSpeak = wakeUpMessages[Math.floor(Math.random() * wakeUpMessages.length)];
+      setClickMessage(messageToSpeak);
       setIsSleeping(false);
     } else {
-      const randomMessage = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
-      setClickMessage(randomMessage);
+      messageToSpeak = cuteMessages[Math.floor(Math.random() * cuteMessages.length)];
+      setClickMessage(messageToSpeak);
     }
     
     setShowClickBubble(true);
     setCurrentState('happy');
+
+    // Speak the message
+    speak(messageToSpeak, 'excited').catch(err => {
+      console.warn('Failed to speak:', err);
+    });
 
     // Reset after animation
     setTimeout(() => {
@@ -151,6 +159,17 @@ export const GhostCharacter = ({
       setIsAnimating(false);
       setCurrentState(state);
     }, 3000);
+  };
+
+  const handleSpeakMessage = () => {
+    if (!message || isSpeaking) return;
+    
+    const emotion = state === 'celebrating' ? 'excited' : 
+                   state === 'thinking' ? 'neutral' : 'encouraging';
+    
+    speak(message, emotion).catch(err => {
+      console.warn('Failed to speak message:', err);
+    });
   };
 
   // Animation variants for celebrating state
@@ -185,6 +204,16 @@ export const GhostCharacter = ({
           <div className="speech-bubble-content">
             {message}
           </div>
+          <br/>
+          <button 
+            className="speech-bubble-speaker"
+            onClick={handleSpeakMessage}
+            disabled={isSpeaking}
+            aria-label="Listen to message"
+            title="Click to hear the ghost speak"
+          >
+            {isSpeaking ? '🔊' : '🔈'}
+          </button>
           <div className="speech-bubble-tail" />
         </div>
       )}

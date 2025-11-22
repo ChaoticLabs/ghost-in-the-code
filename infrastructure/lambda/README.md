@@ -28,7 +28,7 @@ Located in `polly/` - Synthesizes speech using Amazon Polly and caches audio fil
 
 ### Environment Variables
 - `AUDIO_BUCKET`: S3 bucket name for audio cache
-- `VOICE_ID`: Polly voice ID (default: `Joanna`)
+- `VOICE_ID`: Polly voice ID (default: `Justin`)
 
 ### Emotion Options
 - `neutral`: Normal speaking pace and pitch
