@@ -142,19 +142,16 @@ export class GhostInTheCodeStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'WebsiteBucketName', {
       value: websiteBucket.bucketName,
       description: 'S3 bucket name for website hosting',
-      exportName: 'GhostInTheCode-WebsiteBucketName',
     });
 
     new cdk.CfnOutput(this, 'DistributionDomain', {
       value: distribution.distributionDomainName,
       description: 'CloudFront distribution domain name',
-      exportName: 'GhostInTheCode-DistributionDomain',
     });
 
     new cdk.CfnOutput(this, 'DistributionId', {
       value: distribution.distributionId,
       description: 'CloudFront distribution ID for cache invalidation',
-      exportName: 'GhostInTheCode-DistributionId',
     });
 
     new cdk.CfnOutput(this, 'WebsiteUrl', {
@@ -165,13 +162,11 @@ export class GhostInTheCodeStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'ApiEndpoint', {
       value: api.url,
       description: 'API Gateway endpoint URL',
-      exportName: 'GhostInTheCode-ApiEndpoint',
     });
 
     new cdk.CfnOutput(this, 'AudioBucketName', {
       value: audioCacheBucket.bucketName,
       description: 'S3 bucket name for audio cache',
-      exportName: 'GhostInTheCode-AudioBucketName',
     });
   }
 }
