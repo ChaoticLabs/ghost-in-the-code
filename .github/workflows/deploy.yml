@@ -1,126 +1,49 @@
-# GitHub Actions CI/CD Pipeline for Ghost in The Code
-# 
-# This workflow automatically builds and deploys the application to AWS whenever
-# code is pushed to the main branch. It can also be triggered manually.
-#
-# REQUIRED REPOSITORY SECRETS:
-# - AWS_ROLE_ARN: ARN of the IAM role to assume for deployment
-#   Example: arn:aws:iam::123456789012:role/GitHubActionsRole
-# - AWS_ACCOUNT_ID: Your AWS account ID (12-digit number)
-#   Example: 123456789012
-#
-# REQUIRED AWS SETUP:
-# 1. Create an OIDC identity provider in AWS IAM for GitHub Actions
-#    Documentation: https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
-# 
-# 2. Create an IAM role with the following trust policy:
-#    {
-#      "Version": "2012-10-17",
-#      "Statement": [{
-#        "Effect": "Allow",
-#        "Principal": {
-#          "Federated": "arn:aws:iam::ACCOUNT_ID:oidc-provider/token.actions.githubusercontent.com"
-#        },
-#        "Action": "sts:AssumeRoleWithWebIdentity",
-#        "Condition": {
-#          "StringEquals": {
-#            "token.actions.githubusercontent.com:aud": "sts.amazonaws.com"
-#          },
-#          "StringLike": {
-#            "token.actions.githubusercontent.com:sub": "repo:OWNER/REPO:*"
-#          }
-#        }
-#      }]
-#    }
-#
-# 3. Attach a permissions policy to the IAM role with the following permissions:
-#    - cloudformation:* (for CDK stack operations)
-#    - s3:* (for uploading build artifacts and website hosting)
-#    - cloudfront:* (for CDN distribution management)
-#    - lambda:* (for serverless function deployment)
-#    - apigateway:* (for API endpoint management)
-#    - iam:* (for creating service roles)
-#    - logs:* (for CloudWatch logging)
-#    - sts:GetCallerIdentity (for authentication verification)
-#
-# WORKFLOW BEHAVIOR:
-# - Triggers automatically on push to main branch
-# - Can be manually triggered via the Actions tab
-# - Fails fast: any step failure halts the entire workflow
-# - Uses OIDC for secure, temporary AWS credentials (no long-lived secrets)
-# - Caches npm dependencies to speed up builds
-
 name: Deploy to AWS
 
-# Trigger conditions
 on:
   push:
-    branches: [main]  # Automatically deploy when code is pushed to main
-  workflow_dispatch:   # Allow manual triggering from the Actions tab
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Use latest Ubuntu runner for optimal performance
+    runs-on: ubuntu-latest
     
-    # Required permissions for OIDC authentication
-    # These permissions allow the workflow to request an OIDC token and checkout code
     permissions:
-      id-token: write   # Required to request OIDC JWT token from GitHub
-      contents: read    # Required to checkout repository code
+      id-token: write
+      contents: read
     
     steps:
-      # Step 1: Checkout repository code
-      # This step clones the repository so subsequent steps can access the code
       - name: Checkout code
         uses: actions/checkout@v4
       
-      # Step 2: Setup Node.js environment with dependency caching
-      # Installs Node.js 20 and configures npm caching to speed up dependency installation
-      # Cache is automatically invalidated when package-lock.json changes
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'  # Use Node.js 20.x (LTS)
-          cache: 'npm'         # Cache npm dependencies based on package-lock.json
+          node-version: '20'
+          cache: 'npm'
       
-      # Step 3: Configure AWS credentials using OIDC
-      # This step authenticates with AWS using OpenID Connect (OIDC) federation
-      # No long-lived AWS access keys are stored - credentials are temporary and expire after the workflow
-      # The workflow requests a JWT token from GitHub, then uses it to assume the specified IAM role
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}  # IAM role ARN from repository secrets
-          aws-region: us-east-1                         # AWS region for deployment
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: us-east-1
       
-      # Step 4: Install frontend dependencies
-      # Uses 'npm ci' for clean, reproducible installs based on package-lock.json
-      # This is faster and more reliable than 'npm install' in CI environments
       - name: Install dependencies
         run: npm ci
       
-      # Step 5: Build frontend application
-      # Compiles TypeScript and bundles the Vite application
-      # Produces optimized static files in the /dist directory
-      # If this step fails, the workflow halts and deployment does not occur
       - name: Build frontend
         run: npm run build
       
-      # Step 6: Install CDK infrastructure dependencies
-      # Installs AWS CDK and related packages needed for infrastructure deployment
       - name: Install CDK dependencies
         run: |
           cd infrastructure
           npm ci
       
-      # Step 7: Deploy infrastructure using AWS CDK
-      # Deploys or updates the CloudFormation stack with all AWS resources
-      # Includes: S3 bucket, CloudFront distribution, Lambda functions, API Gateway
-      # The --require-approval never flag allows automatic deployment without manual confirmation
       - name: Deploy infrastructure
         run: |
           cd infrastructure
           npx cdk deploy --require-approval never
         env:
-          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}  # AWS account ID for CDK
-          CDK_DEFAULT_REGION: us-east-1                        # AWS region for CDK deployment
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+          CDK_DEFAULT_REGION: us-east-1
