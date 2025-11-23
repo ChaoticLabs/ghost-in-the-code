@@ -125,12 +125,18 @@ export class GhostInTheCodeStack extends cdk.Stack {
 
     // Deploy Vite app to S3 (expects pre-built dist folder)
     // Run 'npm run build' in project root before deploying
-    new s3deploy.BucketDeployment(this, 'DeployWebsite', {
+    const deployment = new s3deploy.BucketDeployment(this, 'DeployWebsite', {
       sources: [s3deploy.Source.asset(path.join(__dirname, '../../dist'))],
       destinationBucket: websiteBucket,
       distribution,
       distributionPaths: ['/*'],
+      memoryLimit: 512,
+      ephemeralStorageSize: cdk.Size.mebibytes(1024),
+      retainOnDelete: false,
     });
+    
+    // Ensure deployment happens after distribution is ready
+    deployment.node.addDependency(distribution);
 
     // Outputs
     new cdk.CfnOutput(this, 'WebsiteBucketName', {
