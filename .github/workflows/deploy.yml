@@ -40,6 +40,14 @@ jobs:
           cd infrastructure
           npm ci
       
+      - name: Bootstrap CDK
+        run: |
+          cd infrastructure
+          npx cdk bootstrap aws://${{ secrets.AWS_ACCOUNT_ID }}/us-east-1
+        env:
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+          CDK_DEFAULT_REGION: us-east-1
+      
       - name: Deploy infrastructure
         run: |
           cd infrastructure
