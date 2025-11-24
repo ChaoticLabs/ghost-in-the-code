@@ -55,3 +55,10 @@ jobs:
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: us-east-1
+          # Optional: Custom domain configuration
+          # Configure these secrets in repository settings to enable custom domain
+          # DOMAIN_NAME: Your custom domain (e.g., ghost.chaotictoejam.com)
+          # HOSTED_ZONE_NAME: Base domain for hosted zone (e.g., chaotictoejam.com)
+          # The hosted zone ID will be looked up automatically from AWS
+          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+          HOSTED_ZONE_NAME: ${{ secrets.HOSTED_ZONE_NAME }}
