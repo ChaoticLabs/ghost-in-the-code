@@ -49,14 +49,14 @@ export const ProgressTracker = ({
   }, [challenges.length, completedInCurrentLevel]);
 
   const challengesByType = useMemo(() => {
-    const groups: Record<string, ChallengeStatus[]> = {
-      loop: [],
-      conditional: [],
-      logic: []
-    };
+    const groups: Record<string, ChallengeStatus[]> = {};
 
     challengeStatuses.forEach(status => {
-      groups[status.challenge.type].push(status);
+      const type = status.challenge.type;
+      if (!groups[type]) {
+        groups[type] = [];
+      }
+      groups[type].push(status);
     });
 
     return groups;
@@ -88,8 +88,14 @@ export const ProgressTracker = ({
         return 'Conditionals';
       case 'logic':
         return 'Logic Puzzles';
+      case 'array':
+        return 'Arrays';
+      case 'function':
+        return 'Functions';
+      case 'cybersecurity':
+        return 'Cybersecurity';
       default:
-        return type;
+        return type.charAt(0).toUpperCase() + type.slice(1);
     }
   };
 
