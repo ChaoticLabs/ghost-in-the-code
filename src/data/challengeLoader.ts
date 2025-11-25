@@ -4,12 +4,10 @@
  */
 
 import type { Challenge, LevelIntroduction } from '../engine/types';
-import loopsData from './challenges/loops.json';
-import conditionalsData from './challenges/conditionals.json';
-import logicData from './challenges/logic.json';
-import arraysData from './challenges/arrays.json';
-import functionsData from './challenges/functions.json';
-import cybersecurityData from './challenges/cybersecurity.json';
+import { getAllLevelTypes, type LevelType } from './levelLoader';
+
+// Dynamically import all challenge files
+const challengeModules = import.meta.glob('./challenges/*.json', { eager: true });
 
 /**
  * Validation error class for challenge data issues
@@ -27,15 +25,15 @@ export class ChallengeValidationError extends Error {
 /**
  * Validates a single challenge object
  */
-function validateChallenge(challenge: any, index: number): void {
+function validateChallenge(challenge: any, index: number, validTypes: string[]): void {
   const errors: string[] = [];
 
   // Required fields
   if (!challenge.id || typeof challenge.id !== 'string') {
     errors.push('Missing or invalid id');
   }
-  if (!challenge.type || !['loop', 'conditional', 'logic', 'array', 'function', 'cybersecurity'].includes(challenge.type)) {
-    errors.push('Missing or invalid type (must be loop, conditional, logic, array, function, or cybersecurity)');
+  if (!challenge.type || !validTypes.includes(challenge.type)) {
+    errors.push(`Missing or invalid type (must be one of: ${validTypes.join(', ')})`);
   }
   if (!challenge.title || typeof challenge.title !== 'string') {
     errors.push('Missing or invalid title');
@@ -100,7 +98,7 @@ function validateChallenge(challenge: any, index: number): void {
 /**
  * Validates a challenge level
  */
-function validateChallengeLevel(level: any, levelType: string): void {
+function validateChallengeLevel(level: any, levelType: string, validTypes: string[]): void {
   if (!level.levelId || typeof level.levelId !== 'string') {
     throw new ChallengeValidationError(`${levelType}: Missing or invalid levelId`);
   }
@@ -114,48 +112,32 @@ function validateChallengeLevel(level: any, levelType: string): void {
   }
 
   level.challenges.forEach((challenge: any, index: number) => {
-    validateChallenge(challenge, index);
+    validateChallenge(challenge, index, validTypes);
   });
 }
 
 /**
- * Loads and validates all challenges
+ * Loads and validates all challenges dynamically
  */
 export function loadAllChallenges(): Map<string, Challenge[]> {
   const challengeMap = new Map<string, Challenge[]>();
+  const validTypes = getAllLevelTypes();
 
   try {
-    // Validate and load loops
-    validateChallengeLevel(loopsData, 'loops');
-    challengeMap.set('loops', loopsData.challenges as Challenge[]);
+    // Dynamically load all challenge files
+    Object.entries(challengeModules).forEach(([path, module]) => {
+      // Extract filename without extension (e.g., 'loops' from './challenges/loops.json')
+      const filename = path.split('/').pop()?.replace('.json', '') || '';
+      const data = module as any;
 
-    // Validate and load conditionals
-    validateChallengeLevel(conditionalsData, 'conditionals');
-    challengeMap.set('conditionals', conditionalsData.challenges as Challenge[]);
+      // Validate and load
+      validateChallengeLevel(data, filename, validTypes);
+      challengeMap.set(filename, data.challenges as Challenge[]);
 
-    // Validate and load logic
-    validateChallengeLevel(logicData, 'logic');
-    challengeMap.set('logic', logicData.challenges as Challenge[]);
-
-    // Validate and load arrays
-    validateChallengeLevel(arraysData, 'arrays');
-    challengeMap.set('arrays', arraysData.challenges as Challenge[]);
-
-    // Validate and load functions
-    validateChallengeLevel(functionsData, 'functions');
-    challengeMap.set('functions', functionsData.challenges as Challenge[]);
-
-    // Validate and load cybersecurity
-    validateChallengeLevel(cybersecurityData, 'cybersecurity');
-    challengeMap.set('cybersecurity', cybersecurityData.challenges as Challenge[]);
+      console.log(`  - ${filename}: ${data.challenges.length} challenges`);
+    });
 
     console.log('✓ All challenges loaded and validated successfully');
-    console.log(`  - Loops: ${loopsData.challenges.length} challenges`);
-    console.log(`  - Conditionals: ${conditionalsData.challenges.length} challenges`);
-    console.log(`  - Logic: ${logicData.challenges.length} challenges`);
-    console.log(`  - Arrays: ${arraysData.challenges.length} challenges`);
-    console.log(`  - Functions: ${functionsData.challenges.length} challenges`);
-    console.log(`  - Cybersecurity: ${cybersecurityData.challenges.length} challenges`);
 
     return challengeMap;
   } catch (error) {
@@ -170,7 +152,8 @@ export function loadAllChallenges(): Map<string, Challenge[]> {
 /**
  * Gets challenges by type
  */
-export function getChallengesByType(type: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity'): Challenge[] {
+export function getChallengesByType(type: LevelType): Challenge[] {
+  // Map singular type to plural filename (common convention)
   const typeMap: Record<string, string> = {
     loop: 'loops',
     conditional: 'conditionals',
@@ -181,7 +164,8 @@ export function getChallengesByType(type: 'loop' | 'conditional' | 'logic' | 'ar
   };
 
   const challenges = loadAllChallenges();
-  return challenges.get(typeMap[type]) || [];
+  const filename = typeMap[type] || type;
+  return challenges.get(filename) || [];
 }
 
 /**
@@ -217,33 +201,41 @@ export function getAllChallengesFlat(): Challenge[] {
 /**
  * Gets challenge count by type
  */
-export function getChallengeCount(): { loops: number; conditionals: number; logic: number; arrays: number; functions: number; cybersecurity: number; total: number } {
+export function getChallengeCount(): Record<string, number> & { total: number } {
   const allChallenges = loadAllChallenges();
+  const counts: Record<string, number> = {};
   
-  return {
-    loops: allChallenges.get('loops')?.length || 0,
-    conditionals: allChallenges.get('conditionals')?.length || 0,
-    logic: allChallenges.get('logic')?.length || 0,
-    arrays: allChallenges.get('arrays')?.length || 0,
-    functions: allChallenges.get('functions')?.length || 0,
-    cybersecurity: allChallenges.get('cybersecurity')?.length || 0,
-    total: getAllChallengesFlat().length
-  };
+  allChallenges.forEach((challenges, type) => {
+    counts[type] = challenges.length;
+  });
+  
+  counts.total = getAllChallengesFlat().length;
+  
+  return counts as Record<string, number> & { total: number };
 }
 
 /**
  * Gets level introduction by type
  */
-export function getLevelIntroduction(type: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity'): LevelIntroduction | null {
-  const dataMap: Record<string, any> = {
-    loop: loopsData,
-    conditional: conditionalsData,
-    logic: logicData,
-    array: arraysData,
-    function: functionsData,
-    cybersecurity: cybersecurityData
+export function getLevelIntroduction(type: LevelType): LevelIntroduction | null {
+  // Map singular type to plural filename
+  const typeMap: Record<string, string> = {
+    loop: 'loops',
+    conditional: 'conditionals',
+    logic: 'logic',
+    array: 'arrays',
+    function: 'functions',
+    cybersecurity: 'cybersecurity'
   };
 
-  const data = dataMap[type];
-  return data?.levelIntroduction || null;
+  const filename = typeMap[type] || type;
+  const path = `./challenges/${filename}.json`;
+  const module = challengeModules[path];
+  
+  if (module) {
+    const data = module as any;
+    return data?.levelIntroduction || null;
+  }
+  
+  return null;
 }

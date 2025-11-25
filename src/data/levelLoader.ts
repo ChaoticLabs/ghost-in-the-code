@@ -5,7 +5,8 @@
 import type { Challenge } from '../engine/types';
 import levelsConfig from './levels.json';
 
-export type LevelType = 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity';
+// Dynamically derive LevelType from levels.json
+export type LevelType = typeof levelsConfig[number]['type'];
 
 export interface LevelConfig {
   type: LevelType;
@@ -18,6 +19,13 @@ export interface LevelConfig {
 export interface LevelInfo extends LevelConfig {
   challengeCount: number;
   completedCount: number;
+}
+
+/**
+ * Gets all valid level types from configuration
+ */
+export function getAllLevelTypes(): LevelType[] {
+  return levelsConfig.map(l => l.type) as LevelType[];
 }
 
 /**
@@ -44,7 +52,7 @@ export function getLevelInfo(
 ): LevelInfo[] {
   return levelsConfig.map(level => ({
     ...level,
-    type: level.type as LevelType,
+    type: level.type,
     challengeCount: allChallenges.filter(c => c.type === level.type).length,
     completedCount: Array.from(completedChallengeIds).filter(id =>
       allChallenges.find(c => c.id === id && c.type === level.type)
