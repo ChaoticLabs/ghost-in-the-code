@@ -129,7 +129,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
     const pollyFunction = new NodejsFunction(this, 'PollyFunction', {
       entry: 'lambda/polly/index.ts',
       handler: 'handler',
-      runtime: Runtime.NODEJS_20_X,
+      runtime: Runtime.NODEJS_22_X,
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
       environment: {
@@ -139,7 +139,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
       bundling: {
         minify: true,
         sourceMap: true,
-        target: 'es2020',
+        target: 'es2022',
       },
     });
 
