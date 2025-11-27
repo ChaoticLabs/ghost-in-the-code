@@ -32,6 +32,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
+      - name: Build frontend with placeholder API endpoint
+        run: npm run build
+        env:
+          VITE_API_ENDPOINT: https://placeholder.execute-api.us-east-1.amazonaws.com/prod/
+      
       - name: Install CDK dependencies
         run: |
           cd infrastructure
@@ -51,13 +56,13 @@ jobs:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: us-east-1
       
-      - name: Deploy infrastructure
+      - name: Deploy infrastructure (includes frontend)
         id: cdk-deploy
         run: |
           cd infrastructure
           
           # Deploy with verbose output
-          npx cdk deploy --require-approval never --outputs-file outputs.json --verbose
+          npx cdk deploy --require-approval never --outputs-file outputs.json
           
           # Verify outputs file was created
           if [ ! -f outputs.json ]; then
@@ -72,15 +77,10 @@ jobs:
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: us-east-1
-          # Optional: Custom domain configuration
-          # Configure these secrets in repository settings to enable custom domain
-          # DOMAIN_NAME: Your custom domain (e.g., ghost.chaotictoejam.com)
-          # HOSTED_ZONE_NAME: Base domain for hosted zone (e.g., chaotictoejam.com)
-          # The hosted zone ID will be looked up automatically from AWS
           DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
           HOSTED_ZONE_NAME: ${{ secrets.HOSTED_ZONE_NAME }}
       
-      - name: Build frontend with API endpoint
+      - name: Rebuild frontend with actual API endpoint
         run: npm run build
         env:
           VITE_API_ENDPOINT: ${{ steps.cdk-deploy.outputs.api_endpoint }}
@@ -94,7 +94,7 @@ jobs:
           echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
           echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
       
-      - name: Sync frontend to S3
+      - name: Sync updated frontend to S3
         run: |
           aws s3 sync dist/ s3://${{ steps.get-outputs.outputs.bucket_name }}/ --delete
       
