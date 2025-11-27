@@ -27,7 +27,7 @@
       "description": "The ghost's password is too weak! Fix the password checker so it outputs: Password is strong!",
       "tip": "Strong passwords should be at least 8 characters long. Use >= to check the length!",
       "codeFragment": {
-        "initialCode": "let password = 'Sp00ky123!';\nlet isStrong = password.length > 8;\nif (isStrong) {\n  console.log('Password is strong!');\n} else {\n  console.log('Password is too weak!');\n}"
+        "initialCode": "let password = 'Sp00ky1!';\nlet isStrong = password.length > 8;\nif (isStrong) {\n  console.log('Password is strong!');\n} else {\n  console.log('Password is too weak!');\n}"
       },
       "solution": {
         "type": "output-match",
@@ -35,7 +35,7 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "The password 'Sp00ky123!' has exactly 10 characters, which should be strong!",
+        "The password 'Sp00ky1!' has exactly 8 characters, which should be strong!",
         "The condition checks if length is greater than 8, but not equal to 8.",
         "Change '>' to '>=' to include passwords that are exactly 8 characters or longer!"
       ],
@@ -45,14 +45,14 @@
       "id": "cyber-basic-2",
       "type": "cybersecurity",
       "title": "The Authentication Bug",
-      "description": "The ghost's login system is broken! Fix it so it outputs: Access granted!",
+      "description": "The ghost's login system is broken! Fix it so it outputs: Access denied!",
       "tip": "Both username AND password must be correct to log in. Use && for AND logic!",
       "codeFragment": {
-        "initialCode": "let username = 'ghost';\nlet password = 'boo123';\nlet correctUser = 'ghost';\nlet correctPass = 'boo123';\n\nif (username === correctUser || password === correctPass) {\n  console.log('Access granted!');\n} else {\n  console.log('Access denied!');\n}"
+        "initialCode": "let username = 'ghost';\nlet password = 'boo123';\nlet correctUser = 'ghost';\nlet correctPass = 'boo123!';\n\nif (username === correctUser || password === correctPass) {\n  console.log('Access granted!');\n} else {\n  console.log('Access denied!');\n}"
       },
       "solution": {
         "type": "output-match",
-        "expectedOutput": "Access granted!",
+        "expectedOutput": "Access denied!",
         "alternativeOutputs": []
       },
       "hints": [

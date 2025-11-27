@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
       
       - name: Configure AWS credentials
@@ -36,6 +36,12 @@ jobs:
         run: |
           cd infrastructure
           npm ci
+          npm run build
+      
+      - name: Clean CDK cache
+        run: |
+          rm -rf ~/.cdk.staging
+          rm -rf infrastructure/cdk.out
       
       - name: Bootstrap CDK
         run: |
@@ -49,11 +55,19 @@ jobs:
         id: cdk-deploy
         run: |
           cd infrastructure
-          OUTPUT=$(npx cdk deploy --require-approval never --outputs-file outputs.json)
-          echo "$OUTPUT"
+          
+          # Deploy with verbose output
+          npx cdk deploy --require-approval never --outputs-file outputs.json --verbose
+          
+          # Verify outputs file was created
+          if [ ! -f outputs.json ]; then
+            echo "Error: outputs.json not created"
+            exit 1
+          fi
           
           # Extract API endpoint from outputs
           API_ENDPOINT=$(node -p "require('./outputs.json')['GhostInTheCodeStack']['ApiEndpoint']")
+          echo "API Endpoint: $API_ENDPOINT"
           echo "api_endpoint=$API_ENDPOINT" >> $GITHUB_OUTPUT
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
