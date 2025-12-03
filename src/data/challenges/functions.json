@@ -25,7 +25,7 @@
       "type": "function",
       "title": "The Missing Call",
       "description": "The ghost created a function but forgot to call it! Fix it so it outputs: Boo!",
-      "tip": "Creating a function doesn't run it - you need to call it by writing its name with ()!",
+      "tip": "Defining a function is like writing a recipe - but you still need to actually make the food! How do you execute a function?",
       "codeFragment": {
         "initialCode": "function sayBoo() {\n  console.log('Boo!');\n}"
       },
@@ -46,7 +46,7 @@
       "type": "function",
       "title": "The Missing Parameter",
       "description": "The ghost wants to greet different ghosts by name. Fix it so it outputs: Hello, Casper!",
-      "tip": "Functions can take parameters (inputs) to work with different values!",
+      "tip": "The function expects a name to greet, but what are you passing to it when you call it?",
       "codeFragment": {
         "initialCode": "function greet(name) {\n  console.log('Hello, ' + name + '!');\n}\ngreet();"
       },
@@ -67,7 +67,7 @@
       "type": "function",
       "title": "The Missing Return",
       "description": "The ghost wants to calculate and use the result. Fix it so it outputs: Total: 15",
-      "tip": "Use 'return' to send a value back from a function so you can use it!",
+      "tip": "The function calculates a result, but how do you get that result back out of the function to use it elsewhere?",
       "codeFragment": {
         "initialCode": "function add(a, b) {\n  let sum = a + b;\n}\nlet total = add(5, 10);\nconsole.log('Total: ' + total);"
       },
@@ -88,7 +88,7 @@
       "type": "function",
       "title": "The Wrong Arguments",
       "description": "The ghost is passing arguments in the wrong order! Fix it so it outputs: 10 - 3 = 7",
-      "tip": "The order of arguments matters! They match up with parameters in order.",
+      "tip": "Look at what calculation you want (10 - 3) and what you're actually doing. Are the numbers in the right positions?",
       "codeFragment": {
         "initialCode": "function subtract(a, b) {\n  return a - b;\n}\nlet result = subtract(3, 10);\nconsole.log('10 - 3 = ' + result);"
       },
@@ -109,7 +109,7 @@
       "type": "function",
       "title": "The Validation Function",
       "description": "The ghost wants a function to check if a number is positive. Fix it so it outputs: true",
-      "tip": "Functions can return boolean values (true/false) to answer yes/no questions!",
+      "tip": "Think about what 'positive' means - is zero considered positive? Check your condition carefully!",
       "codeFragment": {
         "initialCode": "function isPositive(num) {\n  if (num >= 0) {\n    return true;\n  } else {\n    return false;\n  }\n}\nlet result = isPositive(5);\nconsole.log(result);"
       },
@@ -130,7 +130,7 @@
       "type": "function",
       "title": "The Reusable Loop",
       "description": "The ghost wants to print a message multiple times. Fix it so it outputs: Boo! (3 times)",
-      "tip": "Functions can contain loops! This makes repetitive tasks reusable.",
+      "tip": "You want to repeat something exactly 3 times, but how many times is your loop actually running? Count carefully!",
       "codeFragment": {
         "initialCode": "function repeatMessage(message, times) {\n  for (let i = 0; i <= times; i++) {\n    console.log(message);\n  }\n}\nrepeatMessage('Boo!', 3);"
       },
@@ -151,7 +151,7 @@
       "type": "function",
       "title": "The Default Parameter",
       "description": "The ghost wants a greeting function with a default name. Fix it so it outputs: Hello, Ghost!",
-      "tip": "You can give parameters default values in case no argument is provided!",
+      "tip": "What happens when no name is provided to the function? How can you give it a backup value to use?",
       "codeFragment": {
         "initialCode": "function greet(name) {\n  console.log('Hello, ' + name + '!');\n}\ngreet();"
       },
@@ -172,7 +172,7 @@
       "type": "function",
       "title": "The Recursive Ghost",
       "description": "The ghost wants to count down recursively. Fix it so it outputs: 3, 2, 1, Boo!",
-      "tip": "Recursion is when a function calls itself! Make sure it has a stopping condition.",
+      "tip": "You want to count down to 1, then say 'Boo!' Does your stopping condition include 0 or stop before it?",
       "codeFragment": {
         "initialCode": "function countdown(n) {\n  if (n >= 0) {\n    console.log(n);\n    countdown(n - 1);\n  } else {\n    console.log('Boo!');\n  }\n}\ncountdown(3);"
       },
