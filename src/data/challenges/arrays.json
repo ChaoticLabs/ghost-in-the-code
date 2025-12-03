@@ -69,7 +69,7 @@
       "description": "The ghost wants to print all treats, but the loop stops too early! Fix it so it outputs all 4 treats.",
       "tip": "Use i < array.length to loop through all items in an array!",
       "codeFragment": {
-        "initialCode": "let treats = ['candy', 'cookies', 'cake', 'pie'];\nfor (let i = 0; i <= 3; i++) {\n  console.log(treats[i]);\n}"
+        "initialCode": "let treats = ['candy', 'cookies', 'cake', 'pie'];\nfor (let i = 0; i < 3; i++) {\n  console.log(treats[i]);\n}"
       },
       "solution": {
         "type": "output-match",
@@ -77,9 +77,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "The loop works for this array, but what if we add more treats?",
-        "Hardcoding '3' means the loop won't adapt if the array changes.",
-        "Use 'i < treats.length' instead of 'i <= 3' to make it flexible!"
+        "The loop stops at i < 3, which only prints 3 items!",
+        "But there are 4 treats in the array!",
+        "Use 'i < treats.length' to print all items in the array!"
       ],
       "educationalContent": "When looping through arrays, use i < array.length instead of hardcoding the number. This makes your code flexible - it works no matter how many items are in the array!"
     },
@@ -90,7 +90,7 @@
       "description": "The ghost wants to find if 'Boo' is in the list. Fix it so it outputs: Found Boo!",
       "tip": "Use the includes() method to check if an array contains a value!",
       "codeFragment": {
-        "initialCode": "let ghosts = ['Casper', 'Boo', 'Spooky'];\nlet hasBoo = ghosts[1] === 'Boo';\nif (hasBoo) {\n  console.log('Found Boo!');\n} else {\n  console.log('Boo not found');\n}"
+        "initialCode": "let ghosts = ['Casper', 'Spooky', 'Boo'];\nlet hasBoo = ghosts[1] === 'Boo';\nif (hasBoo) {\n  console.log('Found Boo!');\n} else {\n  console.log('Boo not found');\n}"
       },
       "solution": {
         "type": "output-match",
@@ -111,7 +111,7 @@
       "description": "The ghost wants to count how many scores are above 50. Fix it so it outputs: High scores: 3",
       "tip": "Loop through the array and count items that meet your condition!",
       "codeFragment": {
-        "initialCode": "let scores = [45, 67, 89, 34, 92, 56];\nlet highScores = 0;\nfor (let i = 0; i < scores.length; i++) {\n  if (scores[i] >= 50) {\n    highScores++;\n  }\n}\nconsole.log('High scores: ' + highScores);"
+        "initialCode": "let scores = [45, 67, 89, 34, 92, 56];\nlet highScores = 0;\nfor (let i = 0; i < scores.length; i++) {\n  if (scores[i] > 50) {\n    highScores++;\n  }\n}\nconsole.log('High scores: ' + highScores);"
       },
       "solution": {
         "type": "output-match",
@@ -119,9 +119,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "Let's count: 67 >= 50? Yes. 89 >= 50? Yes. 92 >= 50? Yes. 56 >= 50? Yes.",
-        "That's 4 high scores, not 3!",
-        "The code is actually correct! Check the expected output - it should be 4."
+        "We want scores above 50, but the condition checks for greater than 50!",
+        "The score 56 is above 50, but 56 > 50 doesn't include exactly 50.",
+        "Change '>' to '>=' to include scores that are 50 or above!"
       ],
       "educationalContent": "You can filter arrays by looping through and counting items that meet a condition. This is useful for finding how many items match your criteria!"
     },

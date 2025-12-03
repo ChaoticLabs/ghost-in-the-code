@@ -48,7 +48,7 @@
       "description": "The ghost wants to greet different ghosts by name. Fix it so it outputs: Hello, Casper!",
       "tip": "Functions can take parameters (inputs) to work with different values!",
       "codeFragment": {
-        "initialCode": "function greet() {\n  console.log('Hello, Casper!');\n}\ngreet();"
+        "initialCode": "function greet(name) {\n  console.log('Hello, ' + name + '!');\n}\ngreet();"
       },
       "solution": {
         "type": "output-match",
@@ -56,9 +56,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "The function works, but it's not flexible - it always says 'Casper'!",
-        "To make it work with any name, add a parameter.",
-        "Actually, the code already outputs the correct result! It's working as expected."
+        "The function expects a name parameter but none is provided!",
+        "When no argument is passed, 'name' becomes undefined.",
+        "Add 'Casper' as an argument: greet('Casper');"
       ],
       "educationalContent": "Functions can take parameters to make them flexible. Instead of hardcoding values, you can pass different values each time you call the function!"
     },
@@ -174,7 +174,7 @@
       "description": "The ghost wants to count down recursively. Fix it so it outputs: 3, 2, 1, Boo!",
       "tip": "Recursion is when a function calls itself! Make sure it has a stopping condition.",
       "codeFragment": {
-        "initialCode": "function countdown(n) {\n  if (n > 0) {\n    console.log(n);\n    countdown(n - 1);\n  } else {\n    console.log('Boo!');\n  }\n}\ncountdown(3);"
+        "initialCode": "function countdown(n) {\n  if (n >= 0) {\n    console.log(n);\n    countdown(n - 1);\n  } else {\n    console.log('Boo!');\n  }\n}\ncountdown(3);"
       },
       "solution": {
         "type": "output-match",
@@ -182,9 +182,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "Let's trace through: countdown(3) prints 3, calls countdown(2)...",
-        "countdown(2) prints 2, calls countdown(1)...",
-        "countdown(1) prints 1, calls countdown(0), which prints 'Boo!'!"
+        "The condition 'n >= 0' includes 0, so it prints 0 too!",
+        "We want to stop BEFORE printing 0, not after.",
+        "Change 'n >= 0' to 'n > 0' to stop at 1!"
       ],
       "educationalContent": "Recursion is when a function calls itself! It's useful for problems that can be broken down into smaller versions of the same problem. Always include a base case (stopping condition) to prevent infinite recursion!"
     }

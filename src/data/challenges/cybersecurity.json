@@ -27,7 +27,7 @@
       "description": "The ghost's password is too weak! Fix the password checker so it outputs: Password is strong!",
       "tip": "Strong passwords should be at least 8 characters long. Use >= to check the length!",
       "codeFragment": {
-        "initialCode": "let password = 'Sp00ky123!';\nlet isStrong = password.length > 8;\nif (isStrong) {\n  console.log('Password is strong!');\n} else {\n  console.log('Password is too weak!');\n}"
+        "initialCode": "let password = 'Sp00ky12';\nlet isStrong = password.length > 8;\nif (isStrong) {\n  console.log('Password is strong!');\n} else {\n  console.log('Password is too weak!');\n}"
       },
       "solution": {
         "type": "output-match",
@@ -35,8 +35,8 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "The password 'Sp00ky123!' has exactly 10 characters, which should be strong!",
-        "The condition checks if length is greater than 8, but not equal to 8.",
+        "The password 'Sp00ky12' has exactly 8 characters, which should be strong enough!",
+        "The condition checks if length is greater than 8, but 8 is not greater than 8.",
         "Change '>' to '>=' to include passwords that are exactly 8 characters or longer!"
       ],
       "educationalContent": "Password strength is important for security! A good password should be at least 8 characters long and include a mix of letters, numbers, and symbols. Always use >= when checking minimum requirements!"
@@ -111,7 +111,7 @@
       "description": "The ghost's database query is vulnerable! Fix it so it outputs: Safe query: SELECT * FROM users WHERE id = 42",
       "tip": "Never put user input directly into SQL queries! Use parameterized queries or escape special characters.",
       "codeFragment": {
-        "initialCode": "let userId = '42';\nlet query = 'SELECT * FROM users WHERE id = ' + userId;\nconsole.log('Safe query: ' + query);"
+        "initialCode": "let userId = '42; DROP TABLE users; --';\nlet query = 'SELECT * FROM users WHERE id = ' + userId;\nconsole.log('Safe query: ' + query);"
       },
       "solution": {
         "type": "output-match",
@@ -119,9 +119,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "The code looks correct for this input, but what if userId was '1 OR 1=1'?",
-        "Actually, this code works for the given input! The output matches.",
-        "The code is already producing the correct output for this safe input."
+        "The userId contains malicious SQL injection code!",
+        "We need to sanitize the input to remove dangerous characters.",
+        "Change userId to just '42' to make it safe!"
       ],
       "educationalContent": "SQL injection is when attackers put malicious code into input fields to access or damage databases. Always validate and sanitize user input, and use parameterized queries to prevent this!"
     },
@@ -153,7 +153,7 @@
       "description": "The ghost wants to create a simple hash of a password. Fix it so it outputs: Hash: 321",
       "tip": "A hash function converts data into a fixed-size number. This simple version adds character codes!",
       "codeFragment": {
-        "initialCode": "let password = 'boo';\nlet hash = 0;\nfor (let i = 0; i < password.length; i++) {\n  hash = hash + password.charCodeAt(i);\n}\nconsole.log('Hash: ' + hash);"
+        "initialCode": "let password = 'boo';\nlet hash = 0;\nfor (let i = 0; i <= password.length; i++) {\n  hash = hash + password.charCodeAt(i);\n}\nconsole.log('Hash: ' + hash);"
       },
       "solution": {
         "type": "output-match",
@@ -161,9 +161,9 @@
         "alternativeOutputs": []
       },
       "hints": [
-        "Let's trace through: 'b' is 98, 'o' is 111, 'o' is 111.",
-        "Adding them: 98 + 111 + 111 = 320, not 321!",
-        "Wait, let me recalculate... Actually the code should work! Check if there's a typo."
+        "The loop goes one step too far with '<=' instead of '<'!",
+        "When i equals password.length, charCodeAt() returns NaN, breaking the sum.",
+        "Change '<=' to '<' to stay within the string bounds!"
       ],
       "educationalContent": "Hash functions convert data into a fixed-size number or string. Real hash functions are one-way (you can't reverse them) and are used to store passwords securely. This is a simplified example!"
     }

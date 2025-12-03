@@ -48,7 +48,7 @@
       "description": "The ghost needs at least 50 energy to haunt. Fix it so it outputs: Ready to haunt!",
       "tip": "'At least 50' means 50 or more. Use >= to include the number itself!",
       "codeFragment": {
-        "initialCode": "let energy = 75;\nif (energy > 50) {\n  console.log('Ready to haunt!');\n} else {\n  console.log('Need more energy');\n}"
+        "initialCode": "let energy = 50;\nif (energy > 50) {\n  console.log('Ready to haunt!');\n} else {\n  console.log('Need more energy');\n}"
       },
       "solution": {
         "type": "output-match",
