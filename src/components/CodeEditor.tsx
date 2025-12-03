@@ -153,7 +153,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
           data-gramm_editor="false"
           data-enable-grammarly="false"
           aria-label="Code editor"
-          placeholder="Write your code here..."
+          placeholder="// Write your code here..."
         />
       </div>
 
