@@ -59,21 +59,21 @@ export const PatternRules = {
   // Operator changes
   hasGreaterThanOrEqual: {
     name: 'greater-than-or-equal',
-    description: 'Uses >= operator',
+    description: 'Change > to >= for inclusive comparison',
     pattern: />=/,
     shouldMatch: true
   },
   
   hasLogicalAnd: {
     name: 'logical-and',
-    description: 'Uses && (AND) operator',
+    description: 'Use && (AND) for secure authentication',
     pattern: /&&/,
     shouldMatch: true
   },
   
   hasLogicalOr: {
     name: 'logical-or',
-    description: 'Uses || (OR) operator',
+    description: 'Use || (OR) for flexible permissions',
     pattern: /\|\|/,
     shouldMatch: true
   },
@@ -81,23 +81,60 @@ export const PatternRules = {
   // Avoid console.log manipulation - detect hardcoded success messages
   noHardcodedSuccess: {
     name: 'no-hardcoded-success',
-    description: 'Doesn\'t hardcode success messages in both branches',
+    description: 'Fix the code logic instead of changing console.log output',
     pattern: /console\.log\(['"`](?:Access granted|Password is strong|Encrypted:|Safe query:|Hash:)[^'"`]*['"`]\)[\s\S]*?console\.log\(['"`](?:Access granted|Password is strong|Encrypted:|Safe query:|Hash:)[^'"`]*['"`]\)/,
+    shouldMatch: false
+  },
+
+  // Detect when user just writes a single console.log with the answer
+  noDirectConsoleLogCheat: {
+    name: 'no-direct-console-cheat',
+    description: 'Code must contain the original logic structure',
+    pattern: /^[\s]*console\.log\(['"`](?:Access granted|Password is strong|Encrypted:|Safe query:|Hash:)[^'"`]*['"`]\);?[\s]*$/,
     shouldMatch: false
   },
   
   // Specific fixes
   hasCorrectLoopBounds: {
     name: 'correct-loop-bounds',
-    description: 'Uses correct loop bounds (< instead of <=)',
+    description: 'Change <= to < to prevent array out-of-bounds',
     pattern: /i\s*<\s*\w+\.length/,
     shouldMatch: true
   },
   
   hasParameterizedQuery: {
     name: 'parameterized-query',
-    description: 'Uses safe SQL query format',
+    description: 'Clean the userId to prevent SQL injection',
     pattern: /SELECT \* FROM users WHERE id = \d+/,
+    shouldMatch: true
+  },
+
+  // Structure requirements - ensure original code elements are present
+  hasPasswordVariable: {
+    name: 'has-password-variable',
+    description: 'Code must contain password variable and logic',
+    pattern: /let\s+password\s*=|const\s+password\s*=/,
+    shouldMatch: true
+  },
+
+  hasIfStatement: {
+    name: 'has-if-statement', 
+    description: 'Code must contain conditional logic (if statement)',
+    pattern: /if\s*\(/,
+    shouldMatch: true
+  },
+
+  hasUsernamePasswordCheck: {
+    name: 'has-auth-check',
+    description: 'Code must contain username and password checking logic',
+    pattern: /username.*===.*correctUser|correctUser.*===.*username/,
+    shouldMatch: true
+  },
+
+  hasForLoop: {
+    name: 'has-for-loop',
+    description: 'Code must contain the original for loop structure',
+    pattern: /for\s*\(/,
     shouldMatch: true
   }
 };
@@ -110,13 +147,19 @@ export function createChallengeRules(challengeId: string): PatternRule[] {
     case 'cyber-basic-1': // Password strength
       return [
         PatternRules.hasGreaterThanOrEqual,
-        PatternRules.noHardcodedSuccess
+        PatternRules.noHardcodedSuccess,
+        PatternRules.noDirectConsoleLogCheat,
+        PatternRules.hasPasswordVariable,
+        PatternRules.hasIfStatement
       ];
       
     case 'cyber-basic-2': // Authentication
       return [
         PatternRules.hasLogicalAnd,
-        PatternRules.noHardcodedSuccess
+        PatternRules.noHardcodedSuccess,
+        PatternRules.noDirectConsoleLogCheat,
+        PatternRules.hasUsernamePasswordCheck,
+        PatternRules.hasIfStatement
       ];
       
     case 'cyber-intermediate-1': // Rate limiter
@@ -140,7 +183,9 @@ export function createChallengeRules(challengeId: string): PatternRule[] {
     case 'cyber-advanced-1': // Hash function
       return [
         PatternRules.hasCorrectLoopBounds,
-        PatternRules.noHardcodedSuccess
+        PatternRules.noHardcodedSuccess,
+        PatternRules.noDirectConsoleLogCheat,
+        PatternRules.hasForLoop
       ];
       
     default:

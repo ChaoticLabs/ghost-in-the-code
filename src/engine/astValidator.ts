@@ -117,13 +117,13 @@ function hasOperatorChange(originalAST: any, playerAST: any, from: string, to: s
   return originalOps.includes(from) && playerOps.includes(to) && !playerOps.includes(from);
 }
 
-function hasConditionChange(originalAST: any, playerAST: any, expectedCondition: string): boolean {
+function hasConditionChange(_originalAST: any, _playerAST: any, _expectedCondition: string): boolean {
   // This would need more sophisticated AST walking
   // For hackathon purposes, we can use string matching as fallback
   return true; // Simplified for now
 }
 
-function hasVariableValueChange(originalAST: any, playerAST: any, variableName: string, expectedValue: any): boolean {
+function hasVariableValueChange(_originalAST: any, _playerAST: any, _variableName: string, _expectedValue: any): boolean {
   // Extract variable assignments and compare
   return true; // Simplified for now
 }

@@ -99,8 +99,8 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
   const handleSubmit = () => {
     setIsSubmitting(true);
     
-    // Validate the solution by running the code
-    const result = validateSolution(code, challenge.solution);
+    // Validate the solution by running the code with enhanced anti-cheating
+    const result = validateSolution(code, challenge.solution, undefined, challenge.id);
     
     setFeedback({
       message: result.detailedFeedback || result.feedback,
