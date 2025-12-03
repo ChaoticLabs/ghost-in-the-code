@@ -20,7 +20,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
       
       - name: Configure AWS credentials
@@ -32,18 +32,74 @@ jobs:
       - name: Install dependencies
         run: npm ci
       
-      - name: Build frontend
+      - name: Build frontend with placeholder API endpoint
         run: npm run build
+        env:
+          VITE_API_ENDPOINT: https://placeholder.execute-api.us-east-1.amazonaws.com/prod/
       
       - name: Install CDK dependencies
         run: |
           cd infrastructure
           npm ci
+          npm run build
       
-      - name: Deploy infrastructure
+      - name: Clean CDK cache
+        run: |
+          rm -rf ~/.cdk.staging
+          rm -rf infrastructure/cdk.out
+      
+      - name: Bootstrap CDK
         run: |
           cd infrastructure
-          npx cdk deploy --require-approval never
+          npx cdk bootstrap aws://${{ secrets.AWS_ACCOUNT_ID }}/us-east-1
         env:
           CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
           CDK_DEFAULT_REGION: us-east-1
+      
+      - name: Deploy infrastructure (includes frontend)
+        id: cdk-deploy
+        run: |
+          cd infrastructure
+          
+          # Deploy with verbose output
+          npx cdk deploy --require-approval never --outputs-file outputs.json
+          
+          # Verify outputs file was created
+          if [ ! -f outputs.json ]; then
+            echo "Error: outputs.json not created"
+            exit 1
+          fi
+          
+          # Extract API endpoint from outputs
+          API_ENDPOINT=$(node -p "require('./outputs.json')['GhostInTheCodeStack']['ApiEndpoint']")
+          echo "API Endpoint: $API_ENDPOINT"
+          echo "api_endpoint=$API_ENDPOINT" >> $GITHUB_OUTPUT
+        env:
+          CDK_DEFAULT_ACCOUNT: ${{ secrets.AWS_ACCOUNT_ID }}
+          CDK_DEFAULT_REGION: us-east-1
+          DOMAIN_NAME: ${{ secrets.DOMAIN_NAME }}
+          HOSTED_ZONE_NAME: ${{ secrets.HOSTED_ZONE_NAME }}
+      
+      - name: Rebuild frontend with actual API endpoint
+        run: npm run build
+        env:
+          VITE_API_ENDPOINT: ${{ steps.cdk-deploy.outputs.api_endpoint }}
+      
+      - name: Get S3 bucket and CloudFront distribution from CDK outputs
+        id: get-outputs
+        run: |
+          cd infrastructure
+          BUCKET_NAME=$(node -p "require('./outputs.json')['GhostInTheCodeStack']['WebsiteBucketName']")
+          DISTRIBUTION_ID=$(node -p "require('./outputs.json')['GhostInTheCodeStack']['DistributionId']")
+          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
+          echo "distribution_id=$DISTRIBUTION_ID" >> $GITHUB_OUTPUT
+      
+      - name: Sync updated frontend to S3
+        run: |
+          aws s3 sync dist/ s3://${{ steps.get-outputs.outputs.bucket_name }}/ --delete
+      
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ steps.get-outputs.outputs.distribution_id }} \
+            --paths "/*"

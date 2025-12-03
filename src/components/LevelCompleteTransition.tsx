@@ -22,7 +22,7 @@ interface LevelCompleteTransitionProps {
 /**
  * Get appropriate emoji for each badge
  */
-const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logic' | 'function' | 'array' | 'cybersecurity'): string => {
+const getBadgeEmoji = (badgeId: string, concept?: string): string => {
   // Specific badge emojis
   const badgeEmojis: Record<string, string> = {
     'first-bug-fixed': '🐛',
@@ -32,18 +32,28 @@ const getBadgeEmoji = (badgeId: string, concept?: 'loop' | 'conditional' | 'logi
     'ghost-whisperer': '👻',
     'loop-master': '🔄',
     'conditional-champion': '🔀',
-    'logic-legend': '🧩'
+    'logic-legend': '🧩',
+    'array-ace': '📚',
+    'function-wizard': '⚡',
+    'security-guardian': '🔒'
   };
 
   // Return specific emoji if available, otherwise fall back to concept emoji
-  return badgeEmojis[badgeId] || (
-    concept === 'loop' ? '🔄' : 
-    concept === 'conditional' ? '🔀' : 
-    concept === 'logic' ? '🧩' :
-    concept === 'function' ? '⚡' :
-    concept === 'array' ? '📚' :
-    concept === 'cybersecurity' ? '🔒' : '🏆'
-  );
+  if (badgeEmojis[badgeId]) {
+    return badgeEmojis[badgeId];
+  }
+  
+  // Concept-based emojis
+  const conceptEmojis: Record<string, string> = {
+    'loop': '🔄',
+    'conditional': '🔀',
+    'logic': '🧩',
+    'function': '⚡',
+    'array': '📚',
+    'cybersecurity': '🔒'
+  };
+  
+  return concept ? (conceptEmojis[concept] || '🏆') : '🏆';
 };
 
 export const LevelCompleteTransition = ({

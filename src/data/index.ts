@@ -23,6 +23,7 @@ export {
 export {
   getLevelName,
   getAllLevelConfigs,
+  getAllLevelTypes,
   getLevelInfo
 } from './levelLoader';
 

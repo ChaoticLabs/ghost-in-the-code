@@ -5,13 +5,21 @@ import * as cloudfront from 'aws-cdk-lib/aws-cloudfront';
 import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as apigateway from 'aws-cdk-lib/aws-apigateway';
 import * as iam from 'aws-cdk-lib/aws-iam';
+import * as acm from 'aws-cdk-lib/aws-certificatemanager';
+import * as route53 from 'aws-cdk-lib/aws-route53';
+import * as targets from 'aws-cdk-lib/aws-route53-targets';
 import { NodejsFunction } from 'aws-cdk-lib/aws-lambda-nodejs';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import * as path from 'path';
 
+export interface GhostInTheCodeStackProps extends cdk.StackProps {
+  domainName?: string;
+  hostedZoneName?: string;
+}
+
 export class GhostInTheCodeStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props?: GhostInTheCodeStackProps) {
     super(scope, id, props);
 
     // S3 bucket for website hosting
@@ -53,6 +61,21 @@ export class GhostInTheCodeStack extends cdk.Stack {
       })
     );
 
+    // ACM Certificate for custom domain (if domain parameters are provided)
+    let certificate: acm.ICertificate | undefined;
+    if (props?.domainName && props?.hostedZoneName) {
+      // Look up the existing hosted zone by domain name
+      const hostedZone = route53.HostedZone.fromLookup(this, 'HostedZone', {
+        domainName: props.hostedZoneName,
+      });
+
+      // Create certificate in us-east-1 (required for CloudFront)
+      certificate = new acm.Certificate(this, 'Certificate', {
+        domainName: props.domainName,
+        validation: acm.CertificateValidation.fromDns(hostedZone),
+      });
+    }
+
     // CloudFront distribution for the website
     const distribution = new cloudfront.Distribution(this, 'WebsiteDistribution', {
       defaultBehavior: {
@@ -75,15 +98,38 @@ export class GhostInTheCodeStack extends cdk.Stack {
           ttl: cdk.Duration.minutes(5),
         },
       ],
+      // Add custom domain configuration when domain parameters are provided
+      domainNames: props?.domainName ? [props.domainName] : undefined,
+      certificate: certificate,
     });
 
+    // Route 53 DNS records for custom domain (if domain parameters are provided)
+    if (props?.domainName && props?.hostedZoneName) {
+      // Look up the existing hosted zone by domain name
+      const hostedZone = route53.HostedZone.fromLookup(this, 'DnsHostedZone', {
+        domainName: props.hostedZoneName,
+      });
 
+      // Create A record (IPv4) alias pointing to CloudFront distribution
+      new route53.ARecord(this, 'AliasRecord', {
+        zone: hostedZone,
+        recordName: props.domainName,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+
+      // Create AAAA record (IPv6) alias pointing to CloudFront distribution
+      new route53.AaaaRecord(this, 'AliasRecordAAAA', {
+        zone: hostedZone,
+        recordName: props.domainName,
+        target: route53.RecordTarget.fromAlias(new targets.CloudFrontTarget(distribution)),
+      });
+    }
 
     // Lambda function for Polly voice synthesis
     const pollyFunction = new NodejsFunction(this, 'PollyFunction', {
       entry: 'lambda/polly/index.ts',
       handler: 'handler',
-      runtime: Runtime.NODEJS_20_X,
+      runtime: Runtime.NODEJS_22_X,
       timeout: cdk.Duration.seconds(10),
       memorySize: 256,
       environment: {
@@ -93,7 +139,7 @@ export class GhostInTheCodeStack extends cdk.Stack {
       bundling: {
         minify: true,
         sourceMap: true,
-        target: 'es2020',
+        target: 'es2022',
       },
     });
 
@@ -142,19 +188,16 @@ export class GhostInTheCodeStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'WebsiteBucketName', {
       value: websiteBucket.bucketName,
       description: 'S3 bucket name for website hosting',
-      exportName: 'GhostInTheCode-WebsiteBucketName',
     });
 
     new cdk.CfnOutput(this, 'DistributionDomain', {
       value: distribution.distributionDomainName,
       description: 'CloudFront distribution domain name',
-      exportName: 'GhostInTheCode-DistributionDomain',
     });
 
     new cdk.CfnOutput(this, 'DistributionId', {
       value: distribution.distributionId,
       description: 'CloudFront distribution ID for cache invalidation',
-      exportName: 'GhostInTheCode-DistributionId',
     });
 
     new cdk.CfnOutput(this, 'WebsiteUrl', {
@@ -165,13 +208,38 @@ export class GhostInTheCodeStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'ApiEndpoint', {
       value: api.url,
       description: 'API Gateway endpoint URL',
-      exportName: 'GhostInTheCode-ApiEndpoint',
     });
 
     new cdk.CfnOutput(this, 'AudioBucketName', {
       value: audioCacheBucket.bucketName,
       description: 'S3 bucket name for audio cache',
-      exportName: 'GhostInTheCode-AudioBucketName',
     });
+
+    // Conditional outputs for custom domain configuration
+    if (props?.domainName) {
+      new cdk.CfnOutput(this, 'CustomDomainUrl', {
+        value: `https://${props.domainName}`,
+        description: 'Custom domain URL',
+      });
+
+      new cdk.CfnOutput(this, 'CustomDomainName', {
+        value: props.domainName,
+        description: 'Custom domain name',
+      });
+    }
+
+    if (certificate) {
+      new cdk.CfnOutput(this, 'CertificateArn', {
+        value: certificate.certificateArn,
+        description: 'ACM certificate ARN',
+      });
+    }
+
+    if (props?.domainName) {
+      new cdk.CfnOutput(this, 'Route53RecordName', {
+        value: props.domainName,
+        description: 'Route 53 DNS record name',
+      });
+    }
   }
 }

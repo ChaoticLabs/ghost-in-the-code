@@ -10,7 +10,7 @@ export interface BadgeDefinition {
   description: string;
   iconUrl: string;
   category: 'concept' | 'achievement' | 'special';
-  concept?: 'loop' | 'conditional' | 'logic' | 'array' | 'function' | 'cybersecurity';
+  concept?: string;
   earnCondition: (stats: BadgeEarnStats) => boolean;
 }
 

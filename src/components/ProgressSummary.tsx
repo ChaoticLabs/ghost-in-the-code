@@ -1,4 +1,4 @@
-/**
+﻿/**
  * ProgressSummary component - generates comprehensive progress summary document
  * Includes badges, challenges completed, time spent, and all statistics
  * Provides printable HTML and downloadable format
@@ -7,7 +7,7 @@
 import { useRef } from 'react';
 import type { GameState, Badge } from '../engine/types';
 import { BADGE_DEFINITIONS } from '../data/badges';
-import { getAllChallengesFlat } from '../data';
+import { getAllChallengesFlat, getAllLevelConfigs } from '../data';
 import { ProgressBar } from './ProgressBar';
 import './ProgressSummary.css';
 
@@ -71,17 +71,13 @@ export const ProgressSummary = ({
     ? Math.round((completedChallenges / totalChallenges) * 100) 
     : 0;
 
-  // Calculate concept-specific statistics
-  const conceptStats = {
-    loop: { completed: 0, total: 0 },
-    conditional: { completed: 0, total: 0 },
-    logic: { completed: 0, total: 0 },
-    array: { completed: 0, total: 0 },
-    function: { completed: 0, total: 0 },
-    cybersecurity: { completed: 0, total: 0 }
-  };
+  // Calculate concept-specific statistics dynamically
+  const conceptStats: Record<string, { completed: number; total: number }> = {};
 
   allChallenges.forEach(challenge => {
+    if (!conceptStats[challenge.type]) {
+      conceptStats[challenge.type] = { completed: 0, total: 0 };
+    }
     conceptStats[challenge.type].total++;
     if (gameState.completedChallenges.has(challenge.id)) {
       conceptStats[challenge.type].completed++;
@@ -201,84 +197,26 @@ export const ProgressSummary = ({
           {/* Concept Progress */}
           <div className="summary-section">
             <h3 className="summary-section-title">Concept Progress</h3>
-            <div className="summary-concepts">
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">� Looops</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('loop')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('loop')}% Complete</span>
-                  <span>{conceptStats.loop.completed}/{conceptStats.loop.total} Challenges</span>
-                </div>
-              </div>
-
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">🔀 Conditionals</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('conditional')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('conditional')}% Complete</span>
-                  <span>{conceptStats.conditional.completed}/{conceptStats.conditional.total} Challenges</span>
-                </div>
-              </div>
-
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">🧩 Logic</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('logic')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('logic')}% Complete</span>
-                  <span>{conceptStats.logic.completed}/{conceptStats.logic.total} Challenges</span>
-                </div>
-              </div>
-
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">📚 Arrays</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('array')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('array')}% Complete</span>
-                  <span>{conceptStats.array.completed}/{conceptStats.array.total} Challenges</span>
-                </div>
-              </div>
-
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">⚙️ Functions</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('function')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('function')}% Complete</span>
-                  <span>{conceptStats.function.completed}/{conceptStats.function.total} Challenges</span>
-                </div>
-              </div>
-
-              <div className="summary-concept-card">
-                <h4 className="summary-concept-name">🔐 Cybersecurity</h4>
-                <ProgressBar
-                  percentage={getConceptCompletion('cybersecurity')}
-                  height="medium"
-                  className="summary-progress-bar"
-                />
-                <div className="summary-concept-stats">
-                  <span>{getConceptCompletion('cybersecurity')}% Complete</span>
-                  <span>{conceptStats.cybersecurity.completed}/{conceptStats.cybersecurity.total} Challenges</span>
-                </div>
-              </div>
+                        <div className="summary-concepts">
+              {getAllLevelConfigs().map(level => {
+                const stats = conceptStats[level.type] || { completed: 0, total: 0 };
+                const completion = getConceptCompletion(level.type);
+                
+                return (
+                  <div key={level.type} className="summary-concept-card">
+                    <h4 className="summary-concept-name">{level.icon} {level.title}</h4>
+                    <ProgressBar
+                      percentage={completion}
+                      height="medium"
+                      className="summary-progress-bar"
+                    />
+                    <div className="summary-concept-stats">
+                      <span>{completion}% Complete</span>
+                      <span>{stats.completed}/{stats.total} Challenges</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -336,3 +274,4 @@ export const ProgressSummary = ({
     </div>
   );
 };
+
