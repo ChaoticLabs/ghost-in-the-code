@@ -1,0 +1,64 @@
+{
+  "levelId": "loops-1",
+  "title": "Welcome to Loop Land! 🔄",
+  "description": "Loops are like doing something over and over again! Just like when you count to 10 or brush each tooth. In code, loops help us repeat actions without writing the same thing many times.",
+  "concepts": [
+    {
+      "name": "What is a Loop?",
+      "explanation": "A loop repeats code multiple times. Instead of writing the same code 10 times, we can use a loop to do it automatically!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Loop Example",
+        "code": [
+          "// Count from 1 to 3",
+          "for (let i = 1; i <= 3; i++) {",
+          "  console.log('Count: ' + i);",
+          "}",
+          "// Outputs: Count: 1, Count: 2, Count: 3"
+        ]
+      }
+    },
+    {
+      "name": "Loop Counter",
+      "explanation": "Most loops use a counter variable that changes each time. This helps the loop know when to stop.",
+      "codeExample": {
+        "type": "demo",
+        "title": "Counter Variable",
+        "code": [
+          "for (let i = 0; i < 5; i++) {",
+          "  // i starts at 0, increases by 1 each time",
+          "  console.log('Step ' + i);",
+          "}"
+        ]
+      }
+    },
+    {
+      "name": "Stopping the Loop",
+      "explanation": "Every loop needs a way to stop! We use conditions like 'count < 10' to tell the loop when to finish.",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Infinite Loop (Bad!)",
+            "code": [
+              "for (let i = 0; i >= 0; i++) {",
+              "  // This never stops!",
+              "}"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "Proper Stopping Condition",
+            "code": [
+              "for (let i = 0; i < 5; i++) {",
+              "  // Stops when i reaches 5",
+              "}"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "readyMessage": "Ready to help our ghost fix some loopy code? Let's go!"
+}

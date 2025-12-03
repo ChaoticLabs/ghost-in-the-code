@@ -1,0 +1,59 @@
+{
+  "levelId": "arrays-1",
+  "title": "Welcome to Array Academy! 📚",
+  "description": "Arrays are like lists that hold multiple things! Just like a shopping list or a list of your favorite games. In code, arrays help us organize and work with collections of data.",
+  "concepts": [
+    {
+      "name": "What is an Array?",
+      "explanation": "An array is a list that can hold multiple values. Instead of having separate variables for each item, we can keep them all together in one array!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Creating Arrays",
+        "code": [
+          "// Array of ghost names",
+          "let ghosts = ['Casper', 'Boo', 'Phantom'];",
+          "",
+          "// Array of numbers",
+          "let scores = [100, 85, 92, 78];",
+          "",
+          "console.log(ghosts); // ['Casper', 'Boo', 'Phantom']"
+        ]
+      }
+    },
+    {
+      "name": "Array Indexes",
+      "explanation": "Arrays start counting at 0! The first item is at index 0, the second at index 1, and so on. This is called zero-based indexing.",
+      "codeExample": {
+        "type": "demo",
+        "title": "Accessing Array Items",
+        "code": [
+          "let fruits = ['apple', 'banana', 'orange'];",
+          "",
+          "fruits[0]  // 'apple' (first item)",
+          "fruits[1]  // 'banana' (second item)",
+          "fruits[2]  // 'orange' (third item)",
+          "",
+          "// Remember: arrays start counting at 0!"
+        ]
+      }
+    },
+    {
+      "name": "Array Methods",
+      "explanation": "Arrays have special functions (methods) like push() to add items, pop() to remove the last item, and length to count how many items there are.",
+      "codeExample": {
+        "type": "demo",
+        "title": "Common Array Methods",
+        "code": [
+          "let items = ['sword', 'shield'];",
+          "",
+          "items.push('potion');     // Add to end",
+          "items.pop();              // Remove last item",
+          "items.length;            // Count items (2)",
+          "",
+          "console.log(items); // ['sword', 'shield']"
+        ]
+      }
+    }
+  ],
+  "readyMessage": "Ready to help our ghost master arrays? Let's go!"
+}

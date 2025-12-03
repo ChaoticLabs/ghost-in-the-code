@@ -1,0 +1,83 @@
+{
+  "levelId": "cybersecurity-1",
+  "title": "Welcome to Cyber Security Central! 🔐",
+  "description": "Cybersecurity is about keeping information safe! Just like locking your diary or having a secret password for your treehouse. In code, we protect data from bad ghosts who want to steal or break things.",
+  "concepts": [
+    {
+      "name": "What is Cybersecurity?",
+      "explanation": "Cybersecurity means protecting computers and data from bad actors. It's like being a digital security guard!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Security Check Example",
+        "code": [
+          "function checkAccess(username, password) {",
+          "  // Validate user credentials",
+          "  if (username === 'ghost' && password === 'boo123') {",
+          "    return 'Access granted!';",
+          "  } else {",
+          "    return 'Access denied!';",
+          "  }",
+          "}",
+          "",
+          "console.log(checkAccess('ghost', 'boo123')); // Access granted!"
+        ]
+      }
+    },
+    {
+      "name": "Passwords and Authentication",
+      "explanation": "Strong passwords are like strong locks. They should be long, unique, and hard to guess. Authentication checks if you're really who you say you are!",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Weak Password (Bad!)",
+            "code": [
+              "let password = '123';",
+              "",
+              "// This is too short and easy to guess!",
+              "// Bad passwords:",
+              "// - '123', 'password', 'abc'",
+              "// - Your name or birthday"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "Strong Password",
+            "code": [
+              "let password = 'Gh0st$ecur3!2024';",
+              "",
+              "// This is strong because it has:",
+              "// - Uppercase and lowercase letters",
+              "// - Numbers and special characters",
+              "// - More than 12 characters long"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Encryption",
+      "explanation": "Encryption scrambles data so only people with the key can read it. It's like writing in a secret code!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Simple Encryption Example",
+        "code": [
+          "function simpleEncrypt(message, shift) {",
+          "  let encrypted = '';",
+          "  for (let i = 0; i < message.length; i++) {",
+          "    let char = message[i];",
+          "    // Shift each letter by the shift amount",
+          "    encrypted += String.fromCharCode(char.charCodeAt(0) + shift);",
+          "  }",
+          "  return encrypted;",
+          "}",
+          "",
+          "let secret = simpleEncrypt('hello', 3);",
+          "console.log(secret); // 'khoor' (encrypted!)"
+        ]
+      }
+    }
+  ],
+  "readyMessage": "Ready to help our ghost secure the digital world? Let's go!"
+}

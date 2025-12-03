@@ -1,0 +1,95 @@
+{
+  "levelId": "logic-1",
+  "title": "Welcome to Logic Lab! 🧩",
+  "description": "Logic puzzles are like solving mysteries! You need to think step-by-step and figure out what makes sense. In code, logic helps us solve problems by thinking carefully about each piece.",
+  "concepts": [
+    {
+      "name": "What is Logic?",
+      "explanation": "Logic is about thinking through problems step by step. Each step needs to make sense and lead to the solution!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Step-by-Step Logic",
+        "code": [
+          "// Problem: Find the largest number",
+          "let a = 15;",
+          "let b = 23;",
+          "let c = 8;",
+          "",
+          "// Step 1: Compare a and b",
+          "let largest = (a > b) ? a : b;",
+          "",
+          "// Step 2: Compare result with c",
+          "largest = (largest > c) ? largest : c;",
+          "",
+          "console.log(largest); // 23"
+        ]
+      }
+    },
+    {
+      "name": "Variables and Values",
+      "explanation": "Variables are like boxes that hold information. We need to be careful when moving things between boxes so we don't lose anything!",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Losing Data (Bad!)",
+            "code": [
+              "let x = 10;",
+              "let y = 20;",
+              "",
+              "x = y;  // x is now 20, but original 10 is lost!",
+              "y = x;  // y is still 20",
+              "",
+              "// We lost the original value of x!"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "Swapping Safely",
+            "code": [
+              "let x = 10;",
+              "let y = 20;",
+              "",
+              "let temp = x;  // Save x in temporary box",
+              "x = y;         // x gets y's value",
+              "y = temp;      // y gets original x value",
+              "",
+              "// Now x = 20, y = 10. Perfect swap!"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Order Matters",
+      "explanation": "The order we do things in code is very important. Doing steps in the wrong order can cause problems!",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Wrong Order",
+            "code": [
+              "console.log(message);  // Error! message doesn't exist yet",
+              "let message = 'Hello Ghost!';",
+              "",
+              "// This won't work because we use message before creating it"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "Correct Order",
+            "code": [
+              "let message = 'Hello Ghost!';  // Create first",
+              "console.log(message);          // Use second",
+              "",
+              "// This works because we create before we use"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "readyMessage": "Ready to solve some spooky logic puzzles? Let's go!"
+}

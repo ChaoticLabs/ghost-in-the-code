@@ -15,6 +15,7 @@ interface GameBoardProps {
   onSettingsClick?: () => void;
   onBadgeClick?: () => void;
   onProgressSummaryClick?: () => void;
+  onConceptsClick?: () => void;
   badgeCount?: number;
   showSuccessAnimation?: boolean;
 }
@@ -32,6 +33,7 @@ export const GameBoard = ({
   onSettingsClick,
   onBadgeClick,
   onProgressSummaryClick,
+  onConceptsClick,
   badgeCount = 0,
   showSuccessAnimation = false
 }: GameBoardProps) => {
@@ -69,6 +71,16 @@ export const GameBoard = ({
           </button>
         </div>
         <div className="header-actions">
+          {onConceptsClick && (
+            <button 
+              className="icon-button" 
+              onClick={onConceptsClick}
+              aria-label="Learn concepts"
+              title="Open concept explanations in new tab"
+            >
+              📚
+            </button>
+          )}
           {onProgressSummaryClick && (
             <button 
               className="icon-button" 

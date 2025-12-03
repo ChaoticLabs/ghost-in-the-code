@@ -4,6 +4,7 @@ import { useBadgeSystem } from './engine/useBadgeSystem'
 import { gameActions } from './engine/gameActions'
 import { WelcomeScreen, GameBoard, CodeEditor, GhostCharacter, ProgressTracker, LevelCompleteTransition, SettingsPanel, HintPanel, EducationalContentModal, BadgeCollection, LevelIntroductionModal, ProgressSummary, LevelSelection, Footer } from './components'
 import { getAllChallengesFlat, getChallengesByType, getLevelIntroduction, getLevelName, getLevelInfo } from './data'
+import { openConceptExplanation } from './utils/conceptExplanation'
 import type { Challenge, Badge, LevelIntroduction } from './engine/types'
 import type { LevelType } from './data'
 import './App.css'
@@ -308,6 +309,15 @@ function App() {
     setShowProgressSummary(false);
   };
 
+  const handleConceptsClick = async () => {
+    if (currentLevelType) {
+      const introduction = getLevelIntroduction(currentLevelType);
+      if (introduction) {
+        await openConceptExplanation(introduction, currentLevelName);
+      }
+    }
+  };
+
   const handleResetGame = () => {
     // Reset all app state
     setGameStarted(false);
@@ -503,6 +513,7 @@ function App() {
         onSettingsClick={handleSettingsClick}
         onBadgeClick={handleBadgeClick}
         onProgressSummaryClick={handleProgressSummaryClick}
+        onConceptsClick={handleConceptsClick}
         badgeCount={state.badges.length}
         showSuccessAnimation={showSuccessAnimation}
       />

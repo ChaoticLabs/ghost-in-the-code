@@ -1,0 +1,85 @@
+{
+  "levelId": "functions-1",
+  "title": "Welcome to Function Factory! ⚙️",
+  "description": "Functions are like recipes or instructions you can use over and over! Instead of writing the same code many times, you create a function once and call it whenever you need it. Functions make code reusable and organized!",
+  "concepts": [
+    {
+      "name": "What is a Function?",
+      "explanation": "A function is a reusable block of code that does a specific task. You define it once, then call it whenever you need it!",
+      "codeExample": {
+        "type": "demo",
+        "title": "Function Example",
+        "code": [
+          "// Define a function",
+          "function sayHello() {",
+          "  console.log('Hello, Ghost!');",
+          "}",
+          "",
+          "// Call the function",
+          "sayHello(); // Outputs: Hello, Ghost!"
+        ]
+      }
+    },
+    {
+      "name": "Parameters and Arguments",
+      "explanation": "Parameters are like blank spaces in a recipe. When you call the function, you fill in those spaces with arguments (actual values).",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Without Parameters",
+            "code": [
+              "function greet() {",
+              "  console.log('Hello, Casper!');",
+              "}"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "With Parameters",
+            "code": [
+              "function greet(name) {",
+              "  console.log('Hello, ' + name + '!');",
+              "}",
+              "",
+              "greet('Casper'); // Hello, Casper!",
+              "greet('Boo');    // Hello, Boo!"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "Return Values",
+      "explanation": "Functions can give back (return) a result. It's like asking a question and getting an answer back!",
+      "codeExample": {
+        "type": "comparison",
+        "examples": [
+          {
+            "type": "before",
+            "title": "Without Return",
+            "code": [
+              "function add(a, b) {",
+              "  let sum = a + b;",
+              "}",
+              "let result = add(5, 3); // undefined"
+            ]
+          },
+          {
+            "type": "after",
+            "title": "With Return",
+            "code": [
+              "function add(a, b) {",
+              "  let sum = a + b;",
+              "  return sum;",
+              "}",
+              "let result = add(5, 3); // 8"
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "readyMessage": "Ready to help our ghost master functions? Let's go!"
+}
