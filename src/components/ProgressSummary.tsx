@@ -91,13 +91,6 @@ export const ProgressSummary = ({
     ? (totalHintsUsed / completedChallenges).toFixed(1)
     : '0.0';
 
-  // Format time spent
-  const hours = Math.floor(gameState.assessmentMetrics.timeSpentMinutes / 60);
-  const minutes = Math.round(gameState.assessmentMetrics.timeSpentMinutes % 60);
-  const timeSpentFormatted = hours > 0 
-    ? `${hours}h ${minutes}m` 
-    : `${minutes}m`;
-
   // Group badges by category
   const badgesByCategory = gameState.badges.reduce((acc, badge) => {
     const def = BADGE_DEFINITIONS.find(d => d.id === badge.id);
@@ -183,13 +176,6 @@ export const ProgressSummary = ({
                 <div className="summary-stat-value">{gameState.badges.length}</div>
                 <div className="summary-stat-label">Badges Earned</div>
                 <div className="summary-stat-detail">out of {BADGE_DEFINITIONS.length} total</div>
-              </div>
-              
-              <div className="summary-stat-card">
-                <div className="summary-stat-icon">⏱️</div>
-                <div className="summary-stat-value">{timeSpentFormatted}</div>
-                <div className="summary-stat-label">Time Spent</div>
-                <div className="summary-stat-detail">&nbsp;</div>
               </div>
             </div>
           </div>
