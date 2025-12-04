@@ -1,7 +1,7 @@
 {
   "levelId": "cybersecurity-1",
-  "title": "Welcome to Cyber Security Central! 🔐",
-  "description": "Cybersecurity is about keeping information safe! Just like locking your diary or having a secret password for your treehouse. In code, we protect data from bad ghosts who want to steal or break things.",
+  "title": "Welcome to Cybersecurity! 🔐",
+  "description": "Cybersecurity is about keeping information safe! Just like locking your diary or having a secret password for your treehouse. In code, we protect data from bad actors who want to steal or break things.",
   "concepts": [
     {
       "name": "What is Cybersecurity?",

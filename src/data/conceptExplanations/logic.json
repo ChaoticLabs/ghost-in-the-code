@@ -1,7 +1,7 @@
 {
   "levelId": "logic-1",
-  "title": "Welcome to Logic Lab! 🧩",
-  "description": "Logic puzzles are like solving mysteries! You need to think step-by-step and figure out what makes sense. In code, logic helps us solve problems by thinking carefully about each piece.",
+  "title": "Welcome to Logic! 🧩",
+  "description": "Logic is like solving mysteries! You need to think step-by-step and figure out what makes sense. In code, logic helps us solve problems by thinking carefully about each piece.",
   "concepts": [
     {
       "name": "What is Logic?",

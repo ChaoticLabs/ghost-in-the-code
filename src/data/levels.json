@@ -1,13 +1,13 @@
 [
   {
-    "type": "loop",
+    "type": "loops",
     "title": "Loops",
     "description": "Learn how to repeat actions and create efficient code with loops!",
     "icon": "🔄",
     "color": "#00D9FF"
   },
   {
-    "type": "conditional",
+    "type": "conditionals",
     "title": "Conditionals",
     "description": "Master decision-making in code with if statements and conditions!",
     "icon": "🔀",
@@ -15,20 +15,20 @@
   },
   {
     "type": "logic",
-    "title": "Logic Puzzles",
+    "title": "Logic",
     "description": "Solve tricky problems and think like a programmer!",
     "icon": "🧩",
     "color": "#FF9500"
   },
   {
-    "type": "array",
+    "type": "arrays",
     "title": "Arrays",
     "description": "Master working with lists and collections of data!",
     "icon": "📚",
     "color": "#FF006E"
   },
   {
-    "type": "function",
+    "type": "functions",
     "title": "Functions",
     "description": "Create reusable code blocks and organize your programs!",
     "icon": "⚙️",
