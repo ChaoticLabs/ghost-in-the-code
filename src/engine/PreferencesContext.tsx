@@ -97,6 +97,15 @@ export function PreferencesProvider({ children }: PreferencesProviderProps) {
     document.documentElement.classList.add(`font-size-${preferences.fontSize}`);
   }, [preferences.fontSize]);
 
+  // Apply high contrast mode to document
+  useEffect(() => {
+    if (preferences.highContrastMode) {
+      document.documentElement.classList.add('high-contrast-mode');
+    } else {
+      document.documentElement.classList.remove('high-contrast-mode');
+    }
+  }, [preferences.highContrastMode]);
+
   const updatePreference = <K extends keyof UserPreferences>(
     key: K,
     value: UserPreferences[K]

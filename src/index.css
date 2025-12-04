@@ -503,9 +503,25 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* High contrast mode - CSS variables for app setting */
+html.high-contrast-mode {
+  --color-primary: #CCFF33;
+  --color-secondary: #00FFFF;
+  --color-accent: #FFAA00;
+  --color-purple: #9966FF;
+  --color-text-light: #FFFFFF;
+  --color-border: rgba(153, 102, 255, 0.6);
+  --hc-bg-solid: #000000;
+  --hc-bg-panel: rgba(0, 0, 0, 0.95);
+  --hc-bg-disabled: #666666;
+  --hc-text-disabled: #CCCCCC;
+  --hc-border-disabled: #999999;
+  --hc-focus-color: #FFFF00;
+}
+
+/* High contrast mode - CSS variables for system preference */
 @media (prefers-contrast: high) {
   :root {
-    /* Increase color contrast for high contrast mode */
     --color-primary: #CCFF33;
     --color-secondary: #00FFFF;
     --color-accent: #FFAA00;
@@ -519,8 +535,21 @@ button:focus-visible {
     --hc-border-disabled: #999999;
     --hc-focus-color: #FFFF00;
   }
+}
 
-  /* Remove decorative backgrounds for clarity */
+html.high-contrast-mode .game-board::before,
+html.high-contrast-mode .welcome-screen::before,
+html.high-contrast-mode .level-selection::before {
+  display: none;
+}
+
+html.high-contrast-mode .game-board,
+html.high-contrast-mode .welcome-screen,
+html.high-contrast-mode .level-selection {
+  background: var(--hc-bg-solid);
+}
+
+@media (prefers-contrast: high) {
   .game-board::before,
   .welcome-screen::before,
   .level-selection::before {
@@ -783,6 +812,248 @@ button:focus-visible {
   .sidebar::-webkit-scrollbar-track {
     background: #333333;
   }
+}
+
+/* High contrast mode class-based styles (mirrors media query above) */
+html.high-contrast-mode h1,
+html.high-contrast-mode h2,
+html.high-contrast-mode h3,
+html.high-contrast-mode h4,
+html.high-contrast-mode h5,
+html.high-contrast-mode h6,
+html.high-contrast-mode .h1-style,
+html.high-contrast-mode .h2-style,
+html.high-contrast-mode .h3-style {
+  text-shadow: none;
+  font-weight: 900;
+}
+
+html.high-contrast-mode .modal-container,
+html.high-contrast-mode .game-header,
+html.high-contrast-mode .code-section,
+html.high-contrast-mode .ghost-section,
+html.high-contrast-mode .hint-section,
+html.high-contrast-mode .hint-panel,
+html.high-contrast-mode .instructions-panel,
+html.high-contrast-mode .level-card {
+  background: var(--hc-bg-panel);
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+html.high-contrast-mode .modal-container,
+html.high-contrast-mode .modal-header,
+html.high-contrast-mode .modal-footer,
+html.high-contrast-mode .game-header,
+html.high-contrast-mode .code-section,
+html.high-contrast-mode .ghost-section,
+html.high-contrast-mode .hint-section,
+html.high-contrast-mode .hint-panel,
+html.high-contrast-mode .instructions-panel,
+html.high-contrast-mode .level-card,
+html.high-contrast-mode .code-container,
+html.high-contrast-mode .feedback {
+  border-width: 4px;
+}
+
+html.high-contrast-mode .modal-button,
+html.high-contrast-mode button,
+html.high-contrast-mode .reset-button,
+html.high-contrast-mode .submit-button,
+html.high-contrast-mode .hint-button,
+html.high-contrast-mode .start-button,
+html.high-contrast-mode .instructions-toggle,
+html.high-contrast-mode .close-instructions,
+html.high-contrast-mode .progress-button,
+html.high-contrast-mode .level-button,
+html.high-contrast-mode .back-button {
+  border-width: 3px;
+  font-weight: 700;
+}
+
+html.high-contrast-mode .modal-button-primary,
+html.high-contrast-mode .start-button,
+html.high-contrast-mode .hint-button:not(:disabled) {
+  background: var(--color-primary);
+  color: var(--hc-bg-solid);
+  border-color: var(--color-primary);
+}
+
+html.high-contrast-mode .modal-button-primary:hover,
+html.high-contrast-mode .start-button:hover:not(:disabled),
+html.high-contrast-mode .hint-button:hover:not(:disabled) {
+  background: #DDFF66;
+  border-color: #DDFF66;
+}
+
+html.high-contrast-mode .modal-button-secondary,
+html.high-contrast-mode .instructions-toggle,
+html.high-contrast-mode .name-input-buttons .close-instructions.secondary {
+  border-color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 700;
+}
+
+html.high-contrast-mode .modal-button-secondary:hover,
+html.high-contrast-mode .instructions-toggle:hover,
+html.high-contrast-mode .name-input-buttons .close-instructions.secondary:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: #FFFFFF;
+}
+
+html.high-contrast-mode .submit-button,
+html.high-contrast-mode .close-instructions:not(.secondary),
+html.high-contrast-mode .reset-button,
+html.high-contrast-mode .back-button {
+  background: var(--color-purple);
+  border-color: #BB99FF;
+}
+
+html.high-contrast-mode .submit-button:hover:not(:disabled),
+html.high-contrast-mode .close-instructions:hover:not(.secondary),
+html.high-contrast-mode .reset-button:hover:not(:disabled),
+html.high-contrast-mode .back-button:hover {
+  background: #BB99FF;
+  border-color: #DDCCFF;
+}
+
+html.high-contrast-mode .submit-button:disabled,
+html.high-contrast-mode .reset-button:disabled,
+html.high-contrast-mode .hint-button:disabled,
+html.high-contrast-mode .start-button:disabled,
+html.high-contrast-mode button:disabled {
+  background: var(--hc-bg-disabled);
+  color: var(--hc-text-disabled);
+  border-color: var(--hc-border-disabled);
+}
+
+html.high-contrast-mode .icon-button {
+  border-width: 3px;
+  background: rgba(153, 102, 255, 0.4);
+  border-color: var(--color-purple);
+}
+
+html.high-contrast-mode .icon-button:hover {
+  background: rgba(153, 102, 255, 0.6);
+  border-color: #BB99FF;
+}
+
+html.high-contrast-mode .icon-button--badge:hover {
+  border-color: var(--color-primary);
+}
+
+html.high-contrast-mode .icon-button__badge-count {
+  background: var(--color-primary);
+  color: var(--hc-bg-solid);
+  font-weight: 900;
+}
+
+html.high-contrast-mode .tagline,
+html.high-contrast-mode .level-selection-subtitle,
+html.high-contrast-mode .challenge-description,
+html.high-contrast-mode .tip-text,
+html.high-contrast-mode .hint-text,
+html.high-contrast-mode .level-card-description,
+html.high-contrast-mode .name-input-prompt,
+html.high-contrast-mode .instructions-content li {
+  font-weight: 600;
+}
+
+html.high-contrast-mode .tip-label,
+html.high-contrast-mode .progress-button,
+html.high-contrast-mode .level-card-progress,
+html.high-contrast-mode .name-input {
+  font-weight: 700;
+}
+
+html.high-contrast-mode .game-title,
+html.high-contrast-mode .level-selection-title,
+html.high-contrast-mode .level-button,
+html.high-contrast-mode .progress-button-percentage,
+html.high-contrast-mode .level-card-progress,
+html.high-contrast-mode .level-card--completed {
+  color: var(--color-primary);
+}
+
+html.high-contrast-mode .challenge-title,
+html.high-contrast-mode .tip-label,
+html.high-contrast-mode .instructions-content h2,
+html.high-contrast-mode .level-card-title {
+  color: var(--color-secondary);
+}
+
+html.high-contrast-mode .game-header {
+  border-bottom-color: var(--color-secondary);
+}
+
+html.high-contrast-mode .code-section {
+  border-color: var(--color-secondary);
+}
+
+html.high-contrast-mode .ghost-section,
+html.high-contrast-mode .level-card--completed {
+  border-color: var(--color-primary);
+}
+
+html.high-contrast-mode .hint-section {
+  border-color: var(--color-accent);
+}
+
+html.high-contrast-mode .instructions-panel,
+html.high-contrast-mode .level-card:not(.level-card--locked):not(.level-card--completed) {
+  border-color: var(--color-purple);
+}
+
+html.high-contrast-mode .code-textarea,
+html.high-contrast-mode .name-input {
+  background: rgba(0, 255, 255, 0.15);
+  border: 3px solid var(--color-secondary);
+  font-weight: 600;
+}
+
+html.high-contrast-mode .code-textarea:focus,
+html.high-contrast-mode .name-input:focus {
+  background: rgba(0, 255, 255, 0.2);
+  border-color: var(--color-secondary);
+}
+
+html.high-contrast-mode .level-button:focus,
+html.high-contrast-mode .progress-button:focus,
+html.high-contrast-mode .icon-button:focus,
+html.high-contrast-mode .modal-button:focus,
+html.high-contrast-mode .start-button:focus,
+html.high-contrast-mode .instructions-toggle:focus,
+html.high-contrast-mode .close-instructions:focus,
+html.high-contrast-mode .level-card:focus,
+html.high-contrast-mode .back-button:focus,
+html.high-contrast-mode .submit-button:focus,
+html.high-contrast-mode .reset-button:focus,
+html.high-contrast-mode .hint-button:focus-visible,
+html.high-contrast-mode .code-section:focus-within,
+html.high-contrast-mode .hint-section:focus-within,
+html.high-contrast-mode .code-textarea:focus,
+html.high-contrast-mode .name-input:focus {
+  outline-width: 4px;
+  outline-color: var(--hc-focus-color);
+}
+
+html.high-contrast-mode .progress-bar-container {
+  border-width: 3px;
+}
+
+html.high-contrast-mode .modal-overlay {
+  backdrop-filter: none;
+  background: rgba(0, 0, 0, 0.95);
+}
+
+html.high-contrast-mode .code-section::-webkit-scrollbar-thumb,
+html.high-contrast-mode .sidebar::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+}
+
+html.high-contrast-mode .code-section::-webkit-scrollbar-track,
+html.high-contrast-mode .sidebar::-webkit-scrollbar-track {
+  background: #333333;
 }
 
 @media (prefers-color-scheme: light) {
