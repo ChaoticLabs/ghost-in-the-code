@@ -14,6 +14,8 @@
 .challenge-title {
   color: #00D9FF;
   margin: 0;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.3);
+  transition: text-shadow 0.2s ease;
 }
 
 .challenge-description {
@@ -29,6 +31,7 @@
   padding: 0.75rem;
   border-radius: 6px;
   margin-top: 0.5rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .tip-icon {
@@ -55,130 +58,28 @@
   border-radius: 8px;
   overflow: hidden;
   min-height: 200px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-
-
-.syntax-highlighter-container {
-  position: relative;
-  z-index: 1;
-  pointer-events: none;
+.code-container:hover {
+  border-color: #7C3AED;
 }
 
-.syntax-highlighter-container pre {
-  margin: 0 !important;
-  background: transparent !important;
-}
-
-.syntax-highlighter-container code {
-  font-family: "Fira Code", "Consolas", "Monaco", monospace !important;
-}
-
-.code-line {
-  display: flex;
-  align-items: flex-start;
-  min-height: 1.6rem;
-  position: relative;
-  transition: background-color 0.2s ease;
-}
-
-.code-line:hover {
-  background-color: rgba(107, 70, 193, 0.1);
-}
-
-.line-number {
-  display: inline-block;
-  width: 2.5rem;
-  text-align: right;
-  color: #6B46C1;
-  user-select: none;
-  flex-shrink: 0;
-  padding-right: 1rem;
-  font-weight: 500;
-}
-
-.buggy-line .line-number {
-  color: #FF9500;
-  font-weight: 700;
-}
-
-.buggy-line {
-  background-color: rgba(255, 149, 0, 0.1);
-  border-left: 3px solid #FF9500;
-  padding-left: 0.5rem;
-  margin-left: -0.5rem;
-}
-
-.editable-line {
-  background-color: rgba(0, 217, 255, 0.05);
-}
-
-.code-content {
-  flex: 1;
-  margin: 0;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  white-space: pre;
-  text-align: left;
-}
-
-.code-content code {
-  font-family: inherit;
-}
-
-.code-textarea {
-  width: 100%;
-  min-height: 200px;
-  background: #0d1117;
+.code-container .dual-layer-editor {
   border: none;
-  color: #ffffff;
-  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  padding: 15px;
-  resize: vertical;
-  transition: all 0.2s ease;
-  white-space: pre;
-  overflow-wrap: normal;
-  overflow-x: auto;
-  tab-size: 2;
-  border-radius: 8px;
+  border-radius: 0;
+  min-height: 200px;
 }
 
-.code-textarea:focus {
-  outline: none;
+.code-container:focus-within {
   background: #161b22;
-  box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(0, 217, 255, 0.3), 0 4px 12px rgba(107, 70, 193, 0.2);
+  border-color: #8B5CF6;
 }
 
-.code-textarea::placeholder {
-  color: #6e7681;
-  font-style: italic;
-}
 
-.code-content code {
-  font-family: inherit;
-}
 
-.syntax-keyword {
-  color: #C792EA;
-  font-weight: 600;
-}
 
-.syntax-string {
-  color: #A3FF00;
-}
-
-.syntax-number {
-  color: #00D9FF;
-}
-
-.syntax-comment {
-  color: #6B7280;
-  font-style: italic;
-}
 
 .feedback {
   padding: 0.75rem;
@@ -187,6 +88,7 @@
   font-weight: 500;
   text-align: center;
   animation: slideIn 0.3s ease-out;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .feedback-success {
@@ -332,6 +234,12 @@
   .code-container {
     border-color: var(--color-purple);
     background: var(--hc-bg-solid);
+    border-width: 3px;
+  }
+
+  .code-container:focus-within {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.4);
   }
 
   .challenge-tip {
@@ -345,6 +253,7 @@
     border-color: var(--color-primary);
     color: var(--color-primary);
     font-weight: 700;
+    border-width: 3px;
   }
 
   .feedback-error {
@@ -352,46 +261,7 @@
     border-color: var(--color-accent);
     color: var(--color-accent);
     font-weight: 700;
-  }
-
-  .syntax-keyword {
-    color: #DD99FF;
-    font-weight: 700;
-  }
-
-  .syntax-string {
-    color: var(--color-primary);
-    font-weight: 600;
-  }
-
-  .syntax-number {
-    color: var(--color-secondary);
-    font-weight: 600;
-  }
-
-  .syntax-comment {
-    color: #999999;
-    font-weight: 600;
-  }
-
-  .buggy-line {
-    background-color: rgba(255, 170, 0, 0.2);
-    border-left-width: 5px;
-    border-left-color: var(--color-accent);
-  }
-
-  .buggy-line .line-number {
-    color: var(--color-accent);
-    font-weight: 900;
-  }
-
-  .editable-line {
-    background-color: rgba(0, 255, 255, 0.1);
-  }
-
-  .line-number {
-    color: var(--color-purple);
-    font-weight: 700;
+    border-width: 3px;
   }
 
   .code-safety-info {

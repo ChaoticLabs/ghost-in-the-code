@@ -54,17 +54,22 @@ export function PreferencesProvider({ children }: PreferencesProviderProps) {
     // Check system preference for reduced motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     
+    // Check system preference for high contrast
+    const prefersHighContrast = window.matchMedia('(prefers-contrast: high)').matches;
+    
     return {
       ...defaultPreferences,
       reducedMotion: prefersReducedMotion,
+      highContrastMode: prefersHighContrast,
     };
   });
 
   // Listen for system preference changes
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const reducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const highContrastQuery = window.matchMedia('(prefers-contrast: high)');
     
-    const handleChange = (e: MediaQueryListEvent) => {
+    const handleReducedMotionChange = (e: MediaQueryListEvent) => {
       // Only update if user hasn't explicitly set a preference
       const stored = localStorage.getItem(PREFERENCES_STORAGE_KEY);
       if (!stored || !JSON.parse(stored).reducedMotion) {
@@ -75,8 +80,24 @@ export function PreferencesProvider({ children }: PreferencesProviderProps) {
       }
     };
 
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    const handleHighContrastChange = (e: MediaQueryListEvent) => {
+      // Only update if user hasn't explicitly set a preference
+      const stored = localStorage.getItem(PREFERENCES_STORAGE_KEY);
+      if (!stored || JSON.parse(stored).highContrastMode === undefined) {
+        setPreferences(prev => ({
+          ...prev,
+          highContrastMode: e.matches,
+        }));
+      }
+    };
+
+    reducedMotionQuery.addEventListener('change', handleReducedMotionChange);
+    highContrastQuery.addEventListener('change', handleHighContrastChange);
+    
+    return () => {
+      reducedMotionQuery.removeEventListener('change', handleReducedMotionChange);
+      highContrastQuery.removeEventListener('change', handleHighContrastChange);
+    };
   }, []);
 
   // Save to localStorage whenever preferences change

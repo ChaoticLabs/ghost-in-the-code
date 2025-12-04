@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import type { Challenge } from '../engine/types';
 import { validateSolution } from '../engine/solutionValidator';
 import { CodeHeal } from '../animations/SuccessAnimations';
+import { DualLayerEditor } from './DualLayerEditor';
+import { usePreferences } from '../engine/PreferencesContext';
 import './CodeEditor.css';
 
 interface CodeEditorProps {
@@ -15,6 +17,7 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
   const [code, setCode] = useState<string>('');
   const [feedback, setFeedback] = useState<{ message: string; isCorrect: boolean; output?: string } | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { preferences } = usePreferences();
 
   // Reset state when challenge changes
   useEffect(() => {
@@ -140,20 +143,13 @@ export const CodeEditor = ({ challenge, onSuccess, onAttempt, showSuccessAnimati
           isActive={showSuccessAnimation}
         />
         
-        <textarea
-          className="code-textarea"
+        <DualLayerEditor
           value={code}
-          onChange={(e) => handleCodeChange(e.target.value)}
+          onChange={handleCodeChange}
           onKeyDown={handleKeyDown}
-          spellCheck={false}
-          autoComplete="off"
-          autoCorrect="off"
-          autoCapitalize="off"
-          data-gramm="false"
-          data-gramm_editor="false"
-          data-enable-grammarly="false"
-          aria-label="Code editor"
           placeholder="// Write your code here..."
+          disabled={isSubmitting}
+          theme={preferences.highContrastMode ? 'high-contrast' : 'dark'}
         />
       </div>
 

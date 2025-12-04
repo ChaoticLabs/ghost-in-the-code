@@ -1,0 +1,210 @@
+.syntax-highlighter {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: "Fira Code", "Consolas", "Monaco", "Courier New", monospace;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.syntax-pre {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: none;
+  overflow: visible;
+  white-space: pre;
+  -moz-tab-size: 2;
+  -o-tab-size: 2;
+  tab-size: 2;
+}
+
+.syntax-code {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  white-space: inherit;
+  -moz-tab-size: inherit;
+  -o-tab-size: inherit;
+  tab-size: inherit;
+  display: block;
+}
+
+/* Token type styles - Dark theme (default) with smooth transitions */
+.syntax-keyword {
+  color: #C792EA;
+  font-weight: 600;
+  -webkit-transition: color 0.15s ease, font-weight 0.15s ease;
+  -o-transition: color 0.15s ease, font-weight 0.15s ease;
+  transition: color 0.15s ease, font-weight 0.15s ease;
+}
+
+.syntax-string {
+  color: #A3FF00;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-number {
+  color: #00D9FF;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-comment {
+  color: #6B7280;
+  font-style: italic;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-operator {
+  color: #89DDFF;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-punctuation {
+  color: #89DDFF;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-identifier {
+  color: #ffffff;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-whitespace {
+  color: transparent;
+}
+
+.syntax-unknown {
+  color: #ffffff;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+.syntax-fallback {
+  color: #ffffff;
+  white-space: pre;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+/* Fallback mode indicator with smooth transition */
+.syntax-highlighter.fallback-mode {
+  opacity: 0.95;
+  -webkit-transition: opacity 0.2s ease;
+  -o-transition: opacity 0.2s ease;
+  transition: opacity 0.2s ease;
+}
+
+.syntax-highlighter.fallback-mode .syntax-fallback {
+  color: #e0e0e0;
+  -webkit-transition: color 0.15s ease;
+  -o-transition: color 0.15s ease;
+  transition: color 0.15s ease;
+}
+
+/* High-contrast theme */
+.syntax-highlighter.high-contrast .syntax-keyword {
+  color: #DD99FF;
+  font-weight: 700;
+}
+
+.syntax-highlighter.high-contrast .syntax-string {
+  color: #CCFF33;
+  font-weight: 600;
+}
+
+.syntax-highlighter.high-contrast .syntax-number {
+  color: #00FFFF;
+  font-weight: 600;
+}
+
+.syntax-highlighter.high-contrast .syntax-comment {
+  color: #999999;
+  font-weight: 600;
+}
+
+.syntax-highlighter.high-contrast .syntax-operator,
+.syntax-highlighter.high-contrast .syntax-punctuation {
+  color: #00FFFF;
+  font-weight: 600;
+}
+
+.syntax-highlighter.high-contrast .syntax-identifier {
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* CSS media query for system-level high-contrast mode */
+@media (prefers-contrast: high) {
+  .syntax-keyword {
+    color: #DD99FF;
+    font-weight: 700;
+  }
+
+  .syntax-string {
+    color: #CCFF33;
+    font-weight: 600;
+  }
+
+  .syntax-number {
+    color: #00FFFF;
+    font-weight: 600;
+  }
+
+  .syntax-comment {
+    color: #999999;
+    font-weight: 600;
+  }
+
+  .syntax-operator,
+  .syntax-punctuation {
+    color: #00FFFF;
+    font-weight: 600;
+  }
+
+  .syntax-identifier {
+    color: #FFFFFF;
+    font-weight: 600;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .syntax-highlighter {
+    font-size: 12px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .syntax-highlighter,
+  .syntax-keyword,
+  .syntax-string,
+  .syntax-number,
+  .syntax-comment,
+  .syntax-operator,
+  .syntax-punctuation,
+  .syntax-identifier,
+  .syntax-unknown,
+  .syntax-fallback,
+  .syntax-highlighter.fallback-mode,
+  .syntax-highlighter.fallback-mode .syntax-fallback {
+    -webkit-transition: none !important;
+    -o-transition: none !important;
+    transition: none !important;
+  }
+}
