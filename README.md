@@ -1,5 +1,10 @@
 # Ghost in The Code 👻
 
+[![Deploy to AWS](https://github.com/ChaoticLabs/ghost-in-the-code/actions/workflows/deploy.yml/badge.svg)](https://github.com/ChaoticLabs/ghost-in-the-code/actions/workflows/deploy.yml)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.x-brightgreen.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
+
 An interactive web game where kids help a friendly ghost "debug" haunted code to save the digital world. Each bug represents a coding concept (loops, conditions, logic puzzles) with spooky animations as rewards.
 
 **Kiroween Hackathon Submission:** https://kiroween.devpost.com/
@@ -22,6 +27,27 @@ Visit `http://localhost:5173` to play!
 - **Success Animations** with Framer Motion
 - **Voice Integration** using AWS Polly (optional)
 - **Progress Tracking** with LocalStorage persistence
+
+## 🩺 Health Check
+
+Run health checks to verify your local setup and deployment:
+
+```bash
+# Using npm script (cross-platform)
+npm run health
+
+# Or run directly:
+# Linux/Mac: bash scripts/health-check.sh
+# Windows: .\scripts\health-check.ps1
+```
+
+Checks:
+- ✅ Node.js version (>=20.x required)
+- ✅ Dependencies installed
+- ✅ Build status
+- ✅ AWS credentials (for deployment)
+- ✅ API endpoint connectivity
+- ✅ Infrastructure status
 
 ## 🚀 Tech Stack
 
