@@ -28,27 +28,6 @@ Visit `http://localhost:5173` to play!
 - **Voice Integration** using AWS Polly (optional)
 - **Progress Tracking** with LocalStorage persistence
 
-## 🩺 Health Check
-
-Run health checks to verify your local setup and deployment:
-
-```bash
-# Using npm script (cross-platform)
-npm run health
-
-# Or run directly:
-# Linux/Mac: bash scripts/health-check.sh
-# Windows: .\scripts\health-check.ps1
-```
-
-Checks:
-- ✅ Node.js version (>=20.x required)
-- ✅ Dependencies installed
-- ✅ Build status
-- ✅ AWS credentials (for deployment)
-- ✅ API endpoint connectivity
-- ✅ Infrastructure status
-
 ## 🚀 Tech Stack
 
 - **Frontend:** Vite + React + TypeScript
