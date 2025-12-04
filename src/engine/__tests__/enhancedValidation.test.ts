@@ -74,17 +74,23 @@ describe('Enhanced Validation', () => {
     const mockSolution: Solution = {
       type: 'output-match',
       expectedOutput: 'Password is strong!',
-      alternativeOutputs: []
+      alternativeOutputs: [],
+      validationRules: [
+        {
+          name: 'greater-than-or-equal',
+          description: 'Must use >= for inclusive comparison',
+          pattern: '>=',
+          shouldMatch: true,
+          feedbackMessage: 'You need to use >= instead of > to include passwords that are exactly 8 characters long.'
+        }
+      ]
     };
 
     const result = validateSolution(cheatingCode, mockSolution, undefined, 'cyber-basic-1');
     
-    
     expect(result.isCorrect).toBe(false);
-    // The test is getting the "missing operator" message instead of "cheating" message
-    // because the >= operator is missing, which is checked first
-    expect(result.feedback).toContain('ghost notices');
-    expect(result.detailedFeedback).toContain('>=');
+    expect(result.validationMethod).toBe('pattern-validation');
+    expect(result.detailedFeedback).toContain('8 characters');
   });
 
   test('should provide clear feedback for missing operator fix', () => {
@@ -100,16 +106,24 @@ describe('Enhanced Validation', () => {
 
     const mockSolution: Solution = {
       type: 'output-match',
-      expectedOutput: 'Password is too weak!', // This would be the actual output
-      alternativeOutputs: []
+      expectedOutput: 'Password is too weak!',
+      alternativeOutputs: [],
+      validationRules: [
+        {
+          name: 'greater-than-or-equal',
+          description: 'Must use >= for inclusive comparison',
+          pattern: '>=',
+          shouldMatch: true,
+          feedbackMessage: 'You need to use >= instead of > to include passwords that are exactly 8 characters long.'
+        }
+      ]
     };
 
     const result = validateSolution(wrongOperatorCode, mockSolution, undefined, 'cyber-basic-1');
     
     expect(result.isCorrect).toBe(false);
-    // Since output matches but pattern validation fails, it should be pattern-validation
     expect(result.validationMethod).toBe('pattern-validation');
-    expect(result.feedback).toContain('comparison');
+    expect(result.detailedFeedback).toContain('8 characters');
   });
 
   test('should catch direct console.log cheating', () => {
@@ -118,13 +132,29 @@ describe('Enhanced Validation', () => {
     const mockSolution: Solution = {
       type: 'output-match',
       expectedOutput: 'Password is strong!',
-      alternativeOutputs: []
+      alternativeOutputs: [],
+      validationRules: [
+        {
+          name: 'no-direct-console-cheat',
+          description: 'Code must contain the original logic structure',
+          pattern: '^[\\s]*console\\.log\\([\'"`](?:Access granted|Password is strong|Encrypted:|Safe query:|Hash:)[^\'"`]*[\'"`]\\);?[\\s]*$',
+          shouldMatch: false,
+          feedbackMessage: 'You cannot just write the answer directly! Keep the original code structure.'
+        },
+        {
+          name: 'has-password-variable',
+          description: 'Code must contain password variable and logic',
+          pattern: 'let\\s+password\\s*=|const\\s+password\\s*=',
+          shouldMatch: true,
+          feedbackMessage: 'The password variable is missing! Keep the original code structure.'
+        }
+      ]
     };
 
     const result = validateSolution(directCheatCode, mockSolution, undefined, 'cyber-basic-1');
     
     expect(result.isCorrect).toBe(false);
-    expect(result.feedback).toContain('delete everything');
+    expect(result.validationMethod).toBe('pattern-validation');
     expect(result.detailedFeedback).toContain('password variable');
   });
 });

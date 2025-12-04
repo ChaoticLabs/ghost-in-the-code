@@ -6,10 +6,19 @@ export interface CodeFragment {
   initialCode: string;
 }
 
+export interface ValidationRule {
+  name: string;
+  description: string;
+  pattern: string;
+  shouldMatch: boolean;
+  feedbackMessage?: string;
+}
+
 export interface Solution {
   type: 'output-match';
   expectedOutput: string;
   alternativeOutputs?: string[];
+  validationRules?: ValidationRule[];
 }
 
 export interface LevelConcept {

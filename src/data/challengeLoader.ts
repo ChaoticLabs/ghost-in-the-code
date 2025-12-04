@@ -67,6 +67,29 @@ function validateChallenge(challenge: any, index: number, validTypes: string[]):
     if (challenge.solution.alternativeOutputs && !Array.isArray(challenge.solution.alternativeOutputs)) {
       errors.push('solution.alternativeOutputs must be an array if provided');
     }
+    if (challenge.solution.validationRules) {
+      if (!Array.isArray(challenge.solution.validationRules)) {
+        errors.push('solution.validationRules must be an array if provided');
+      } else {
+        challenge.solution.validationRules.forEach((rule: any, ruleIndex: number) => {
+          if (!rule.name || typeof rule.name !== 'string') {
+            errors.push(`Validation rule ${ruleIndex}: missing or invalid name`);
+          }
+          if (!rule.description || typeof rule.description !== 'string') {
+            errors.push(`Validation rule ${ruleIndex}: missing or invalid description`);
+          }
+          if (!rule.pattern || typeof rule.pattern !== 'string') {
+            errors.push(`Validation rule ${ruleIndex}: missing or invalid pattern`);
+          }
+          if (typeof rule.shouldMatch !== 'boolean') {
+            errors.push(`Validation rule ${ruleIndex}: shouldMatch must be a boolean`);
+          }
+          if (rule.feedbackMessage && typeof rule.feedbackMessage !== 'string') {
+            errors.push(`Validation rule ${ruleIndex}: feedbackMessage must be a string if provided`);
+          }
+        });
+      }
+    }
   }
 
   // Validate hints
@@ -153,7 +176,7 @@ export function loadAllChallenges(): Map<string, Challenge[]> {
  * Gets challenges by type
  */
 export function getChallengesByType(type: LevelType): Challenge[] {
-  // Map singular type to plural filename (common convention)
+  // Map singular type to plural filename
   const typeMap: Record<string, string> = {
     loop: 'loops',
     conditional: 'conditionals',

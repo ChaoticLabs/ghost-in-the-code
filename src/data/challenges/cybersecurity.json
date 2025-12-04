@@ -32,7 +32,37 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Password is strong!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "greater-than-or-equal",
+            "description": "Must use >= for inclusive comparison",
+            "pattern": ">=",
+            "shouldMatch": true,
+            "feedbackMessage": "The password checker still uses '>' instead of '>='. Remember: a password that's exactly 8 characters should be considered strong too! Try changing the '>' to '>=' in your condition."
+          },
+          {
+            "name": "no-direct-console-cheat",
+            "description": "Code must contain the original logic structure",
+            "pattern": "^[\\s]*console\\.log\\(['\"`](?:Access granted|Password is strong|Encrypted:|Safe query:|Hash:)[^'\"`]*['\"`]\\);?[\\s]*$",
+            "shouldMatch": false,
+            "feedbackMessage": "Whoa there! You can't just delete everything and write the answer! The ghost needs you to fix the original code, not replace it. Keep the password variable, the if statement, and the length checking logic."
+          },
+          {
+            "name": "has-password-variable",
+            "description": "Code must contain password variable and logic",
+            "pattern": "let\\s+password\\s*=|const\\s+password\\s*=",
+            "shouldMatch": true,
+            "feedbackMessage": "The password variable is missing! You need to keep the original code structure and just fix the comparison operator."
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic (if statement)",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! You need to keep the original conditional logic and just fix the comparison operator."
+          }
+        ]
       },
       "hints": [
         "The password 'Sp00ky1!' has exactly 8 characters, which should be strong!",

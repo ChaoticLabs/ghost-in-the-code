@@ -32,7 +32,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Door opens!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic (if statement)",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! You need to keep the original conditional logic and fix the condition to check when hasKey is true."
+          },
+          {
+            "name": "has-hasKey-check",
+            "description": "Code must check hasKey variable",
+            "pattern": "hasKey",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the hasKey variable! The door should open when hasKey is true, not false."
+          },
+          {
+            "name": "no-direct-console-cheat",
+            "description": "Code must contain the original logic structure",
+            "pattern": "^[\\s]*console\\.log\\(['\"`][^'\"`]*['\"`]\\);?[\\s]*$",
+            "shouldMatch": false,
+            "feedbackMessage": "You can't just write the answer directly! Keep the original code with the hasKey variable and if statement, then fix the condition."
+          }
+        ]
       },
       "hints": [
         "The door should open when hasKey is true, but the condition checks for false!",
@@ -53,7 +76,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Ready to haunt!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "greater-than-or-equal",
+            "description": "Must use >= for inclusive comparison",
+            "pattern": ">=",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to use >= instead of > to include energy that's exactly 50. 'At least 50' means 50 or more!"
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original code structure and just fix the comparison operator."
+          },
+          {
+            "name": "has-energy-variable",
+            "description": "Code must check energy variable",
+            "pattern": "energy",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the energy variable! Don't just hardcode the output."
+          }
+        ]
       },
       "hints": [
         "The ghost needs AT LEAST 50 energy, which means 50 or more!",
@@ -74,7 +120,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Too cold!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain if statement",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original conditional logic."
+          },
+          {
+            "name": "has-else",
+            "description": "Code must have else block",
+            "pattern": "else\\s*{",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to add an else block to handle when temperature is below 60!"
+          },
+          {
+            "name": "has-temperature-check",
+            "description": "Code must check temperature variable",
+            "pattern": "temperature",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the temperature variable! Don't just hardcode the output."
+          }
+        ]
       },
       "hints": [
         "When temperature is less than 60, nothing happens! We need an 'else' part.",
@@ -95,7 +164,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Perfect time to haunt!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "logical-and",
+            "description": "Must use && (AND) operator",
+            "pattern": "&&",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to use && (AND) instead of || (OR). The ghost needs BOTH nighttime AND full moon to haunt perfectly!"
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original code structure."
+          },
+          {
+            "name": "checks-both-conditions",
+            "description": "Code must check both isNighttime and isFullMoon",
+            "pattern": "isNighttime.*isFullMoon|isFullMoon.*isNighttime",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check both isNighttime and isFullMoon variables!"
+          }
+        ]
       },
       "hints": [
         "The ghost needs BOTH nighttime AND full moon, not just one or the other!",
@@ -116,7 +208,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Ghost enters the room!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "has-not-operator",
+            "description": "Must use ! (NOT) operator",
+            "pattern": "!\\s*isDoorLocked",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to use the ! (NOT) operator before isDoorLocked. The ghost should enter when the door is NOT locked!"
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original code structure."
+          },
+          {
+            "name": "checks-door-locked",
+            "description": "Code must check isDoorLocked variable",
+            "pattern": "isDoorLocked",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the isDoorLocked variable!"
+          }
+        ]
       },
       "hints": [
         "The ghost should enter when the door is NOT locked!",
@@ -137,7 +252,30 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Welcome to the haunted house!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "greater-than-or-equal",
+            "description": "Must use >= for inclusive comparison",
+            "pattern": ">=",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to use >= instead of > to include people who are exactly 13. '13 or older' means 13 is included!"
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain conditional logic",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original code structure."
+          },
+          {
+            "name": "checks-age",
+            "description": "Code must check age variable",
+            "pattern": "age",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the age variable! Don't just hardcode the output."
+          }
+        ]
       },
       "hints": [
         "Someone who is exactly 13 should be allowed in!",
@@ -158,7 +296,37 @@
       "solution": {
         "type": "output-match",
         "expectedOutput": "Pretty spooky!",
-        "alternativeOutputs": []
+        "alternativeOutputs": [],
+        "validationRules": [
+          {
+            "name": "has-greater-than-or-equal",
+            "description": "Must use >= in the else if condition",
+            "pattern": "else\\s+if\\s*\\([^)]*>=",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to change > to >= in the 'else if' condition to include scare level 50!"
+          },
+          {
+            "name": "has-if-statement",
+            "description": "Code must contain if statement",
+            "pattern": "if\\s*\\(",
+            "shouldMatch": true,
+            "feedbackMessage": "The if statement is missing! Keep the original code structure."
+          },
+          {
+            "name": "has-else-if",
+            "description": "Code must have else if structure",
+            "pattern": "else\\s+if",
+            "shouldMatch": true,
+            "feedbackMessage": "The else if chain is missing! Keep the original code structure."
+          },
+          {
+            "name": "checks-scare-level",
+            "description": "Code must check scareLevel variable",
+            "pattern": "scareLevel",
+            "shouldMatch": true,
+            "feedbackMessage": "You need to check the scareLevel variable!"
+          }
+        ]
       },
       "hints": [
         "A scare level of exactly 50 should be 'Pretty spooky!'",
