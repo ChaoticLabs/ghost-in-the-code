@@ -8,8 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest --run",
-    "health": "bash scripts/health-check.sh || powershell -ExecutionPolicy Bypass -File scripts/health-check.ps1"
+    "test": "vitest --run"
   },
   "dependencies": {
     "@types/acorn": "^4.0.6",
