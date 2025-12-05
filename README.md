@@ -5,7 +5,7 @@
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.x-brightgreen.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
 
-An interactive web game where kids help a friendly ghost "debug" haunted code to save the digital world. Each bug represents a coding concept (loops, conditions, logic puzzles) with spooky animations as rewards.
+An interactive web game where kids help a friendly ghost "debug" haunted code to save the digital world. Each bug represents a coding concept (loops, conditions, logic puzzles, etc) with spooky animations as rewards.
 
 **Kiroween Hackathon Submission:** https://kiroween.devpost.com/
 
@@ -101,7 +101,7 @@ See [Security Documentation](docs/development/security.md) for details.
 
 ## 📝 License
 
-This is a hackathon project. Repository is public - keep credentials out of code.
+MIT License - see [LICENSE.md](LICENSE.md) for details.
 
 ## 🤝 Contributing
 
