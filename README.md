@@ -49,10 +49,10 @@ All documentation is in the [`docs/`](docs/) folder:
 ## 🎨 Features
 
 ### Challenge System
-14 challenges teach coding concepts through interactive debugging. Fix buggy code, earn points, and master programming fundamentals.
+Challenges teach coding concepts through interactive debugging. Fix buggy code, earn points, and master programming fundamentals.
 
 ### Badge System
-Earn 8 badges for concept mastery, achievements, and special accomplishments. Track your progress and celebrate milestones.
+Earn badges for concept mastery, achievements, and special accomplishments. Track your progress and celebrate milestones.
 
 ### Voice Integration
 The ghost speaks using AWS Polly! Enable voice narration in settings for an immersive experience.
